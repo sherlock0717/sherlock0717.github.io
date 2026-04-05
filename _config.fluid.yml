@@ -2,7 +2,7 @@ navbar:
   blog_title: "心海澄明"
   ground_glass:
     enable: true
-    px: 8
+    px: 16
     alpha: 0.72
   menu:
     - { key: "home", name: "首页", link: "/", icon: "iconfont icon-home-fill" }
@@ -20,13 +20,17 @@ scroll_down_arrow:
 custom_css:
   - /css/custom.css
 
+dark_mode:
+  enable: true
+  default: dark
+
 index:
   banner_img: /img/default.png
   banner_img_height: 100
-  banner_mask_alpha: 0.42
+  banner_mask_alpha: 0.48
   slogan:
     enable: true
-    text: "应用心理学背景的游戏研究与用户洞察实践者"
+    text: "游戏研究 · 用户洞察 · 社区反馈分析"
     api: ""
   auto_excerpt:
     enable: true
@@ -43,10 +47,10 @@ about:
   enable: true
   banner_img: /img/default.png
   banner_img_height: 60
-  banner_mask_alpha: 0.35
+  banner_mask_alpha: 0.42
   avatar: /img/avatar.png
   name: "孙海澄"
   intro: "应用心理学背景｜游戏研究｜用户洞察｜社区反馈分析"
   icons:
     - { class: "iconfont icon-github-fill", link: "https://github.com/sherlock0717", tip: "GitHub" }
-    - { class: "iconfont icon-link-fill", link: "https://sherlock0717.github.io/PsyLens/", tip: "PsyLens" }
+    - { class: "iconfont icon-bookmark-fill", link: "https://sherlock0717.github.io/PsyLens/", tip: "PsyLens" }
