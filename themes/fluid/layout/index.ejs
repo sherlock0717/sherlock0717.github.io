@@ -1,0 +1,201 @@
+﻿<%
+function asArray(collection) {
+  if (!collection) return [];
+  if (Array.isArray(collection)) return collection;
+  if (typeof collection.toArray === 'function') return collection.toArray();
+  if (Array.isArray(collection.data)) return collection.data;
+  return [];
+}
+
+function strip(html) {
+  return String(html || '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function excerptOf(post) {
+  var source = post.excerpt || post.description || post.content || '';
+  var clean = strip(source);
+  if (clean.length > 110) return clean.slice(0, 110) + '…';
+  return clean;
+}
+
+function postUrl(post) {
+  if (!post) return '#';
+  if (post.path && typeof url_for === 'function') return url_for(post.path);
+  if (post.slug && typeof url_for === 'function') return url_for('/' + post.slug + '/');
+  if (post.link) return post.link;
+  return '#';
+}
+
+function fmtDate(date) {
+  try {
+    return new Date(date).toISOString().slice(0, 10);
+  } catch (e) {
+    return '';
+  }
+}
+
+function takeTags(post) {
+  var tags = asArray(post.tags).map(function(tag) {
+    return tag && tag.name ? tag.name : '';
+  }).filter(Boolean);
+  return tags.slice(0, 3);
+}
+
+function coverOf(post, index) {
+  if (post && post.index_img) return post.index_img;
+
+  var title = String((post && post.title) || '').toLowerCase();
+
+  if (title.indexOf('psylens') !== -1) return '/img/project/psylens-cover.png';
+  if (title.indexOf('workflow') !== -1 || title.indexOf('ai') !== -1 || title.indexOf('工作流') !== -1) {
+    return '/img/project/workflow-cover.png';
+  }
+  if (title.indexOf('洞察') !== -1 || title.indexOf('研究') !== -1 || title.indexOf('体验') !== -1) {
+    return '/img/project/insight-cover.png';
+  }
+
+  var fallback = [
+    '/img/project/psylens-cover.png',
+    '/img/project/workflow-cover.png',
+    '/img/project/insight-cover.png'
+  ];
+  return fallback[index % fallback.length];
+}
+
+var base = typeof url_for === 'function' ? url_for : function(p) { return p; };
+
+var posts = asArray(site.posts)
+  .filter(function(post) {
+    return post && post.published !== false && post.title !== 'Hello World';
+  })
+  .sort(function(a, b) {
+    return new Date(b.date) - new Date(a.date);
+  });
+
+var featured = posts[0] || null;
+var rest = posts.slice(1);
+%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>海澄｜项目展示主页</title>
+  <meta name="description" content="海澄的项目展示主页，聚焦游戏研究、用户洞察、社区反馈分析与研究型工作流。">
+  <link rel="stylesheet" href="<%= base('/css/custom.css') %>">
+</head>
+<body class="portfolio-home">
+  <div class="gate-overlay" id="gateOverlay" aria-hidden="false">
+    <div class="gate-grid"></div>
+    <div class="gate-inner">
+      <p class="gate-kicker">HAICHENG PORTFOLIO</p>
+      <h1 class="gate-title">海的那边…</h1>
+      <p class="gate-text">点击、滚轮下滑或上滑进入</p>
+      <button class="gate-enter" id="gateEnter" type="button">进入主页</button>
+      <div class="gate-indicator" aria-hidden="true">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <nav class="navlinks">
+        <a href="<%= base('/') %>">首页</a>
+        <a href="<%= base('/archives/') %>">项目</a>
+        <a href="<%= base('/about/') %>">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro shell reveal">
+      <p class="intro-kicker">GAME RESEARCH · USER INSIGHTS · WORKFLOW DESIGN</p>
+      <p class="intro-role intro-role-main">游戏研究｜用户洞察｜研究型工作流</p>
+      <p class="intro-desc">
+        应用心理学背景，关注游戏社区反馈分析、研究驱动的内容整理与项目展示。
+        这里不区分“文章”和“项目”，所有公开内容都按项目条目来组织与呈现。
+      </p>
+    </section>
+
+    <section class="shell project-flow">
+      <% if (featured) { %>
+      <article class="featured-card reveal click-card" data-url="<%= postUrl(featured) %>">
+        <a class="featured-cover" href="<%= postUrl(featured) %>">
+          <img src="<%= base(coverOf(featured, 0)) %>" alt="<%= featured.title %>">
+        </a>
+        <div class="featured-content">
+          <div class="meta-row meta-row-plain">
+            <span class="meta-date"><%= fmtDate(featured.date) %></span>
+          </div>
+          <h2><a href="<%= postUrl(featured) %>"><%= featured.title %></a></h2>
+          <p class="project-excerpt"><%= excerptOf(featured) %></p>
+
+          <% var featuredTags = takeTags(featured); %>
+          <% if (featuredTags.length) { %>
+          <div class="tag-row">
+            <% featuredTags.forEach(function(tag) { %>
+              <span><%= tag %></span>
+            <% }) %>
+          </div>
+          <% } %>
+
+          <a class="text-link" href="<%= postUrl(featured) %>">查看项目</a>
+        </div>
+      </article>
+      <% } %>
+
+      <% if (rest.length) { %>
+      <div class="project-grid">
+        <% rest.forEach(function(post, index) { %>
+        <article class="project-card reveal click-card" data-url="<%= postUrl(post) %>">
+          <a class="project-cover" href="<%= postUrl(post) %>">
+            <img src="<%= base(coverOf(post, index + 1)) %>" alt="<%= post.title %>">
+          </a>
+          <div class="project-body">
+            <div class="meta-row">
+              <span class="meta-label">项目</span>
+              <span class="meta-date"><%= fmtDate(post.date) %></span>
+            </div>
+            <h3><a href="<%= postUrl(post) %>"><%= post.title %></a></h3>
+            <p class="project-excerpt"><%= excerptOf(post) %></p>
+
+            <% var tags = takeTags(post); %>
+            <% if (tags.length) { %>
+            <div class="tag-row">
+              <% tags.forEach(function(tag) { %>
+                <span><%= tag %></span>
+              <% }) %>
+            </div>
+            <% } %>
+
+            <a class="text-link" href="<%= postUrl(post) %>">继续阅读</a>
+          </div>
+        </article>
+        <% }) %>
+      </div>
+      <% } %>
+    </section>
+
+    <section class="shell about-strip reveal">
+      <div class="about-copy">
+        <p class="section-kicker">ABOUT</p>
+        <h2>关于这个主页</h2>
+        <p>
+          这个站点用于持续整理我公开展示的项目。当前内容主要围绕游戏研究、用户洞察与研究型工作流展开，
+          后续会继续补充新的案例、方法记录与过程整理。
+        </p>
+      </div>
+      <div class="about-actions">
+        <a class="ghost-link" href="<%= base('/about/') %>">查看 About</a>
+        <a class="ghost-link" href="<%= base('/archives/') %>">查看全部项目</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="<%= base('/js/home-gate.js') %>"></script>
+</body>
+</html>
