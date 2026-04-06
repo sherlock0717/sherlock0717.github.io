@@ -19,7 +19,11 @@ var githubUrl = 'https://github.com/sherlock0717';
       <p class="gate-kicker">HAICHENG PORTFOLIO</p>
       <h1 class="gate-title">海的那边…</h1>
       <p class="gate-text">点击、滚轮下滑或上滑进入</p>
-      <button class="gate-enter" id="gateEnter" type="button">进入主页</button>
+      <a
+        class="gate-enter"
+        href="#homeContent"
+        id="gateEnter"
+      >进入主页</a>
       <div class="gate-indicator" aria-hidden="true"><span></span></div>
     </div>
   </div>
@@ -58,7 +62,7 @@ var githubUrl = 'https://github.com/sherlock0717';
     </div>
   </header>
 
-  <main>
+  <main id="homeContent">
     <section class="hero-intro shell reveal">
       <p class="eyebrow">GAME RESEARCH · USER INSIGHTS · WORKFLOW DESIGN</p>
       <h1 class="hero-title">游戏研究｜用户洞察｜研究型工作流</h1>
@@ -169,6 +173,175 @@ var githubUrl = 'https://github.com/sherlock0717';
     </section>
   </main>
 
-  <script src="<%= base('/js/site-ui.js') %>"></script>
+  <script>
+  (function () {
+    var gate = document.getElementById('gateOverlay');
+    var enterBtn = document.getElementById('gateEnter');
+    var body = document.body;
+    var touchStartY = null;
+    var params = new URLSearchParams(window.location.search);
+    var forceGate = params.get('gate') === '1';
+    var sessionKey = 'haicheng-home-inline-v2';
+
+    var drawer = document.getElementById('projectDrawer');
+    var drawerMask = document.getElementById('drawerMask');
+    var drawerTrigger = document.getElementById('projectTrigger');
+    var drawerClose = document.getElementById('drawerClose');
+
+    function initReveal() {
+      var items = document.querySelectorAll('.reveal');
+      if (!items.length || !('IntersectionObserver' in window)) {
+        items.forEach(function (item) { item.classList.add('is-visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.14,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      items.forEach(function (item, index) {
+        item.style.transitionDelay = Math.min(index * 0.05, 0.24) + 's';
+        observer.observe(item);
+      });
+    }
+
+    function initClickableCards() {
+      document.querySelectorAll('.click-card[data-url]').forEach(function (card) {
+        var url = card.getAttribute('data-url');
+        if (!url || url === '#') return;
+
+        card.setAttribute('tabindex', '0');
+
+        card.addEventListener('click', function (e) {
+          if (e.target.closest('a, button')) return;
+          window.location.href = url;
+        });
+
+        card.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            window.location.href = url;
+          }
+        });
+      });
+    }
+
+    function hideGateInstantly() {
+      if (!gate) return;
+      gate.classList.add('is-hidden');
+      gate.setAttribute('aria-hidden', 'true');
+      body.classList.remove('gate-locked');
+    }
+
+    function dismissGate() {
+      if (!gate) return;
+      gate.classList.add('is-leaving');
+      gate.setAttribute('aria-hidden', 'true');
+      body.classList.remove('gate-locked');
+      try { sessionStorage.setItem(sessionKey, '1'); } catch (e) {}
+      setTimeout(function () {
+        gate.classList.add('is-hidden');
+      }, 500);
+    }
+
+    function openDrawer() {
+      if (!drawer || !drawerMask) return;
+      drawer.classList.add('is-open');
+      drawerMask.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      drawerMask.setAttribute('aria-hidden', 'false');
+      body.classList.add('drawer-open');
+    }
+
+    function closeDrawer() {
+      if (!drawer || !drawerMask) return;
+      drawer.classList.remove('is-open');
+      drawerMask.classList.remove('is-open');
+      drawer.setAttribute('aria-hidden', 'true');
+      drawerMask.setAttribute('aria-hidden', 'true');
+      body.classList.remove('drawer-open');
+    }
+
+    initReveal();
+    initClickableCards();
+
+    if (drawerTrigger) {
+      drawerTrigger.addEventListener('click', function () {
+        if (drawer && drawer.classList.contains('is-open')) {
+          closeDrawer();
+        } else {
+          openDrawer();
+        }
+      });
+    }
+
+    if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+    if (drawerMask) drawerMask.addEventListener('click', closeDrawer);
+
+    window.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    if (!gate) return;
+
+    try {
+      if (!forceGate && sessionStorage.getItem(sessionKey) === '1') {
+        hideGateInstantly();
+        return;
+      }
+    } catch (e) {}
+
+    body.classList.add('gate-locked');
+
+    if (enterBtn) {
+      enterBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        dismissGate();
+        var home = document.getElementById('homeContent');
+        if (home) home.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
+    gate.addEventListener('click', function (e) {
+      if (e.target === gate) dismissGate();
+    });
+
+    window.addEventListener('wheel', function (e) {
+      if (!gate || gate.classList.contains('is-hidden')) return;
+      if (e.deltaY > 8) dismissGate();
+    }, { passive: true });
+
+    window.addEventListener('keydown', function (e) {
+      if (!gate || gate.classList.contains('is-hidden')) return;
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+        dismissGate();
+      }
+    });
+
+    window.addEventListener('touchstart', function (e) {
+      if (!gate || gate.classList.contains('is-hidden')) return;
+      if (!e.touches || !e.touches.length) return;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchend', function (e) {
+      if (!gate || gate.classList.contains('is-hidden')) return;
+      if (touchStartY === null) return;
+      if (!e.changedTouches || !e.changedTouches.length) return;
+
+      var endY = e.changedTouches[0].clientY;
+      if (touchStartY - endY > 48) dismissGate();
+      touchStartY = null;
+    }, { passive: true });
+  })();
+  </script>
 </body>
 </html>
