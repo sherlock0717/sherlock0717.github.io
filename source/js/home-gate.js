@@ -2,9 +2,8 @@
   var gate = document.getElementById('gateOverlay');
   var enterBtn = document.getElementById('gateEnter');
   var body = document.body;
-  var sessionKey = 'haicheng-home-gate-v4-seen';
+  var sessionKey = 'haicheng-home-clean-seen';
   var touchStartY = null;
-  var gateDismissed = false;
   var params = new URLSearchParams(window.location.search);
   var forceGate = params.get('gate') === '1';
 
@@ -19,10 +18,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, {
-      threshold: 0.14,
-      rootMargin: '0px 0px -40px 0px'
-    });
+    }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
 
     items.forEach(function (item, index) {
       item.style.transitionDelay = Math.min(index * 0.05, 0.24) + 's';
@@ -31,8 +27,7 @@
   }
 
   function initClickableCards() {
-    var cards = document.querySelectorAll('.click-card[data-url]');
-    cards.forEach(function (card) {
+    document.querySelectorAll('.click-card[data-url]').forEach(function (card) {
       var url = card.getAttribute('data-url');
       if (!url || url === '#') return;
 
@@ -40,26 +35,14 @@
 
       card.addEventListener('click', function (e) {
         if (e.target.closest('a, button')) return;
-        window.location.assign(url);
+        window.location.href = url;
       });
 
       card.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          window.location.assign(url);
+          window.location.href = url;
         }
-      });
-    });
-  }
-
-  function initNavFallback() {
-    document.querySelectorAll('.navlinks a').forEach(function (link) {
-      link.addEventListener('click', function (e) {
-        var href = link.getAttribute('href');
-        if (!href) return;
-        if (href === '#') return;
-        e.preventDefault();
-        window.location.assign(href);
       });
     });
   }
@@ -72,8 +55,7 @@
   }
 
   function dismissGate() {
-    if (!gate || gateDismissed) return;
-    gateDismissed = true;
+    if (!gate) return;
     gate.classList.add('is-leaving');
     gate.setAttribute('aria-hidden', 'true');
     body.classList.remove('gate-locked');
@@ -86,7 +68,6 @@
 
   initReveal();
   initClickableCards();
-  initNavFallback();
 
   if (!gate) return;
 
@@ -132,8 +113,7 @@
     if (!e.changedTouches || !e.changedTouches.length) return;
 
     var endY = e.changedTouches[0].clientY;
-    var delta = touchStartY - endY;
-    if (delta > 48) dismissGate();
+    if (touchStartY - endY > 48) dismissGate();
     touchStartY = null;
   }, { passive: true });
 })();
