@@ -1,10 +1,11 @@
+﻿theme: fluid
 # Hexo Configuration
 
-title: 孙海澄
-subtitle: 游戏研究 / 用户洞察 / 社区反馈分析
-description: 个人项目、研究笔记与作品整理
+title: 瀛欐捣婢?
+subtitle: 娓告垙鐮旂┒ / 鐢ㄦ埛娲炲療 / 绀惧尯鍙嶉鍒嗘瀽
+description: 涓汉椤圭洰銆佺爺绌剁瑪璁颁笌浣滃搧鏁寸悊
 keywords:
-author: 孙海澄
+author: 瀛欐捣婢?
 language: zh-CN
 timezone: Asia/Shanghai
 
@@ -54,38 +55,9 @@ prismjs:
   tab_replace: ''
 
 # Home page setting
+
 index_generator:
   path: ''
   per_page: 10
   order_by: -date
 
-# Category & Tag
-default_category: 未分类
-category_map:
-tag_map:
-
-# Metadata elements
-meta_generator: true
-
-date_format: YYYY-MM-DD
-time_format: HH:mm:ss
-updated_option: 'mtime'
-
-# Pagination
-per_page: 10
-pagination_dir: page
-
-# Include / Exclude file(s)
-include:
-exclude:
-ignore:
-
-# Extensions
-## Plugins: https://hexo.io/plugins/
-## Themes: https://hexo.io/themes/
-theme: fluid
-
-# Deployment
-## Docs: https://hexo.io/docs/one-command-deployment
-deploy:
-  type: ''
