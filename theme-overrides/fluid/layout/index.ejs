@@ -11,6 +11,190 @@ var githubUrl = 'https://github.com/sherlock0717';
   <title>海澄｜项目展示主页</title>
   <meta name="description" content="海澄的项目展示主页，聚焦游戏研究、用户洞察、社区反馈分析与研究型工作流。">
   <link rel="stylesheet" href="<%= base('/css/custom.css') %>">
+
+  <style>
+    /* ===== 关键修复：抽屉相关样式直接内联，避免外部 css 不生效 ===== */
+    .project-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(420px, 100vw);
+      height: 100vh;
+      z-index: 70;
+      background: rgba(248, 251, 255, 0.96);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid rgba(120, 146, 192, 0.12);
+      box-shadow: -12px 0 36px rgba(45, 68, 112, 0.12);
+      transform: translateX(102%);
+      transition: transform .28s ease;
+      display: none;
+      flex-direction: column;
+      padding: 24px 20px;
+    }
+
+    .project-drawer.is-open {
+      transform: translateX(0);
+    }
+
+    .drawer-mask {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 34, 60, 0.18);
+      backdrop-filter: blur(2px);
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .24s ease;
+      display: none;
+    }
+
+    .drawer-mask.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(120, 146, 192, 0.12);
+    }
+
+    .drawer-kicker {
+      margin: 0 0 8px;
+      color: #7e8ba6;
+      font-size: .8rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .drawer-head h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #203457;
+    }
+
+    .drawer-close {
+      appearance: none;
+      border: 0;
+      background: rgba(255,255,255,0.72);
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      font-size: 1.6rem;
+      line-height: 1;
+      cursor: pointer;
+      color: #44536d;
+    }
+
+    .drawer-list {
+      display: grid;
+      gap: 16px;
+      margin-top: 20px;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .drawer-card {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 14px;
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(120, 146, 192, 0.12);
+      cursor: pointer;
+      transition: transform .22s ease, box-shadow .22s ease;
+    }
+
+    .drawer-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(50, 78, 132, 0.12);
+    }
+
+    .drawer-cover {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #dfe9fb;
+    }
+
+    .drawer-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .drawer-body h3 {
+      margin: 2px 0 8px;
+      font-size: 1.08rem;
+      color: #203457;
+    }
+
+    .drawer-body p {
+      margin: 0;
+      color: #627089;
+      line-height: 1.65;
+      font-size: .92rem;
+    }
+
+    .drawer-link {
+      display: inline-flex;
+      margin-top: 12px;
+      font-weight: 700;
+      color: #2d72ea;
+    }
+
+    .nav-project-trigger {
+      position: relative;
+      transition: color .2s ease;
+      background: none;
+      border: 0;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .nav-project-trigger::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #5b86f7, #9bb8ff);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .24s ease;
+    }
+
+    .nav-project-trigger:hover {
+      color: var(--text, #10213a);
+    }
+
+    .nav-project-trigger:hover::after {
+      transform: scaleX(1);
+    }
+
+    .gate-enter {
+      text-decoration: none;
+    }
+
+    @media (max-width: 760px) {
+      .project-drawer {
+        width: 100vw;
+        padding: 18px 16px;
+      }
+
+      .drawer-card {
+        grid-template-columns: 96px 1fr;
+      }
+    }
+  </style>
 </head>
 <body class="portfolio-home home-page">
   <div class="gate-overlay" id="gateOverlay" aria-hidden="false">
@@ -19,16 +203,12 @@ var githubUrl = 'https://github.com/sherlock0717';
       <p class="gate-kicker">HAICHENG PORTFOLIO</p>
       <h1 class="gate-title">海的那边…</h1>
       <p class="gate-text">点击、滚轮下滑或上滑进入</p>
-      <a
-        class="gate-enter"
-        href="#homeContent"
-        id="gateEnter"
-      >进入主页</a>
+      <a class="gate-enter" href="#homeContent" id="gateEnter">进入主页</a>
       <div class="gate-indicator" aria-hidden="true"><span></span></div>
     </div>
   </div>
 
-  <aside class="project-drawer" id="projectDrawer" aria-hidden="true">
+  <aside class="project-drawer" id="projectDrawer" aria-hidden="true" style="display:none;">
     <div class="drawer-head">
       <div>
         <p class="drawer-kicker">PROJECTS</p>
@@ -51,7 +231,7 @@ var githubUrl = 'https://github.com/sherlock0717';
     </div>
   </aside>
 
-  <div class="drawer-mask" id="drawerMask" aria-hidden="true"></div>
+  <div class="drawer-mask" id="drawerMask" aria-hidden="true" style="display:none;"></div>
 
   <header class="topbar">
     <div class="shell topbar-inner">
@@ -181,7 +361,7 @@ var githubUrl = 'https://github.com/sherlock0717';
     var touchStartY = null;
     var params = new URLSearchParams(window.location.search);
     var forceGate = params.get('gate') === '1';
-    var sessionKey = 'haicheng-home-inline-v2';
+    var sessionKey = 'haicheng-home-inline-v3';
 
     var drawer = document.getElementById('projectDrawer');
     var drawerMask = document.getElementById('drawerMask');
@@ -254,8 +434,12 @@ var githubUrl = 'https://github.com/sherlock0717';
 
     function openDrawer() {
       if (!drawer || !drawerMask) return;
-      drawer.classList.add('is-open');
-      drawerMask.classList.add('is-open');
+      drawer.style.display = 'flex';
+      drawerMask.style.display = 'block';
+      requestAnimationFrame(function () {
+        drawer.classList.add('is-open');
+        drawerMask.classList.add('is-open');
+      });
       drawer.setAttribute('aria-hidden', 'false');
       drawerMask.setAttribute('aria-hidden', 'false');
       body.classList.add('drawer-open');
@@ -268,6 +452,10 @@ var githubUrl = 'https://github.com/sherlock0717';
       drawer.setAttribute('aria-hidden', 'true');
       drawerMask.setAttribute('aria-hidden', 'true');
       body.classList.remove('drawer-open');
+      setTimeout(function () {
+        drawer.style.display = 'none';
+        drawerMask.style.display = 'none';
+      }, 260);
     }
 
     initReveal();
