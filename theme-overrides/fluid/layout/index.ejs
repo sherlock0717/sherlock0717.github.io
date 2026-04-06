@@ -1,5 +1,7 @@
 ﻿<%
 var base = typeof url_for === 'function' ? url_for : function(p) { return p; };
+var currentProjectUrl = 'https://sherlock0717.github.io/PsyLens/';
+var githubUrl = 'https://github.com/sherlock0717';
 %>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -10,7 +12,7 @@ var base = typeof url_for === 'function' ? url_for : function(p) { return p; };
   <meta name="description" content="海澄的项目展示主页，聚焦游戏研究、用户洞察、社区反馈分析与研究型工作流。">
   <link rel="stylesheet" href="<%= base('/css/custom.css') %>">
 </head>
-<body class="portfolio-home">
+<body class="portfolio-home home-page">
   <div class="gate-overlay" id="gateOverlay" aria-hidden="false">
     <div class="gate-grid"></div>
     <div class="gate-inner">
@@ -18,72 +20,155 @@ var base = typeof url_for === 'function' ? url_for : function(p) { return p; };
       <h1 class="gate-title">海的那边…</h1>
       <p class="gate-text">点击、滚轮下滑或上滑进入</p>
       <button class="gate-enter" id="gateEnter" type="button">进入主页</button>
-      <div class="gate-indicator" aria-hidden="true">
-        <span></span>
-      </div>
+      <div class="gate-indicator" aria-hidden="true"><span></span></div>
     </div>
   </div>
+
+  <aside class="project-drawer" id="projectDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <div>
+        <p class="drawer-kicker">PROJECTS</p>
+        <h2>项目预览</h2>
+      </div>
+      <button class="drawer-close" id="drawerClose" type="button" aria-label="关闭">×</button>
+    </div>
+
+    <div class="drawer-list">
+      <article class="drawer-card click-card" data-url="<%= currentProjectUrl %>">
+        <div class="drawer-cover">
+          <img src="<%= base('/img/project/psylens-cover.png') %>" alt="PsyLens">
+        </div>
+        <div class="drawer-body">
+          <h3>PsyLens</h3>
+          <p>多平台游戏社区反馈洞察工作流</p>
+          <span class="drawer-link">查看项目</span>
+        </div>
+      </article>
+    </div>
+  </aside>
+
+  <div class="drawer-mask" id="drawerMask" aria-hidden="true"></div>
 
   <header class="topbar">
     <div class="shell topbar-inner">
       <nav class="navlinks">
         <a href="<%= base('/') %>">首页</a>
-        <a href="<%= base('/PsyLens/') %>">项目</a>
-        <a href="<%= base('/about/') %>">关于</a>
+        <button class="nav-project-trigger" id="projectTrigger" type="button">项目</button>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="intro shell reveal">
-      <p class="intro-kicker">GAME RESEARCH · USER INSIGHTS · WORKFLOW DESIGN</p>
-      <p class="intro-role-main">游戏研究｜用户洞察｜研究型工作流</p>
-      <p class="intro-desc">
+    <section class="hero-intro shell reveal">
+      <p class="eyebrow">GAME RESEARCH · USER INSIGHTS · WORKFLOW DESIGN</p>
+      <h1 class="hero-title">游戏研究｜用户洞察｜研究型工作流</h1>
+      <p class="hero-desc">
         应用心理学背景，关注游戏社区反馈分析、研究驱动的内容整理与项目展示。
-        当前首页先聚焦公开项目 PsyLens，后续再继续补充新的案例与方法整理。
+        这里把公开内容按项目条目来组织，而不是按普通博客文章来堆放。
+        当前已公开完整案例 1 项，后续会继续补充新的研究案例、洞察项目与方法整理。
       </p>
+      <div class="hero-actions">
+        <a class="pill-button pill-primary" href="<%= githubUrl %>" target="_blank" rel="noopener noreferrer">查看开发中的项目</a>
+      </div>
     </section>
 
-    <section class="shell project-flow">
-      <article class="featured-card reveal click-card" data-url="<%= base('/PsyLens/') %>">
-        <a class="featured-cover" href="<%= base('/PsyLens/') %>">
+    <section class="shell reveal">
+      <div class="section-head">
+        <p class="section-kicker">PROJECTS</p>
+        <h2>项目预览</h2>
+        <p>当前先展示已公开项目，后续项目会在这里继续补充。</p>
+      </div>
+
+      <article class="featured-card click-card" data-url="<%= currentProjectUrl %>">
+        <a class="featured-cover" href="<%= currentProjectUrl %>" target="_blank" rel="noopener noreferrer">
           <img src="<%= base('/img/project/psylens-cover.png') %>" alt="PsyLens">
         </a>
         <div class="featured-content">
-          <div class="meta-row meta-row-plain">
+          <div class="meta-row">
             <span class="meta-date">2026-04-05</span>
           </div>
-          <h2><a href="<%= base('/PsyLens/') %>">PsyLens｜多平台游戏社区反馈洞察工作流</a></h2>
-          <p class="project-excerpt">
+          <h3><a href="<%= currentProjectUrl %>" target="_blank" rel="noopener noreferrer">PsyLens｜多平台游戏社区反馈洞察工作流</a></h3>
+          <p class="card-desc">
             围绕公开游戏社区反馈搭建的一条研究与数据工作流。当前公开案例聚焦《英雄联盟》海克斯大乱斗模式，
-            整合 NGA、贴吧、B站三平台反馈，最终收束到主题、心理机制、证据链与行动建议。
+            整合多平台反馈，最终收束到主题、心理机制、证据链与行动建议。
           </p>
           <div class="tag-row">
             <span>PsyLens</span>
             <span>游戏研究</span>
             <span>社区反馈分析</span>
           </div>
-          <a class="text-link" href="<%= base('/PsyLens/') %>">查看项目</a>
+          <a class="text-link" href="<%= currentProjectUrl %>" target="_blank" rel="noopener noreferrer">查看项目</a>
         </div>
       </article>
+
+      <div class="card-grid card-grid-3">
+        <article class="project-card is-disabled">
+          <div class="project-cover">
+            <img src="<%= base('/img/project/workflow-cover.png') %>" alt="研究型 AI 工作流设计">
+          </div>
+          <div class="project-body">
+            <h3>研究型 AI 工作流设计</h3>
+            <p class="card-desc">
+              围绕采集、清洗、结构化与输出展示的流程整理，持续沉淀成可复用的研究型项目方法。
+            </p>
+            <div class="tag-row">
+              <span>工作流</span>
+              <span>AI辅助研究</span>
+              <span>建设中</span>
+            </div>
+            <a class="text-link" href="<%= githubUrl %>" target="_blank" rel="noopener noreferrer">查看开发中的项目</a>
+          </div>
+        </article>
+
+        <article class="project-card is-disabled">
+          <div class="project-cover">
+            <img src="<%= base('/img/project/insight-cover.png') %>" alt="用户洞察与体验分析">
+          </div>
+          <div class="project-body">
+            <h3>用户洞察与体验分析</h3>
+            <p class="card-desc">
+              围绕玩法体验、玩家表达与结构化洞察的持续案例整理，关注如何把体验问题转化为更清楚的分析与表达。
+            </p>
+            <div class="tag-row">
+              <span>用户洞察</span>
+              <span>体验分析</span>
+              <span>建设中</span>
+            </div>
+            <a class="text-link" href="<%= githubUrl %>" target="_blank" rel="noopener noreferrer">查看开发中的项目</a>
+          </div>
+        </article>
+
+        <article class="project-card is-disabled">
+          <div class="project-cover cover-soft">
+            <img src="<%= base('/img/project/workflow-cover.png') %>" alt="更多项目持续补充中">
+          </div>
+          <div class="project-body">
+            <h3>更多项目持续补充中</h3>
+            <p class="card-desc">
+              后续会逐步加入新的项目页。到时这里会直接跳转到对应的独立项目页面。
+            </p>
+            <div class="tag-row">
+              <span>持续更新</span>
+              <span>建设中</span>
+            </div>
+            <a class="text-link" href="<%= githubUrl %>" target="_blank" rel="noopener noreferrer">查看开发中的项目</a>
+          </div>
+        </article>
+      </div>
     </section>
 
     <section class="shell about-strip reveal">
       <div class="about-copy">
-        <p class="section-kicker">ABOUT</p>
-        <h2>关于这个主页</h2>
+        <p class="section-kicker">UPDATE</p>
+        <h2>敬请期待更新</h2>
         <p>
-          这个站点用于持续整理我公开展示的项目。当前公开内容先以 PsyLens 为主，
-          后续会继续补充新的案例、方法记录与过程整理。
+          这个首页会持续补充新的项目入口与预览内容。随着后续项目逐步公开，这里会形成更完整的项目展示结构，
+          欢迎之后再回来看看。
         </p>
-      </div>
-      <div class="about-actions">
-        <a class="ghost-link" href="<%= base('/about/') %>">查看 About</a>
-        <a class="ghost-link" href="<%= base('/PsyLens/') %>">进入当前项目</a>
       </div>
     </section>
   </main>
 
-  <script src="<%= base('/js/home-gate.js') %>"></script>
+  <script src="<%= base('/js/site-ui.js') %>"></script>
 </body>
 </html>
