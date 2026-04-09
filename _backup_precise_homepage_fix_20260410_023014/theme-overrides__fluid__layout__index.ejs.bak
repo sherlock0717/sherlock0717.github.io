@@ -1,0 +1,153 @@
+﻿<%
+var base = typeof url_for === 'function' ? url_for : function(p) { return p; };
+%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>海澄｜项目展示主页</title>
+  <meta name="description" content="海澄的项目展示主页，聚焦游戏研究、用户洞察、社区反馈分析与研究型工作流。">
+  <link rel="stylesheet" href="<%= base('/css/custom.css') %>">
+</head>
+<body class="portfolio-home home-page">
+  <div class="gate-overlay" id="gateOverlay" aria-hidden="false">
+    <div class="gate-grid"></div>
+    <div class="gate-inner">
+      <p class="gate-kicker">HAICHENG PORTFOLIO</p>
+      <h1 class="gate-title">海的那边…</h1>
+      <p class="gate-text">点击、滚轮下滑或上滑进入</p>
+      <button class="gate-enter" id="gateEnter" type="button">进入主页</button>
+      <div class="gate-indicator" aria-hidden="true"><span></span></div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <nav class="navlinks">
+        <a href="<%= base('/') %>">首页</a>
+        <a href="<%= base('/projects/') %>">项目</a>
+        <a href="<%= base('/about/') %>">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-intro shell reveal">
+      <p class="eyebrow">GAME RESEARCH · USER INSIGHTS · WORKFLOW DESIGN</p>
+      <h1 class="hero-title">游戏研究｜用户洞察｜研究型工作流</h1>
+      <p class="hero-desc">
+        应用心理学背景，关注游戏社区反馈分析、研究驱动的内容整理与项目展示。
+        这里把公开内容按项目条目来组织，而不是按普通博客文章来堆放。
+        当前已公开完整案例 1 项，后续会继续补充新的研究案例、洞察项目与方法整理。
+      </p>
+      <div class="hero-actions">
+        <a class="pill-button pill-primary" href="<%= base('/projects/') %>">进入项目页</a>
+        <a class="pill-button pill-secondary" href="<%= base('/about/') %>">查看 About</a>
+      </div>
+    </section>
+
+    <section class="shell reveal">
+      <div class="section-head">
+        <p class="section-kicker">PROJECTS</p>
+        <h2>项目预览</h2>
+        <p>这里先展示当前已公开项目，以及后续正在建设中的方向。</p>
+      </div>
+
+      <article class="featured-card click-card" data-url="<%= base('/PsyLens/') %>">
+        <a class="featured-cover" href="<%= base('/PsyLens/') %>">
+          <img src="<%= base('/img/project/psylens-cover.png') %>" alt="PsyLens">
+        </a>
+        <div class="featured-content">
+          <div class="meta-row">
+            <span class="meta-date">2026-04-05</span>
+          </div>
+          <h3><a href="<%= base('/PsyLens/') %>">PsyLens｜多平台游戏社区反馈洞察工作流</a></h3>
+          <p class="card-desc">
+            围绕公开游戏社区反馈搭建的一条研究与数据工作流。当前公开案例聚焦《英雄联盟》海克斯大乱斗模式，
+            整合多平台反馈，最终收束到主题、心理机制、证据链与行动建议。
+          </p>
+          <div class="tag-row">
+            <span>PsyLens</span>
+            <span>游戏研究</span>
+            <span>社区反馈分析</span>
+          </div>
+          <a class="text-link" href="<%= base('/PsyLens/') %>">查看项目</a>
+        </div>
+      </article>
+
+      <div class="card-grid card-grid-3">
+        <article class="project-card is-disabled">
+          <div class="project-cover">
+            <img src="<%= base('/img/project/workflow-cover.png') %>" alt="研究型 AI 工作流设计">
+          </div>
+          <div class="project-body">
+            <h3>研究型 AI 工作流设计</h3>
+            <p class="card-desc">
+              围绕采集、清洗、结构化与输出展示的流程整理，持续沉淀成可复用的研究型项目方法。
+            </p>
+            <div class="tag-row">
+              <span>工作流</span>
+              <span>AI辅助研究</span>
+              <span>建设中</span>
+            </div>
+            <span class="text-link disabled-link">建设中</span>
+          </div>
+        </article>
+
+        <article class="project-card is-disabled">
+          <div class="project-cover">
+            <img src="<%= base('/img/project/insight-cover.png') %>" alt="用户洞察与体验分析">
+          </div>
+          <div class="project-body">
+            <h3>用户洞察与体验分析</h3>
+            <p class="card-desc">
+              围绕玩法体验、玩家表达与结构化洞察的持续案例整理，关注如何把体验问题转化为更清楚的分析与表达。
+            </p>
+            <div class="tag-row">
+              <span>用户洞察</span>
+              <span>体验分析</span>
+              <span>建设中</span>
+            </div>
+            <span class="text-link disabled-link">建设中</span>
+          </div>
+        </article>
+
+        <article class="project-card click-card" data-url="<%= base('/projects/') %>">
+          <div class="project-cover cover-soft">
+            <img src="<%= base('/img/project/workflow-cover.png') %>" alt="全部项目">
+          </div>
+          <div class="project-body">
+            <h3>全部项目</h3>
+            <p class="card-desc">
+              查看当前公开案例与后续更新，了解这个主页如何持续扩展成完整的项目系统。
+            </p>
+            <div class="tag-row">
+              <span>项目索引</span>
+              <span>持续更新</span>
+            </div>
+            <a class="text-link" href="<%= base('/projects/') %>">进入项目页</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell about-strip reveal">
+      <div class="about-copy">
+        <p class="section-kicker">ABOUT</p>
+        <h2>关于这个主页</h2>
+        <p>
+          这个站点用于持续整理我公开展示的项目。当前内容主要围绕游戏研究、用户洞察与研究型工作流展开。
+          首页只保留最核心的入口，具体内容会分别放进项目页、案例页与 About 页面中。
+        </p>
+      </div>
+      <div class="about-actions">
+        <a class="pill-button pill-secondary" href="<%= base('/about/') %>">查看 About</a>
+        <a class="pill-button pill-primary" href="<%= base('/projects/') %>">进入项目页</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="<%= base('/js/site-ui.js') %>"></script>
+</body>
+</html>

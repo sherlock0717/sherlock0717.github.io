@@ -1457,13 +1457,13 @@ body.portfolio-home::before {
   background:
     repeating-radial-gradient(
       ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
+      rgba(64, 90, 142, 0.135) 0 2px,
       rgba(255,255,255,0.00) 2px 22px,
       rgba(255,255,255,0.00) 22px 44px
     ),
     repeating-radial-gradient(
       ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
+      rgba(96, 122, 176, 0.115) 0 2px,
       rgba(255,255,255,0.00) 2px 24px,
       rgba(255,255,255,0.00) 24px 48px
     ),
@@ -1471,9 +1471,9 @@ body.portfolio-home::before {
       118deg,
       rgba(255,255,255,0.00) 0%,
       rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
+      rgba(142,170,220,0.120) 40%,
+      rgba(245,249,255,0.155) 50%,
+      rgba(142,170,220,0.120) 60%,
       rgba(255,255,255,0.00) 76%,
       rgba(255,255,255,0.00) 100%
     );
@@ -1482,7 +1482,7 @@ body.portfolio-home::before {
   opacity: 0.68;
   filter: blur(0.45px);
   mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
+  animation: heroWaterTexture 88s linear infinite;
 }
 
 @keyframes heroWaterSheenMain{
@@ -1509,17 +1509,6 @@ body.portfolio-home::before {
     transform: translate3d(-0.45%, 0, 0) scale(1.00);
     opacity: 0.54;
   }
-  50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
-    opacity: 0.68;
-  }
-  100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.48%, 0.10%, 0) scale(1.005);
-    opacity: 0.56;
-  }
-}
   50%{
     background-position: 42% 10%, 62% 14%, 52% 50%;
     transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
@@ -1579,13 +1568,13 @@ body.portfolio-home::before {
   background:
     repeating-radial-gradient(
       ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
+      rgba(64, 90, 142, 0.135) 0 2px,
       rgba(255,255,255,0.00) 2px 22px,
       rgba(255,255,255,0.00) 22px 44px
     ),
     repeating-radial-gradient(
       ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
+      rgba(96, 122, 176, 0.115) 0 2px,
       rgba(255,255,255,0.00) 2px 24px,
       rgba(255,255,255,0.00) 24px 48px
     ),
@@ -1593,9 +1582,9 @@ body.portfolio-home::before {
       118deg,
       rgba(255,255,255,0.00) 0%,
       rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
+      rgba(142,170,220,0.120) 40%,
+      rgba(245,249,255,0.155) 50%,
+      rgba(142,170,220,0.120) 60%,
       rgba(255,255,255,0.00) 76%,
       rgba(255,255,255,0.00) 100%
     );
@@ -1604,12 +1593,11 @@ body.portfolio-home::before {
   opacity: 0.68;
   filter: blur(0.45px);
   mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
+  animation: heroWaterTexture 88s linear infinite;
 }
 }
 
 /* === homepage final visual override end === */
-
 
 
 

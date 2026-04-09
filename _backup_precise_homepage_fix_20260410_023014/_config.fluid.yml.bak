@@ -1,4 +1,4 @@
-﻿navbar:
+navbar:
   blog_title: "心海澄明"
   ground_glass:
     enable: true
@@ -54,4 +54,3 @@ about:
   icons:
     - { class: "iconfont icon-github-fill", link: "https://github.com/sherlock0717", tip: "GitHub" }
     - { class: "iconfont icon-archive-fill", link: "https://sherlock0717.github.io/PsyLens/", tip: "PsyLens" }
-

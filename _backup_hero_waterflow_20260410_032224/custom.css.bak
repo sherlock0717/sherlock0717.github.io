@@ -1381,34 +1381,14 @@ body.portfolio-home::before {
 .hero-intro .hero-title{
   text-shadow:
     0 1px 0 rgba(255,255,255,0.30),
-    0 10px 22px rgba(40, 63, 108, 0.20),
-    0 20px 42px rgba(40, 63, 108, 0.12);
+    0 8px 18px rgba(40, 63, 108, 0.18),
+    0 16px 36px rgba(40, 63, 108, 0.12);
 }
 
 .hero-intro{
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  border-radius: 56px;
-  background: transparent;
-  -webkit-mask-image: radial-gradient(
-    145% 120% at 50% 50%,
-    rgba(0,0,0,1) 58%,
-    rgba(0,0,0,0.96) 70%,
-    rgba(0,0,0,0.78) 82%,
-    rgba(0,0,0,0.44) 91%,
-    rgba(0,0,0,0.14) 97%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    145% 120% at 50% 50%,
-    rgba(0,0,0,1) 58%,
-    rgba(0,0,0,0.96) 70%,
-    rgba(0,0,0,0.78) 82%,
-    rgba(0,0,0,0.44) 91%,
-    rgba(0,0,0,0.14) 97%,
-    transparent 100%
-  );
 }
 
 .hero-intro > *{
@@ -1416,141 +1396,74 @@ body.portfolio-home::before {
   z-index: 2;
 }
 
-/* 主体流光：保留柔和感，但让移动更可见 */
-.hero-intro::before{
-  content: "";
-  position: absolute;
-  inset: -16%;
-  z-index: 1;
-  pointer-events: none;
-  border-radius: inherit;
-  background:
-    linear-gradient(
-      112deg,
-      rgba(255,255,255,0.00) 0%,
-      rgba(255,255,255,0.00) 18%,
-      rgba(204,223,255,0.16) 30%,
-      rgba(243,248,255,0.34) 42%,
-      rgba(184,210,255,0.22) 55%,
-      rgba(255,255,255,0.00) 70%,
-      rgba(255,255,255,0.00) 100%
-    ),
-    radial-gradient(42rem 24rem at 18% 28%, rgba(198,218,255,0.18) 0%, rgba(198,218,255,0.00) 72%),
-    radial-gradient(34rem 20rem at 78% 34%, rgba(160,190,245,0.14) 0%, rgba(160,190,245,0.00) 74%),
-    radial-gradient(36rem 22rem at 58% 78%, rgba(220,235,255,0.14) 0%, rgba(220,235,255,0.00) 72%);
-  background-size: 250% 210%, auto, auto, auto;
-  background-position: 0% 50%, 0 0, 0 0, 0 0;
-  opacity: 0.90;
-  filter: blur(10px);
-  mix-blend-mode: screen;
-  animation: heroWaterSheenMain 54s ease-in-out infinite;
-}
-
-/* 斜向流纹：更深、更可见、仍然克制 */
+.hero-intro::before,
 .hero-intro::after{
   content: "";
   position: absolute;
-  inset: -18%;
-  z-index: 1;
+  inset: -10%;
   pointer-events: none;
-  border-radius: inherit;
+  z-index: 1;
+}
+
+.hero-intro::before{
   background:
-    repeating-radial-gradient(
-      ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
-      rgba(255,255,255,0.00) 2px 22px,
-      rgba(255,255,255,0.00) 22px 44px
-    ),
-    repeating-radial-gradient(
-      ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
-      rgba(255,255,255,0.00) 2px 24px,
-      rgba(255,255,255,0.00) 24px 48px
-    ),
+    radial-gradient(42rem 24rem at 14% 22%, rgba(176, 205, 255, 0.20) 0%, rgba(176, 205, 255, 0.00) 64%),
+    radial-gradient(34rem 20rem at 78% 34%, rgba(156, 191, 255, 0.17) 0%, rgba(156, 191, 255, 0.00) 66%),
+    radial-gradient(30rem 18rem at 48% 82%, rgba(210, 228, 255, 0.16) 0%, rgba(210, 228, 255, 0.00) 70%);
+  filter: blur(26px);
+  opacity: 0.62;
+  mix-blend-mode: screen;
+  animation: heroWaterFlow 18s ease-in-out infinite alternate;
+}
+
+.hero-intro::after{
+  background:
     linear-gradient(
-      118deg,
+      115deg,
       rgba(255,255,255,0.00) 0%,
-      rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
-      rgba(255,255,255,0.00) 76%,
+      rgba(255,255,255,0.00) 18%,
+      rgba(196, 222, 255, 0.08) 32%,
+      rgba(232, 242, 255, 0.16) 44%,
+      rgba(176, 210, 255, 0.10) 58%,
+      rgba(255,255,255,0.00) 74%,
       rgba(255,255,255,0.00) 100%
-    );
-  background-size: 155% 155%, 165% 165%, 240% 220%;
-  background-position: 0% 0%, 100% 0%, 100% 50%;
-  opacity: 0.68;
-  filter: blur(0.45px);
-  mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
+    ),
+    radial-gradient(24rem 16rem at 28% 58%, rgba(220, 235, 255, 0.12) 0%, rgba(220, 235, 255, 0.00) 72%),
+    radial-gradient(28rem 18rem at 72% 56%, rgba(168, 205, 255, 0.10) 0%, rgba(168, 205, 255, 0.00) 74%);
+  background-size: 180% 180%, auto, auto;
+  filter: blur(18px);
+  opacity: 0.40;
+  mix-blend-mode: soft-light;
+  animation: heroWaterSheen 14s ease-in-out infinite;
 }
 
-@keyframes heroWaterSheenMain{
+@keyframes heroWaterFlow{
   0%{
-    background-position: 0% 50%, 0 0, 0 0, 0 0;
-    transform: translate3d(-0.8%, 0, 0) scale(1.00);
-    opacity: 0.82;
+    transform: translate3d(-1.5%, -1.0%, 0) scale(1.00);
   }
   50%{
-    background-position: 52% 50%, 0 0, 0 0, 0 0;
-    transform: translate3d(0.6%, -0.18%, 0) scale(1.014);
-    opacity: 0.94;
+    transform: translate3d(1.8%, 1.2%, 0) scale(1.04);
   }
   100%{
-    background-position: 100% 50%, 0 0, 0 0, 0 0;
-    transform: translate3d(1.0%, 0.16%, 0) scale(1.008);
-    opacity: 0.84;
+    transform: translate3d(-0.8%, 0.8%, 0) scale(1.01);
   }
 }
 
-@keyframes heroWaterTexture{
+@keyframes heroWaterSheen{
   0%{
-    background-position: 0% 0%, 100% 0%, 100% 50%;
-    transform: translate3d(-0.45%, 0, 0) scale(1.00);
-    opacity: 0.54;
+    transform: translate3d(-3%, 0%, 0) scale(1.01);
+    background-position: 0% 50%, 0 0, 0 0;
+    opacity: 0.22;
   }
   50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
-    opacity: 0.68;
+    transform: translate3d(2%, -1%, 0) scale(1.04);
+    background-position: 56% 48%, 0 0, 0 0;
+    opacity: 0.40;
   }
   100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.48%, 0.10%, 0) scale(1.005);
-    opacity: 0.56;
-  }
-}
-  50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
-    opacity: 0.68;
-  }
-  100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.48%, 0.10%, 0) scale(1.005);
-    opacity: 0.56;
-  }
-}
-  50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.28%, 0.12%, 0) scale(1.010);
-    opacity: 0.34;
-  }
-  100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.40%, 0.08%, 0) scale(1.005);
-    opacity: 0.28;
-  }
-}
-  50%{
-    background-position: 46% 18%, 26% 10%, 50% 50%;
-    transform: translate3d(0.35%, 0.16%, 0) scale(1.012);
-    opacity: 0.46;
-  }
-  100%{
-    background-position: 100% 36%, 64% 22%, 0% 50%;
-    transform: translate3d(0.55%, 0.10%, 0) scale(1.006);
-    opacity: 0.36;
+    transform: translate3d(5%, 1%, 0) scale(1.02);
+    background-position: 100% 52%, 0 0, 0 0;
+    opacity: 0.24;
   }
 }
 
@@ -1560,65 +1473,17 @@ body.portfolio-home::before {
     line-height: 1.9;
   }
 
-  .hero-intro{
-    border-radius: 34px;
-  }
-
   .hero-intro::before{
-    opacity: 0.74;
-    filter: blur(8px);
+    opacity: 0.48;
+    filter: blur(20px);
   }
 
   .hero-intro::after{
-  content: "";
-  position: absolute;
-  inset: -18%;
-  z-index: 1;
-  pointer-events: none;
-  border-radius: inherit;
-  background:
-    repeating-radial-gradient(
-      ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
-      rgba(255,255,255,0.00) 2px 22px,
-      rgba(255,255,255,0.00) 22px 44px
-    ),
-    repeating-radial-gradient(
-      ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
-      rgba(255,255,255,0.00) 2px 24px,
-      rgba(255,255,255,0.00) 24px 48px
-    ),
-    linear-gradient(
-      118deg,
-      rgba(255,255,255,0.00) 0%,
-      rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
-      rgba(255,255,255,0.00) 76%,
-      rgba(255,255,255,0.00) 100%
-    );
-  background-size: 155% 155%, 165% 165%, 240% 220%;
-  background-position: 0% 0%, 100% 0%, 100% 50%;
-  opacity: 0.68;
-  filter: blur(0.45px);
-  mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
-}
+    opacity: 0.28;
+    filter: blur(14px);
+  }
 }
 
 /* === homepage final visual override end === */
-
-
-
-
-
-
-
-
-
-
-
 
 

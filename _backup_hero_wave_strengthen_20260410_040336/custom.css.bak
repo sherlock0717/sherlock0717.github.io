@@ -1457,32 +1457,32 @@ body.portfolio-home::before {
   background:
     repeating-radial-gradient(
       ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
-      rgba(255,255,255,0.00) 2px 22px,
-      rgba(255,255,255,0.00) 22px 44px
+      rgba(96, 122, 172, 0.050) 0 2px,
+      rgba(255,255,255,0.00) 2px 26px,
+      rgba(255,255,255,0.00) 26px 52px
     ),
     repeating-radial-gradient(
       ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
-      rgba(255,255,255,0.00) 2px 24px,
-      rgba(255,255,255,0.00) 24px 48px
+      rgba(132, 156, 204, 0.040) 0 2px,
+      rgba(255,255,255,0.00) 2px 28px,
+      rgba(255,255,255,0.00) 28px 56px
     ),
     linear-gradient(
       118deg,
       rgba(255,255,255,0.00) 0%,
-      rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
-      rgba(255,255,255,0.00) 76%,
+      rgba(224,236,255,0.00) 26%,
+      rgba(170,196,236,0.055) 42%,
+      rgba(245,249,255,0.080) 50%,
+      rgba(170,196,236,0.055) 58%,
+      rgba(255,255,255,0.00) 74%,
       rgba(255,255,255,0.00) 100%
     );
   background-size: 155% 155%, 165% 165%, 240% 220%;
   background-position: 0% 0%, 100% 0%, 100% 50%;
-  opacity: 0.68;
-  filter: blur(0.45px);
+  opacity: 0.30;
+  filter: blur(1.2px);
   mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
+  animation: heroWaterTexture 96s linear infinite;
 }
 
 @keyframes heroWaterSheenMain{
@@ -1506,31 +1506,9 @@ body.portfolio-home::before {
 @keyframes heroWaterTexture{
   0%{
     background-position: 0% 0%, 100% 0%, 100% 50%;
-    transform: translate3d(-0.45%, 0, 0) scale(1.00);
-    opacity: 0.54;
+    transform: translate3d(-0.35%, 0, 0) scale(1.00);
+    opacity: 0.26;
   }
-  50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
-    opacity: 0.68;
-  }
-  100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.48%, 0.10%, 0) scale(1.005);
-    opacity: 0.56;
-  }
-}
-  50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
-    opacity: 0.68;
-  }
-  100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.48%, 0.10%, 0) scale(1.005);
-    opacity: 0.56;
-  }
-}
   50%{
     background-position: 42% 10%, 62% 14%, 52% 50%;
     transform: translate3d(0.28%, 0.12%, 0) scale(1.010);
@@ -1579,39 +1557,36 @@ body.portfolio-home::before {
   background:
     repeating-radial-gradient(
       ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
-      rgba(255,255,255,0.00) 2px 22px,
-      rgba(255,255,255,0.00) 22px 44px
+      rgba(96, 122, 172, 0.050) 0 2px,
+      rgba(255,255,255,0.00) 2px 26px,
+      rgba(255,255,255,0.00) 26px 52px
     ),
     repeating-radial-gradient(
       ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
-      rgba(255,255,255,0.00) 2px 24px,
-      rgba(255,255,255,0.00) 24px 48px
+      rgba(132, 156, 204, 0.040) 0 2px,
+      rgba(255,255,255,0.00) 2px 28px,
+      rgba(255,255,255,0.00) 28px 56px
     ),
     linear-gradient(
       118deg,
       rgba(255,255,255,0.00) 0%,
-      rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
-      rgba(255,255,255,0.00) 76%,
+      rgba(224,236,255,0.00) 26%,
+      rgba(170,196,236,0.055) 42%,
+      rgba(245,249,255,0.080) 50%,
+      rgba(170,196,236,0.055) 58%,
+      rgba(255,255,255,0.00) 74%,
       rgba(255,255,255,0.00) 100%
     );
   background-size: 155% 155%, 165% 165%, 240% 220%;
   background-position: 0% 0%, 100% 0%, 100% 50%;
-  opacity: 0.68;
-  filter: blur(0.45px);
+  opacity: 0.30;
+  filter: blur(1.2px);
   mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
+  animation: heroWaterTexture 96s linear infinite;
 }
 }
 
 /* === homepage final visual override end === */
-
-
-
 
 
 

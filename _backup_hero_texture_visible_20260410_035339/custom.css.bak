@@ -1416,7 +1416,7 @@ body.portfolio-home::before {
   z-index: 2;
 }
 
-/* 主体流光：保留柔和感，但让移动更可见 */
+/* 主体缓慢流光，改得更慢、更柔和 */
 .hero-intro::before{
   content: "";
   position: absolute;
@@ -1429,24 +1429,24 @@ body.portfolio-home::before {
       112deg,
       rgba(255,255,255,0.00) 0%,
       rgba(255,255,255,0.00) 18%,
-      rgba(204,223,255,0.16) 30%,
-      rgba(243,248,255,0.34) 42%,
-      rgba(184,210,255,0.22) 55%,
+      rgba(216,232,255,0.12) 30%,
+      rgba(246,250,255,0.28) 42%,
+      rgba(204,224,255,0.18) 55%,
       rgba(255,255,255,0.00) 70%,
       rgba(255,255,255,0.00) 100%
     ),
-    radial-gradient(42rem 24rem at 18% 28%, rgba(198,218,255,0.18) 0%, rgba(198,218,255,0.00) 72%),
-    radial-gradient(34rem 20rem at 78% 34%, rgba(160,190,245,0.14) 0%, rgba(160,190,245,0.00) 74%),
-    radial-gradient(36rem 22rem at 58% 78%, rgba(220,235,255,0.14) 0%, rgba(220,235,255,0.00) 72%);
-  background-size: 250% 210%, auto, auto, auto;
+    radial-gradient(42rem 24rem at 18% 28%, rgba(218,232,255,0.18) 0%, rgba(218,232,255,0.00) 72%),
+    radial-gradient(34rem 20rem at 78% 34%, rgba(188,212,255,0.14) 0%, rgba(188,212,255,0.00) 74%),
+    radial-gradient(36rem 22rem at 58% 78%, rgba(236,244,255,0.14) 0%, rgba(236,244,255,0.00) 72%);
+  background-size: 260% 220%, auto, auto, auto;
   background-position: 0% 50%, 0 0, 0 0, 0 0;
-  opacity: 0.90;
-  filter: blur(10px);
+  opacity: 0.88;
+  filter: blur(14px);
   mix-blend-mode: screen;
-  animation: heroWaterSheenMain 54s ease-in-out infinite;
+  animation: heroWaterSheenMain 72s ease-in-out infinite;
 }
 
-/* 斜向流纹：更深、更可见、仍然克制 */
+/* 极淡斜向流纹 + 更轻的漂移 */
 .hero-intro::after{
   content: "";
   position: absolute;
@@ -1455,102 +1455,63 @@ body.portfolio-home::before {
   pointer-events: none;
   border-radius: inherit;
   background:
-    repeating-radial-gradient(
-      ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
-      rgba(255,255,255,0.00) 2px 22px,
-      rgba(255,255,255,0.00) 22px 44px
-    ),
-    repeating-radial-gradient(
-      ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
-      rgba(255,255,255,0.00) 2px 24px,
-      rgba(255,255,255,0.00) 24px 48px
+    repeating-linear-gradient(
+      118deg,
+      rgba(255,255,255,0.00) 0 34px,
+      rgba(232,241,255,0.030) 34px 36px,
+      rgba(255,255,255,0.00) 36px 74px
     ),
     linear-gradient(
       118deg,
       rgba(255,255,255,0.00) 0%,
-      rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
-      rgba(255,255,255,0.00) 76%,
+      rgba(231,241,255,0.00) 26%,
+      rgba(231,241,255,0.055) 42%,
+      rgba(255,255,255,0.085) 50%,
+      rgba(231,241,255,0.050) 58%,
+      rgba(255,255,255,0.00) 74%,
       rgba(255,255,255,0.00) 100%
     );
-  background-size: 155% 155%, 165% 165%, 240% 220%;
-  background-position: 0% 0%, 100% 0%, 100% 50%;
-  opacity: 0.68;
-  filter: blur(0.45px);
-  mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
+  background-size: 180% 180%, 240% 220%;
+  background-position: 0% 0%, 100% 50%;
+  opacity: 0.22;
+  filter: blur(6px);
+  mix-blend-mode: soft-light;
+  animation: heroWaterTexture 110s linear infinite;
 }
 
 @keyframes heroWaterSheenMain{
   0%{
     background-position: 0% 50%, 0 0, 0 0, 0 0;
-    transform: translate3d(-0.8%, 0, 0) scale(1.00);
-    opacity: 0.82;
+    transform: translate3d(-0.6%, 0, 0) scale(1.00);
+    opacity: 0.80;
   }
   50%{
-    background-position: 52% 50%, 0 0, 0 0, 0 0;
-    transform: translate3d(0.6%, -0.18%, 0) scale(1.014);
-    opacity: 0.94;
+    background-position: 54% 50%, 0 0, 0 0, 0 0;
+    transform: translate3d(0.4%, -0.15%, 0) scale(1.012);
+    opacity: 0.92;
   }
   100%{
     background-position: 100% 50%, 0 0, 0 0, 0 0;
-    transform: translate3d(1.0%, 0.16%, 0) scale(1.008);
-    opacity: 0.84;
+    transform: translate3d(0.8%, 0.15%, 0) scale(1.008);
+    opacity: 0.82;
   }
 }
 
 @keyframes heroWaterTexture{
   0%{
-    background-position: 0% 0%, 100% 0%, 100% 50%;
-    transform: translate3d(-0.45%, 0, 0) scale(1.00);
-    opacity: 0.54;
+    background-position: 0% 0%, 100% 50%;
+    transform: translate3d(-0.3%, 0, 0) scale(1.00);
+    opacity: 0.18;
   }
   50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
-    opacity: 0.68;
+    background-position: 44% 18%, 50% 50%;
+    transform: translate3d(0.25%, 0.12%, 0) scale(1.01);
+    opacity: 0.24;
   }
   100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.48%, 0.10%, 0) scale(1.005);
-    opacity: 0.56;
-  }
-}
-  50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.35%, 0.14%, 0) scale(1.010);
-    opacity: 0.68;
-  }
-  100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.48%, 0.10%, 0) scale(1.005);
-    opacity: 0.56;
-  }
-}
-  50%{
-    background-position: 42% 10%, 62% 14%, 52% 50%;
-    transform: translate3d(0.28%, 0.12%, 0) scale(1.010);
-    opacity: 0.34;
-  }
-  100%{
-    background-position: 100% 20%, 0% 24%, 0% 50%;
-    transform: translate3d(0.40%, 0.08%, 0) scale(1.005);
-    opacity: 0.28;
-  }
-}
-  50%{
-    background-position: 46% 18%, 26% 10%, 50% 50%;
-    transform: translate3d(0.35%, 0.16%, 0) scale(1.012);
-    opacity: 0.46;
-  }
-  100%{
-    background-position: 100% 36%, 64% 22%, 0% 50%;
-    transform: translate3d(0.55%, 0.10%, 0) scale(1.006);
-    opacity: 0.36;
+    background-position: 100% 36%, 0% 50%;
+    transform: translate3d(0.4%, 0.08%, 0) scale(1.005);
+    opacity: 0.19;
   }
 }
 
@@ -1565,57 +1526,17 @@ body.portfolio-home::before {
   }
 
   .hero-intro::before{
-    opacity: 0.74;
-    filter: blur(8px);
+    opacity: 0.70;
+    filter: blur(10px);
   }
 
   .hero-intro::after{
-  content: "";
-  position: absolute;
-  inset: -18%;
-  z-index: 1;
-  pointer-events: none;
-  border-radius: inherit;
-  background:
-    repeating-radial-gradient(
-      ellipse 180% 115% at 8% 52%,
-      rgba(78, 102, 150, 0.115) 0 2px,
-      rgba(255,255,255,0.00) 2px 22px,
-      rgba(255,255,255,0.00) 22px 44px
-    ),
-    repeating-radial-gradient(
-      ellipse 170% 108% at 92% 50%,
-      rgba(108, 132, 184, 0.098) 0 2px,
-      rgba(255,255,255,0.00) 2px 24px,
-      rgba(255,255,255,0.00) 24px 48px
-    ),
-    linear-gradient(
-      118deg,
-      rgba(255,255,255,0.00) 0%,
-      rgba(224,236,255,0.00) 24%,
-      rgba(154,180,224,0.102) 40%,
-      rgba(245,249,255,0.138) 50%,
-      rgba(154,180,224,0.102) 60%,
-      rgba(255,255,255,0.00) 76%,
-      rgba(255,255,255,0.00) 100%
-    );
-  background-size: 155% 155%, 165% 165%, 240% 220%;
-  background-position: 0% 0%, 100% 0%, 100% 50%;
-  opacity: 0.68;
-  filter: blur(0.45px);
-  mix-blend-mode: multiply;
-  animation: heroWaterTexture 74s linear infinite;
-}
+    opacity: 0.16;
+    filter: blur(4px);
+  }
 }
 
 /* === homepage final visual override end === */
-
-
-
-
-
-
-
 
 
 

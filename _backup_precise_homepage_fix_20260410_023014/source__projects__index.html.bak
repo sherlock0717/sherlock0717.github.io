@@ -31,12 +31,14 @@
       <div class="card-grid card-grid-2">
         <article class="project-card click-card" data-url="/PsyLens/">
           <a class="project-cover" href="/PsyLens/">
-            <img src="/img/project/more-projects-cover.png" alt="PsyLens">
+            <img src="/img/project/psylens-cover.png" alt="PsyLens">
           </a>
           <div class="project-body">
             <div class="meta-row"><span class="meta-date">已公开</span></div>
             <h3><a href="/PsyLens/">PsyLens｜多平台游戏社区反馈洞察工作流</a></h3>
-            <p class="card-desc">后续会逐步加入新的项目页。</p>
+            <p class="card-desc">
+              从公开社区反馈出发，整理主题、心理机制、证据链与行动建议，形成一条可展示、可复用的研究型项目工作流。
+            </p>
             <div class="tag-row">
               <span>游戏研究</span>
               <span>社区反馈分析</span>
@@ -48,12 +50,14 @@
 
         <article class="project-card is-disabled">
           <div class="project-cover">
-            <img src="/img/project/more-projects-cover.png" alt="研究型 AI 工作流设计">
+            <img src="/img/project/workflow-cover.png" alt="研究型 AI 工作流设计">
           </div>
           <div class="project-body">
             <div class="meta-row"><span class="meta-date">建设中</span></div>
             <h3>研究型 AI 工作流设计</h3>
-            <p class="card-desc">后续会逐步加入新的项目页。</p>
+            <p class="card-desc">
+              围绕资料采集、清洗、结构化与表达输出，整理一套更适合研究展示与项目复用的流程。
+            </p>
             <div class="tag-row">
               <span>工作流</span>
               <span>AI辅助研究</span>
@@ -65,12 +69,14 @@
 
         <article class="project-card is-disabled">
           <div class="project-cover">
-            <img src="/img/project/more-projects-cover.png" alt="用户洞察与体验分析">
+            <img src="/img/project/insight-cover.png" alt="用户洞察与体验分析">
           </div>
           <div class="project-body">
             <div class="meta-row"><span class="meta-date">建设中</span></div>
             <h3>用户洞察与体验分析</h3>
-            <p class="card-desc">后续会逐步加入新的项目页。</p>
+            <p class="card-desc">
+              围绕玩法体验、用户表达与结构化洞察的持续案例整理，关注如何把体验问题转化为更清楚的分析路径。
+            </p>
             <div class="tag-row">
               <span>用户洞察</span>
               <span>体验分析</span>
@@ -82,12 +88,14 @@
 
         <article class="project-card is-disabled">
           <div class="project-cover cover-soft">
-            <img src="/img/project/more-projects-cover.png" alt="更多项目持续补充中">
+            <img src="/img/project/workflow-cover.png" alt="更多项目持续补充中">
           </div>
           <div class="project-body">
             <div class="meta-row"><span class="meta-date">持续更新</span></div>
             <h3>更多项目持续补充中</h3>
-            <p class="card-desc">后续会逐步加入新的项目页。</p>
+            <p class="card-desc">
+              后续会逐步加入新的案例页、方法页与过程整理，用来补完整个项目系统。
+            </p>
             <div class="tag-row">
               <span>持续更新</span>
               <span>建设中</span>
@@ -102,4 +110,3 @@
   <script src="/js/site-ui.js"></script>
 </body>
 </html>
-

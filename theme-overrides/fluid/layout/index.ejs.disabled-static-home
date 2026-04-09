@@ -1,0 +1,89 @@
+﻿<%
+var base = typeof url_for === 'function' ? url_for : function(p) { return p; };
+%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>海澄｜项目展示主页</title>
+  <meta name="description" content="海澄的项目展示主页，聚焦游戏研究、用户洞察、社区反馈分析与研究型工作流。">
+  <link rel="stylesheet" href="<%= base('/css/custom.css') %>">
+</head>
+<body class="portfolio-home">
+  <div class="gate-overlay" id="gateOverlay" aria-hidden="false">
+    <div class="gate-grid"></div>
+    <div class="gate-inner">
+      <p class="gate-kicker">HAICHENG PORTFOLIO</p>
+      <h1 class="gate-title">海的那边…</h1>
+      <p class="gate-text">点击、滚轮下滑或上滑进入</p>
+      <button class="gate-enter" id="gateEnter" type="button">进入主页</button>
+      <div class="gate-indicator" aria-hidden="true">
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <nav class="navlinks">
+        <a href="<%= base('/') %>">首页</a>
+        <a href="<%= base('/PsyLens/') %>">项目</a>
+        <a href="<%= base('/about/') %>">关于</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro shell reveal">
+      <p class="intro-kicker">GAME RESEARCH · USER INSIGHTS · WORKFLOW DESIGN</p>
+      <p class="intro-role-main">游戏研究｜用户洞察｜研究型工作流</p>
+      <p class="intro-desc">
+        应用心理学背景，关注游戏社区反馈分析、研究驱动的内容整理与项目展示。
+        当前首页先聚焦公开项目 PsyLens，后续再继续补充新的案例与方法整理。
+      </p>
+    </section>
+
+    <section class="shell project-flow">
+      <article class="featured-card reveal click-card" data-url="<%= base('/PsyLens/') %>">
+        <a class="featured-cover" href="<%= base('/PsyLens/') %>">
+          <img src="<%= base('/img/project/psylens-cover.png') %>" alt="PsyLens">
+        </a>
+        <div class="featured-content">
+          <div class="meta-row meta-row-plain">
+            <span class="meta-date">2026-04-05</span>
+          </div>
+          <h2><a href="<%= base('/PsyLens/') %>">PsyLens｜多平台游戏社区反馈洞察工作流</a></h2>
+          <p class="project-excerpt">
+            围绕公开游戏社区反馈搭建的一条研究与数据工作流。当前公开案例聚焦《英雄联盟》海克斯大乱斗模式，
+            整合 NGA、贴吧、B站三平台反馈，最终收束到主题、心理机制、证据链与行动建议。
+          </p>
+          <div class="tag-row">
+            <span>PsyLens</span>
+            <span>游戏研究</span>
+            <span>社区反馈分析</span>
+          </div>
+          <a class="text-link" href="<%= base('/PsyLens/') %>">查看项目</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="shell about-strip reveal">
+      <div class="about-copy">
+        <p class="section-kicker">ABOUT</p>
+        <h2>关于这个主页</h2>
+        <p>
+          这个站点用于持续整理我公开展示的项目。当前公开内容先以 PsyLens 为主，
+          后续会继续补充新的案例、方法记录与过程整理。
+        </p>
+      </div>
+      <div class="about-actions">
+        <a class="ghost-link" href="<%= base('/about/') %>">查看 About</a>
+        <a class="ghost-link" href="<%= base('/PsyLens/') %>">进入当前项目</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="<%= base('/js/home-gate.js') %>"></script>
+</body>
+</html>
