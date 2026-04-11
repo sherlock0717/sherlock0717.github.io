@@ -488,12 +488,15 @@ img { display: block; width: 100%; }
 .featured-cover,
 .project-cover {
   overflow: hidden;
-  background: #dfe9fb;
+  background: linear-gradient(155deg, #e6eef9 0%, #d8e6f8 45%, #cddcf3 100%);
 }
 
 .featured-cover {
   border-radius: 22px;
-  min-height: 330px;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
 }
 
 .project-cover {
@@ -502,8 +505,27 @@ img { display: block; width: 100%; }
 
 .featured-cover img,
 .project-cover img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
+}
+
+.cover-fit--psylens {
+  object-position: center 42%;
+}
+
+.cover-fit--ai-eval {
+  object-position: center 48%;
+}
+
+.card-grid--projects-main {
+  grid-template-columns: 1fr;
+  gap: 28px;
+}
+
+.card-grid--projects-main > .featured-card + .featured-card + .project-card {
+  margin-top: 8px;
 }
 
 .featured-content,
@@ -521,6 +543,7 @@ img { display: block; width: 100%; }
 
 .meta-date {
   color: #8190ab;
+  letter-spacing: 0.02em;
 }
 
 .featured-content h3,
@@ -543,6 +566,46 @@ img { display: block; width: 100%; }
   color: var(--muted);
   line-height: 1.9;
   font-size: .98rem;
+}
+
+.card-lead {
+  margin: 0 0 12px;
+  color: var(--text);
+  font-weight: 650;
+  line-height: 1.65;
+  font-size: 1.02rem;
+}
+
+.featured-content .card-lead {
+  margin-top: 0;
+  margin-bottom: 2px;
+  color: #3a4d68;
+  font-weight: 600;
+}
+
+.featured-content .tag-row {
+  margin-top: 14px;
+}
+
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 22px;
+  margin-top: 18px;
+}
+
+.project-actions .text-link {
+  margin-top: 0;
+}
+
+.text-link-secondary {
+  color: var(--muted);
+  font-weight: 650;
+}
+
+.text-link-secondary:hover {
+  color: var(--accent);
 }
 
 .card-grid {
@@ -684,7 +747,8 @@ img { display: block; width: 100%; }
   }
 
   .featured-cover {
-    min-height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
   }
 
   .project-body {
@@ -1060,8 +1124,8 @@ body.drawer-open {
   }
 
   .featured-cover {
-    min-height: auto;
-    aspect-ratio: 16 / 9;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
   }
 
   .card-grid-3 {
