@@ -519,6 +519,10 @@ img { display: block; width: 100%; }
   object-position: center 48%;
 }
 
+.cover-fit--patch-notes {
+  object-position: center 45%;
+}
+
 .card-grid--projects-main {
   grid-template-columns: 1fr;
   gap: 28px;
