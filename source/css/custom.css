@@ -1786,8 +1786,8 @@ body.portfolio-home::before {
 }
 
 .cover-fit--dream-echo {
-  object-position: center 50%;
-  filter: saturate(.86) brightness(.86) contrast(1.05);
+  object-position: center 44%;
+  filter: saturate(.9) brightness(.9) contrast(1.08);
 }
 
 .cover-fit--ai-system {
@@ -1796,8 +1796,8 @@ body.portfolio-home::before {
 }
 
 .cover-fit--doc-studio {
-  object-position: center 50%;
-  filter: saturate(.82) brightness(.94);
+  object-position: center 48%;
+  filter: saturate(.92) brightness(.95) contrast(1.02);
 }
 
 .drawer-card:hover {
@@ -1850,7 +1850,6 @@ body.portfolio-home::before {
     padding-bottom: 62px;
   }
 }
-
 
 
 
