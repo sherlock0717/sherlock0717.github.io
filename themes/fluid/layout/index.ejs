@@ -74,7 +74,7 @@ var toolProjects = [
     tags: ['AI 系统', '工作流', '整理中'],
     url: 'https://github.com/sherlock0717/AI_agent_bootstrap_pack_stage3',
     primaryAction: '查看仓库',
-    cover: base('/img/project/workflow-cover.png'),
+    cover: base('/img/project/ai-hub-system-cover.png'),
     coverClass: 'cover-fit--ai-system',
     alt: '中文 AI 中枢系统',
     status: '整理中'
@@ -96,7 +96,7 @@ var toolProjects = [
     <div class="gate-inner">
       <p class="gate-kicker">HAICHENG PORTFOLIO</p>
       <h1 class="gate-title">海的那边…</h1>
-      <p class="gate-text">点击、滚轮下滑或上滑进入</p>
+      <p class="gate-text">点击按钮进入主页</p>
       <a class="gate-enter" href="#homeContent" id="gateEnter">进入主页</a>
       <div class="gate-indicator" aria-hidden="true"><span></span></div>
     </div>
@@ -132,9 +132,7 @@ var toolProjects = [
   <header class="topbar">
     <div class="shell topbar-inner">
       <nav class="navlinks">
-        <a href="<%= base('/') %>">首页</a>
         <button class="nav-project-trigger" id="projectTrigger" type="button">项目</button>
-        <a href="<%= base('/about/') %>">关于</a>
       </nav>
     </div>
   </header>
@@ -159,7 +157,6 @@ var toolProjects = [
           </p>
           <div class="hero-actions">
             <a class="pill-button pill-primary" href="<%= githubUrl %>" target="_blank" rel="noopener noreferrer">查看 GitHub</a>
-            <a class="pill-button pill-secondary" href="<%= base('/projects/') %>">进入项目页</a>
           </div>
         </div>
       </div>

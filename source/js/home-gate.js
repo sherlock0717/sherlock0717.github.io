@@ -2,10 +2,6 @@
   var gate = document.getElementById('gateOverlay');
   var enterBtn = document.getElementById('gateEnter');
   var body = document.body;
-  var sessionKey = 'haicheng-home-clean-seen';
-  var touchStartY = null;
-  var params = new URLSearchParams(window.location.search);
-  var forceGate = params.get('gate') === '1';
 
   function initReveal() {
     var items = document.querySelectorAll('.reveal');
@@ -47,19 +43,11 @@
     });
   }
 
-  function hideGateInstantly() {
-    if (!gate) return;
-    gate.classList.add('is-hidden');
-    gate.setAttribute('aria-hidden', 'true');
-    body.classList.remove('gate-locked');
-  }
-
   function dismissGate() {
     if (!gate) return;
     gate.classList.add('is-leaving');
     gate.setAttribute('aria-hidden', 'true');
     body.classList.remove('gate-locked');
-    sessionStorage.setItem(sessionKey, '1');
 
     setTimeout(function () {
       gate.classList.add('is-hidden');
@@ -71,49 +59,13 @@
 
   if (!gate) return;
 
-  if (!forceGate && sessionStorage.getItem(sessionKey) === '1') {
-    hideGateInstantly();
-    return;
-  }
-
   body.classList.add('gate-locked');
 
   if (enterBtn) {
     enterBtn.addEventListener('click', function (e) {
+      e.preventDefault();
       e.stopPropagation();
       dismissGate();
     });
   }
-
-  gate.addEventListener('click', function () {
-    dismissGate();
-  });
-
-  window.addEventListener('wheel', function (e) {
-    if (!gate || gate.classList.contains('is-hidden')) return;
-    if (e.deltaY > 8) dismissGate();
-  }, { passive: true });
-
-  window.addEventListener('keydown', function (e) {
-    if (!gate || gate.classList.contains('is-hidden')) return;
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-      dismissGate();
-    }
-  });
-
-  window.addEventListener('touchstart', function (e) {
-    if (!gate || gate.classList.contains('is-hidden')) return;
-    if (!e.touches || !e.touches.length) return;
-    touchStartY = e.touches[0].clientY;
-  }, { passive: true });
-
-  window.addEventListener('touchend', function (e) {
-    if (!gate || gate.classList.contains('is-hidden')) return;
-    if (touchStartY === null) return;
-    if (!e.changedTouches || !e.changedTouches.length) return;
-
-    var endY = e.changedTouches[0].clientY;
-    if (touchStartY - endY > 48) dismissGate();
-    touchStartY = null;
-  }, { passive: true });
 })();
