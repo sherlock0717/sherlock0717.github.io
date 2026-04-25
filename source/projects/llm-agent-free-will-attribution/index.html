@@ -907,28 +907,334 @@ layout: false
       position: static;
     }
 
+    /* Typography and layout refinement */
+    body.llm-case {
+      color: var(--text-secondary);
+      background:
+        radial-gradient(circle at 15% 0%, rgba(90, 150, 255, .30), transparent 30%),
+        radial-gradient(circle at 86% 10%, rgba(86, 216, 255, .18), transparent 28%),
+        linear-gradient(180deg, #1b3a61 0%, #123053 34%, #0d2038 72%, #071422 100%);
+      font-size: 16px;
+    }
+
+    .shell { width: min(1140px, calc(100vw - 48px)); }
+
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(360px, .82fr);
+      gap: 56px;
+      min-height: auto;
+      padding: 82px 0 96px;
+    }
+
+    .hero h1 {
+      max-width: 760px;
+      font-size: clamp(40px, 4.2vw, 48px);
+      line-height: 1.17;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      max-width: 760px;
+      font-size: clamp(18px, 1.7vw, 22px);
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .lead,
+    .boundary {
+      max-width: 760px;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .boundary { color: rgba(244, 248, 255, .68); }
+
+    .kicker {
+      margin-bottom: 12px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .section {
+      padding: 84px 0;
+      scroll-margin-top: 94px;
+    }
+
+    .section-head {
+      max-width: 780px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(28px, 2.5vw, 32px);
+      line-height: 1.3;
+      font-weight: 750;
+    }
+
+    .section-head p,
+    .prose {
+      max-width: 780px;
+      color: rgba(244, 248, 255, .76);
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .prose { gap: 16px; }
+
+    .model,
+    .panel,
+    .chart,
+    .table-panel,
+    .flow,
+    .limits,
+    .timeline,
+    .plain-card,
+    .scene-card,
+    .application-card,
+    .stat,
+    .material-lab,
+    .tab-panel,
+    .material-panel {
+      border-radius: 20px;
+      box-shadow: 0 18px 54px rgba(0, 0, 0, .20);
+    }
+
+    .panel,
+    .plain-card,
+    .scene-card,
+    .application-card {
+      padding: 24px;
+    }
+
+    .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+    .scene-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 16px;
+      align-items: start;
+    }
+
+    .scene-icon {
+      width: auto;
+      min-width: 56px;
+      height: 36px;
+      padding: 0 12px;
+      margin: 0;
+      border-radius: 999px;
+      font-size: 15px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .scene-card h3 {
+      margin: 0 0 8px;
+      color: #fff;
+      font-size: 20px;
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .scene-card p {
+      grid-column: 2;
+      margin: 0;
+      color: rgba(244, 248, 255, .74);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .panel h3,
+    .plain-card h3,
+    .application-card h3,
+    .chart h3,
+    .table-panel h3,
+    .material-panel h3 {
+      font-size: clamp(20px, 1.8vw, 24px);
+      line-height: 1.4;
+      font-weight: 700;
+    }
+
+    .panel p,
+    .panel li,
+    .plain-card p,
+    .application-card p,
+    .material-panel p,
+    .example-box div {
+      font-size: 16px;
+      line-height: 1.78;
+    }
+
+    .plain-card,
+    .panel,
+    .application-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .design-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(250px, 320px);
+      gap: 24px;
+    }
+
+    .summary-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: start;
+      gap: 12px;
+    }
+
+    .summary-list div {
+      display: grid;
+      gap: 6px;
+      padding: 14px;
+      border: 1px solid rgba(119,196,255,.14);
+      border-radius: 16px;
+      background: rgba(255,255,255,.05);
+      text-align: left;
+    }
+
+    .summary-list strong {
+      font-size: 28px;
+      line-height: 1.1;
+    }
+
+    #data .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .material-lab { padding: 26px; }
+    .tabs { gap: 8px; margin-bottom: 14px; }
+    .tab-btn,
+    .material-tab,
+    .chip,
+    .manipulation-tags span,
+    .status {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .flow {
+      padding: 24px;
+    }
+
+    .flow-track {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .flow-step {
+      min-height: 64px;
+      padding: 14px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .flow-arrow {
+      display: none;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 16px;
+      min-height: 118px;
+    }
+
+    .stat strong {
+      font-size: clamp(34px, 4vw, 44px);
+    }
+
+    .stat span {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .figure-layout {
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, .75fr);
+      gap: 24px;
+    }
+
+    .figure-note {
+      padding: 20px;
+    }
+
+    .figure-note ol {
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .chart {
+      padding: 24px;
+      margin-top: 26px;
+    }
+
+    .chart figcaption,
+    .case-note {
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .application-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .application-card {
+      overflow-wrap: anywhere;
+    }
+
+    .application-two-col {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .application-card .scene-label {
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: nowrap;
+      align-self: flex-start;
+    }
+
+    .example-box {
+      margin: 12px 0 0;
+    }
+
+    .design-tip {
+      font-size: 15px;
+    }
+
     @media (max-width: 1040px) {
       .hero,
       .design-layout,
       .result-grid { grid-template-columns: 1fr; }
-      .grid-3,
-      .grid-4,
       .grid-5,
       .plain-grid,
-      .application-grid,
       .application-two-col,
       .figure-layout,
       .chart-layout { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-4,
+      .application-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #data .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .ladder-row { grid-template-columns: 42px minmax(150px, 1fr) repeat(2, minmax(74px, .5fr)); }
+      .hero { gap: 28px; padding-top: 64px; }
+      .flow-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 720px) {
-      .shell { width: min(100% - 28px, 1160px); }
+      .shell { width: min(100% - 28px, 1140px); }
       .topbar-inner { align-items: flex-start; flex-direction: column; padding: 14px 0; }
       .nav { justify-content: flex-start; }
-      .hero { min-height: auto; padding: 52px 0 68px; }
-      .hero h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
-      .section { padding: 74px 0; }
+      .hero { min-height: auto; padding: 48px 0 64px; }
+      .hero h1 { font-size: clamp(34px, 9.5vw, 42px); line-height: 1.18; }
+      .subtitle { font-size: 18px; }
+      .lead,
+      .boundary,
+      .section-head p,
+      .prose { font-size: 16px; }
+      .section { padding: 64px 0; }
+      .section-head h2 { font-size: clamp(26px, 8vw, 30px); }
       .grid-2,
       .grid-3,
       .grid-4,
@@ -938,6 +1244,7 @@ layout: false
       .application-two-col,
       .figure-layout,
       .chart-layout { grid-template-columns: 1fr; }
+      #data .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .ladder-row { grid-template-columns: 36px 1fr; }
       .ladder-row.head { display: none; }
       .mark { justify-content: flex-start; padding: 7px 10px; }
@@ -945,6 +1252,11 @@ layout: false
       .flow-arrow { text-align: center; transform: rotate(90deg); }
       .result-list li { grid-template-columns: 1fr; }
       .result-list strong { text-align: left; }
+      .scene-card { grid-template-columns: 1fr; }
+      .scene-card p { grid-column: auto; }
+      .scene-icon { margin-bottom: 12px; width: max-content; }
+      .chart { padding: 16px; }
+      .material-lab { padding: 18px; }
     }
   </style>
 </head>
@@ -1022,10 +1334,10 @@ layout: false
         <p>这就是本项目的现实入口：AI 的解释过程不只是界面文案，它可能改变用户对系统能力、信任、公平感、责任边界和主体性的理解。</p>
       </div>
       <div class="grid-4" style="margin-top:28px">
-        <article class="scene-card"><div class="scene-icon">聘</div><h3>招聘筛选</h3><p>“未通过”很冷冰冰；说明比较依据、岗位要求和能力匹配差距，会改变候选人对公平和责任的感受。</p></article>
-        <article class="scene-card"><div class="scene-icon">荐</div><h3>推荐系统</h3><p>只推内容像黑箱；解释“为什么推荐给你”，会让用户觉得系统在理解偏好和做判断。</p></article>
-        <article class="scene-card"><div class="scene-icon">助</div><h3>智能助手 / 客服</h3><p>只给答案可能像模板回复；说明建议依据和备选方案，会让用户更愿意依赖它。</p></article>
-        <article class="scene-card"><div class="scene-icon">游</div><h3>游戏智能体</h3><p>只执行动作像脚本；展示战术判断、风险权衡和临场修正，会让角色更像有主见。</p></article>
+        <article class="scene-card"><div class="scene-icon">招聘</div><h3>招聘筛选</h3><p>“未通过”很冷冰冰；说明比较依据、岗位要求和能力匹配差距，会改变候选人对公平和责任的感受。</p></article>
+        <article class="scene-card"><div class="scene-icon">推荐</div><h3>推荐系统</h3><p>只推内容像黑箱；解释“为什么推荐给你”，会让用户觉得系统在理解偏好和做判断。</p></article>
+        <article class="scene-card"><div class="scene-icon">助手</div><h3>智能助手 / 客服</h3><p>只给答案可能像模板回复；说明建议依据和备选方案，会让用户更愿意依赖它。</p></article>
+        <article class="scene-card"><div class="scene-icon">游戏</div><h3>游戏智能体</h3><p>只执行动作像脚本；展示战术判断、风险权衡和临场修正，会让角色更像有主见。</p></article>
       </div>
     </section>
 
@@ -1235,10 +1547,9 @@ layout: false
           <aside class="figure-note">
             <b>读图要点</b>
             <ol>
-              <li>“直接给出选择”和“长文本直接选择”接近 0，说明它们几乎没有呈现明确的决策过程结构。</li>
-              <li>“列出可选方案”开始上升，说明材料中已经出现可替代选项。</li>
-              <li>“理由权衡”和“反思与反馈修正”继续升高，说明材料逐步加入理由比较和后果修正。</li>
-              <li>这说明材料操纵是有效的：模型能够区分不同层次的决策过程。</li>
+              <li>“直接给出选择”和“长文本直接选择”接近 0，说明两者几乎没有呈现明确的决策过程结构。</li>
+              <li>“列出可选方案”开始上升，“理由权衡”和“反思与反馈修正”继续升高。</li>
+              <li>这说明材料操纵有效：模型能够区分不同层次的决策过程。</li>
             </ol>
           </aside>
         </div>
@@ -1256,8 +1567,7 @@ layout: false
             <ol>
               <li>行动者感在“反思与反馈修正”条件下提升最明显。</li>
               <li>“长文本直接选择”并没有带来更高评分，说明单纯增加文字长度并不足以增强行动者感。</li>
-              <li>自由意志归因也呈上升趋势，但控制分析显示其直接效应并不稳定。</li>
-              <li>更稳妥的解释是：决策过程首先影响行动者感，再通过行动者感影响自由意志归因。</li>
+              <li>自由意志归因也呈上升趋势，但更稳妥的解释是先影响行动者感，再间接影响自由意志归因。</li>
             </ol>
           </aside>
         </div>
@@ -1275,8 +1585,7 @@ layout: false
             <ol>
               <li>行动者感的间接效应为 0.2699，95% 置信区间为 [0.1985, 0.3507]，说明该路径较稳定。</li>
               <li>感知智能的间接效应为 0.0184，95% 置信区间为 [-0.0068, 0.0442]，区间跨 0，说明这一路径不稳定。</li>
-              <li>这意味着结果并不是主要因为 AI “看起来更聪明”，而是因为更完整的决策过程让它更像一个能判断、能行动的主体。</li>
-              <li>文本长度已作为控制因素处理，降低了“只是写得更长”的解释可能。</li>
+              <li>文本长度已作为控制因素处理，结果更支持“行动者感路径”，而不是“看起来更聪明”。</li>
             </ol>
           </aside>
         </div>
