@@ -1735,6 +1735,56 @@ body.portfolio-home::before {
   align-items: stretch;
 }
 
+.llm-freewill-cover {
+  display: grid;
+  place-items: center;
+  min-height: 280px;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(54, 215, 255, 0.34), transparent 30%),
+    radial-gradient(circle at 82% 20%, rgba(137, 124, 255, 0.30), transparent 30%),
+    linear-gradient(145deg, #07111f 0%, #111b35 48%, #0a1020 100%);
+}
+
+.llm-freewill-cover-inner {
+  width: min(82%, 430px);
+  padding: 28px;
+  border: 1px solid rgba(151, 207, 255, 0.26);
+  border-radius: 22px;
+  background: rgba(9, 17, 34, 0.58);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  color: #eef7ff;
+  text-align: left;
+}
+
+.llm-freewill-cover-inner span {
+  display: inline-flex;
+  margin-bottom: 22px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(54, 215, 255, 0.12);
+  color: #7ee8ff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.llm-freewill-cover-inner strong,
+.llm-freewill-cover-inner em {
+  display: block;
+  font-style: normal;
+  line-height: 1.06;
+}
+
+.llm-freewill-cover-inner strong {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.llm-freewill-cover-inner em {
+  margin-top: 10px;
+  color: #aebfff;
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  font-weight: 700;
+}
+
 .project-main-card {
   margin: 0;
   border-radius: 24px;
@@ -1896,7 +1946,6 @@ body.portfolio-home::before {
 .hero-actions .pill-button {
   min-width: 148px;
 }
-
 
 
 

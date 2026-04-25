@@ -1,0 +1,1421 @@
+---
+layout: false
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI 决策解释、行动者感与自由意志归因｜海澄</title>
+  <meta name="description" content="一个关于 AI 决策解释、行动者感与自由意志归因的模拟研究原型。">
+  <link rel="stylesheet" href="/css/custom.css">
+  <style>
+    :root {
+      --page-bg: #102846;
+      --page-bg-deep: #071422;
+      --section-bg: #15345a;
+      --card-bg: rgba(255, 255, 255, 0.075);
+      --card-bg-soft: rgba(255, 255, 255, 0.052);
+      --border-soft: rgba(255, 255, 255, 0.12);
+      --text-main: #f4f8ff;
+      --text-secondary: rgba(244, 248, 255, 0.78);
+      --text-muted: rgba(244, 248, 255, 0.58);
+      --accent-cyan: #56d8ff;
+      --accent-blue: #6fa8ff;
+      --accent-gold: #f5cb72;
+      --bg: var(--page-bg-deep);
+      --ink: var(--text-main);
+      --text: var(--text-secondary);
+      --muted: var(--text-muted);
+      --line: var(--border-soft);
+      --panel: rgba(21, 52, 90, .72);
+      --panel-2: rgba(31, 73, 118, .78);
+      --cyan: var(--accent-cyan);
+      --blue: var(--accent-blue);
+      --amber: var(--accent-gold);
+      --shadow: 0 28px 80px rgba(0, 0, 0, .34);
+    }
+
+    * { box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
+
+    body.llm-case {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 4%, rgba(90, 150, 255, .34), transparent 32%),
+        radial-gradient(circle at 86% 12%, rgba(55, 216, 255, .22), transparent 30%),
+        radial-gradient(circle at 52% 42%, rgba(88, 118, 200, .13), transparent 36%),
+        linear-gradient(180deg, #1a3558 0%, #102846 38%, #071422 100%);
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body.llm-case::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(116,168,255,.048) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(116,168,255,.048) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.10));
+      z-index: 0;
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 3px;
+      width: 0;
+      z-index: 50;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+    }
+
+    .shell {
+      width: min(1160px, calc(100vw - 44px));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid rgba(137, 195, 255, .14);
+      background: rgba(9, 24, 42, .80);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand,
+    .nav a {
+      color: #c7d7ee;
+      text-decoration: none;
+      font-weight: 750;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: rgba(255,255,255,.06);
+    }
+
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(340px, .92fr);
+      gap: 48px;
+      align-items: center;
+      padding: 76px 0 92px;
+    }
+
+    .kicker {
+      margin: 0 0 16px;
+      color: var(--cyan);
+      font-size: .82rem;
+      font-weight: 850;
+      letter-spacing: .14em;
+    }
+
+    .hero h1 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(40px, 6vw, 68px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 22px 0 0;
+      color: #d2e0f4;
+      font-size: clamp(1.18rem, 2.1vw, 1.62rem);
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .lead,
+    .boundary {
+      max-width: 790px;
+      line-height: 1.76;
+      font-size: 1.08rem;
+    }
+
+    .lead { margin: 24px 0 0; color: var(--text); }
+    .boundary { margin: 16px 0 0; color: var(--muted); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(119, 196, 255, .26);
+      background: rgba(255,255,255,.06);
+      color: #e8f5ff;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, rgba(109,140,255,.45), rgba(55,216,255,.26));
+      border-color: rgba(55,216,255,.42);
+    }
+
+    .model,
+    .panel,
+    .chart,
+    .table-panel,
+    .flow,
+    .limits,
+    .timeline {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, var(--panel-2), var(--panel)),
+        linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,0));
+      box-shadow: var(--shadow);
+    }
+
+    .model {
+      padding: 24px;
+    }
+
+    .model-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+    }
+
+    .model-main {
+      display: grid;
+      gap: 14px;
+      justify-items: center;
+      padding: 10px;
+    }
+
+    .node {
+      width: min(100%, 360px);
+      min-height: 72px;
+      display: grid;
+      place-items: center;
+      padding: 14px 18px;
+      border: 1px solid rgba(119,196,255,.30);
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(109,140,255,.26), rgba(55,216,255,.13));
+      color: #fff;
+      text-align: center;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .arrow-down {
+      color: var(--cyan);
+      font-size: 1.55rem;
+      font-weight: 900;
+    }
+
+    .controls {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(137,195,255,.14);
+      display: grid;
+      gap: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 8px 12px;
+      border: 1px solid rgba(119,196,255,.22);
+      border-radius: 999px;
+      background: rgba(255,255,255,.055);
+      color: #ddecff;
+      font-size: .9rem;
+      font-weight: 760;
+    }
+
+    .section {
+      padding: 100px 0;
+      scroll-margin-top: 96px;
+    }
+
+    .section-head {
+      max-width: 900px;
+      margin-bottom: 30px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(28px, 3.2vw, 40px);
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    .section-head p,
+    .prose {
+      color: var(--muted);
+      line-height: 1.78;
+      font-size: 1.04rem;
+    }
+
+    .section-head p { margin: 14px 0 0; }
+    .prose { display: grid; gap: 18px; max-width: 980px; }
+    .prose p { margin: 0; }
+
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .grid-5 {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .scene-card {
+      padding: 22px;
+      border: 1px solid rgba(119,196,255,.14);
+      border-radius: 20px;
+      background: rgba(255,255,255,.055);
+      box-shadow: 0 14px 42px rgba(0,0,0,.12);
+    }
+
+    .scene-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(55,216,255,.20), rgba(109,140,255,.20));
+      color: #9cefff;
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+
+    .panel h3 {
+      margin: 0 0 12px;
+      color: #fff;
+      font-size: 1.1rem;
+      line-height: 1.38;
+      letter-spacing: 0;
+    }
+
+    .panel p,
+    .panel li {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.72;
+      font-size: .98rem;
+    }
+
+    .question-num {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--cyan);
+      font-size: .86rem;
+      letter-spacing: .08em;
+      font-weight: 850;
+    }
+
+    .plain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .plain-card {
+      padding: 24px;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 22px;
+      background: rgba(255,255,255,.055);
+    }
+
+    .plain-card h3 {
+      margin: 0 0 12px;
+      color: #fff;
+      font-size: 1.18rem;
+    }
+
+    .plain-card p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.76;
+    }
+
+    .design-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .ladder {
+      display: grid;
+      gap: 12px;
+    }
+
+    .ladder-row {
+      display: grid;
+      grid-template-columns: 42px minmax(150px, 1fr) repeat(4, minmax(74px, .45fr));
+      gap: 10px;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+    }
+
+    .ladder-row.head {
+      background: rgba(255,255,255,.07);
+      color: #fff;
+      font-weight: 850;
+    }
+
+    .step-num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #061021;
+      font-weight: 900;
+    }
+
+    .condition-name {
+      color: #fff;
+      font-weight: 850;
+      line-height: 1.4;
+    }
+
+    .mark {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 30px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.055);
+      color: #cfe0f7;
+      font-weight: 800;
+      font-size: .88rem;
+    }
+
+    .mark.yes { color: #07101f; background: var(--cyan); }
+    .mark.diag { color: #07101f; background: var(--amber); }
+
+    .summary-list {
+      display: grid;
+      gap: 12px;
+      padding: 22px;
+    }
+
+    .summary-list div {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(137,195,255,.12);
+    }
+
+    .summary-list div:last-child { border-bottom: 0; }
+    .summary-list strong { color: #fff; font-size: 1.4rem; }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      appearance: none;
+      border: 1px solid rgba(119,196,255,.22);
+      border-radius: 999px;
+      background: rgba(255,255,255,.055);
+      color: #ddecff;
+      min-height: 40px;
+      padding: 9px 14px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .tab-btn.is-active {
+      color: #061021;
+      background: linear-gradient(135deg, var(--cyan), #a4efff);
+      border-color: transparent;
+    }
+
+    .tab-panel {
+      display: none;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.045);
+      line-height: 1.8;
+    }
+
+    .tab-panel.is-active { display: block; }
+    .tab-panel h3 { margin: 0 0 12px; color: #fff; }
+    .tab-panel p { margin: 0; color: var(--text); }
+
+    .case-note {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border: 1px solid rgba(55,216,255,.22);
+      border-radius: 18px;
+      background: rgba(55,216,255,.07);
+      color: #d9f6ff;
+      line-height: 1.68;
+    }
+
+    .material-scene {
+      margin-bottom: 16px;
+      padding: 16px 18px;
+      border: 1px solid rgba(242,197,107,.22);
+      border-radius: 18px;
+      background: rgba(242,197,107,.07);
+      color: #f2e2c1;
+      line-height: 1.68;
+    }
+
+    .flow { padding: 20px; }
+    .flow-track { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+    .flow-step {
+      flex: 1 1 158px;
+      min-height: 70px;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 15px;
+      background: rgba(255,255,255,.045);
+      color: #e5f2ff;
+      text-align: center;
+      font-weight: 780;
+      line-height: 1.42;
+    }
+
+    .flow-arrow { color: var(--cyan); font-weight: 900; }
+
+    .stat {
+      padding: 22px;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+    }
+
+    .stat strong {
+      display: block;
+      color: #fff;
+      font-size: 2.55rem;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.42;
+    }
+
+    .quality-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chart {
+      padding: 20px;
+      margin-top: 22px;
+      overflow: visible;
+      position: relative;
+      min-height: auto;
+    }
+
+    .figure-layout,
+    .chart-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(280px, .8fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .figure-graphic {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .figure-note,
+    .chart-note {
+      position: static;
+      transform: none;
+      align-self: start;
+      padding: 22px;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 22px;
+      background: rgba(255,255,255,.075);
+    }
+
+    .figure-note b,
+    .chart-note b {
+      display: block;
+      color: #fff;
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    .figure-note ol {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .figure-note li + li {
+      margin-top: 8px;
+    }
+
+    .chart-note p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    .chart img {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      height: auto;
+      border-radius: 18px;
+    }
+
+    .chart figcaption {
+      margin-top: 14px;
+      color: var(--muted);
+      line-height: 1.68;
+      font-size: .95rem;
+    }
+
+    .tooltip {
+      position: fixed;
+      z-index: 80;
+      max-width: 280px;
+      padding: 10px 12px;
+      border: 1px solid rgba(119,196,255,.28);
+      border-radius: 12px;
+      background: rgba(7, 11, 22, .94);
+      color: #e8f5ff;
+      font-size: .9rem;
+      line-height: 1.55;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .15s ease, transform .15s ease;
+    }
+
+    .tooltip.is-visible { opacity: 1; transform: translateY(0); }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .result-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .result-list li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(137,195,255,.12);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .result-list li:last-child { border-bottom: 0; }
+    .result-list b { color: #fff; }
+    .result-list strong { color: #9cefff; text-align: right; }
+    .result-list .hot strong { color: var(--amber); }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      margin-left: 8px;
+      color: #061021;
+      background: var(--cyan);
+      font-size: .78rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status.weak { background: #9aa8bc; }
+    .status.explore { background: var(--amber); }
+    .status.no { background: #d1d7e2; }
+
+    .callout {
+      padding: 24px;
+      border: 1px solid rgba(242,197,107,.28);
+      border-radius: 22px;
+      background: rgba(242,197,107,.07);
+      box-shadow: 0 18px 58px rgba(0,0,0,.18);
+    }
+
+    .callout h3 { margin: 0 0 10px; color: #fff5d8; }
+    .callout p { margin: 0; color: #f3e6c8; line-height: 1.78; font-size: 1.04rem; }
+
+    .application-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .application-card {
+      padding: 24px;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 24px;
+      background: rgba(255,255,255,.065);
+      box-shadow: 0 18px 54px rgba(0,0,0,.15);
+    }
+
+    .application-card h3 {
+      margin: 0 0 16px;
+      color: #fff;
+      font-size: 1.25rem;
+      letter-spacing: 0;
+    }
+
+    .example-box {
+      display: grid;
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .example-box div {
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 14px;
+      background: rgba(255,255,255,.052);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .application-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .application-card .scene-label {
+      display: inline-flex;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(86,216,255,.24);
+      color: var(--accent-cyan);
+      background: rgba(86,216,255,.08);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+
+    .application-card .application-read {
+      margin-top: 14px;
+      color: var(--text-secondary);
+      line-height: 1.78;
+    }
+
+    .limits { padding: 26px; border-color: rgba(242,197,107,.28); }
+    .limits h2 { margin: 0 0 20px; color: #fff; font-size: clamp(2rem, 3vw, 2.5rem); }
+    .limit-col { padding: 20px; border: 1px solid rgba(242,197,107,.20); border-radius: 18px; background: rgba(255,255,255,.045); }
+    .limit-col h3 { margin: 0 0 12px; color: #fff5d8; }
+    .limit-col ul { margin: 0; padding-left: 20px; color: #d7cdb7; line-height: 1.78; }
+
+    details.appendix {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.045);
+      padding: 18px 20px;
+      position: relative;
+      overflow: visible;
+      min-height: auto;
+    }
+
+    details.appendix summary {
+      cursor: pointer;
+      color: #fff;
+      font-weight: 850;
+    }
+
+    .appendix-table {
+      width: 100%;
+      margin-top: 16px;
+      border-collapse: collapse;
+      color: var(--muted);
+      font-size: .92rem;
+      display: table;
+    }
+
+    .appendix-table th,
+    .appendix-table td {
+      border-bottom: 1px solid rgba(137,195,255,.12);
+      padding: 10px;
+      text-align: left;
+    }
+
+    .footer {
+      padding: 46px 0 72px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.7;
+      position: static;
+    }
+
+    @media (max-width: 1040px) {
+      .hero,
+      .design-layout,
+      .result-grid { grid-template-columns: 1fr; }
+      .grid-3,
+      .grid-4,
+      .grid-5,
+      .plain-grid,
+      .application-grid,
+      .figure-layout,
+      .chart-layout { grid-template-columns: 1fr; }
+      .ladder-row { grid-template-columns: 42px minmax(150px, 1fr) repeat(2, minmax(74px, .5fr)); }
+    }
+
+    @media (max-width: 720px) {
+      .shell { width: min(100% - 28px, 1160px); }
+      .topbar-inner { align-items: flex-start; flex-direction: column; padding: 14px 0; }
+      .nav { justify-content: flex-start; }
+      .hero { min-height: auto; padding: 52px 0 68px; }
+      .hero h1 { font-size: clamp(2.4rem, 12vw, 3.2rem); }
+      .section { padding: 74px 0; }
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .grid-5,
+      .plain-grid,
+      .application-grid,
+      .figure-layout,
+      .chart-layout { grid-template-columns: 1fr; }
+      .ladder-row { grid-template-columns: 36px 1fr; }
+      .ladder-row.head { display: none; }
+      .mark { justify-content: flex-start; padding: 7px 10px; }
+      .flow-track { display: grid; grid-template-columns: 1fr; }
+      .flow-arrow { text-align: center; transform: rotate(90deg); }
+      .result-list li { grid-template-columns: 1fr; }
+      .result-list strong { text-align: left; }
+    }
+  </style>
+</head>
+<body class="llm-case">
+  <div class="progress" id="progress"></div>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="/projects/">← 返回项目</a>
+      <nav class="nav" aria-label="页面导航">
+        <a href="#background">背景</a>
+        <a href="#design">设计</a>
+        <a href="#flow">流程</a>
+        <a href="#charts">结果</a>
+        <a href="#model">模型</a>
+        <a href="#application">应用</a>
+        <a href="#limits">边界</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="shell hero">
+      <div>
+        <p class="kicker">研究型作品案例</p>
+        <h1>同样是给出结果，为什么“会解释原因”的 AI 更像在做决定？</h1>
+        <p class="subtitle">一个关于 AI 决策解释、行动者感与自由意志归因的模拟研究原型</p>
+        <p class="lead">AI 正在从“回答工具”变成“参与判断的系统”。它会筛选简历、推荐内容、辅助办公、响应客服问题，也可能在游戏中扮演会行动的智能体。</p>
+        <p class="boundary">本项目关注的不是 AI 是否真的拥有自由意志，而是一个更具体的问题：当 AI 不只给出结论，而是展示候选方案、理由权衡和反思修正时，用户会不会更容易把它看成一个会判断、会行动、会承担后果的系统？</p>
+        <div class="hero-actions">
+          <a class="button primary" href="#design">研究设计</a>
+          <a class="button" href="#charts">关键结果</a>
+          <a class="button" href="#limits">研究边界</a>
+          <a class="button" href="https://github.com/sherlock0717/llm-agent-free-will-attribution" target="_blank" rel="noopener noreferrer">查看 GitHub 仓库</a>
+        </div>
+      </div>
+
+      <aside class="model" aria-label="核心机制图">
+        <div class="model-title"><span>核心机制图</span><span>控制与竞争解释</span></div>
+        <div class="model-main">
+          <div class="node">解释过程更完整</div>
+          <div class="arrow-down">↓</div>
+          <div class="node">行动者感增强</div>
+          <div class="arrow-down">↓</div>
+          <div class="node">更容易产生自由意志归因</div>
+        </div>
+        <div class="controls">
+          <span class="chip">已控制：文本长度</span>
+          <span class="chip">竞争解释：感知智能</span>
+        </div>
+      </aside>
+    </section>
+
+    <section id="background" class="shell section">
+      <div class="section-head">
+        <p class="kicker">现实问题</p>
+        <h2>为什么这个问题正在变得重要？</h2>
+      </div>
+      <div class="prose">
+        <p>过去的 AI 更像“回答机器”：用户提问，系统给答案。</p>
+        <p>现在的 AI Agent 越来越像“参与任务的系统”：它会比较方案、调用工具、执行步骤、解释理由，也可能参与招聘筛选、内容推荐、办公协作、客服处理和游戏智能体行为设计。</p>
+        <p>当 AI 参与的是判断类任务时，用户关注的不只是结果是否正确，还会关注：它为什么这样判断？它有没有比较过其他方案？它是不是只是在套规则？如果判断错了，责任应该归给谁？它看起来是一个工具，还是一个会行动的系统？</p>
+        <p>这就是本项目的现实入口：AI 的解释过程不只是界面文案，它可能改变用户对系统能力、信任、公平感、责任边界和主体性的理解。</p>
+      </div>
+      <div class="grid-4" style="margin-top:28px">
+        <article class="scene-card"><div class="scene-icon">聘</div><h3>招聘筛选</h3><p>“未通过”很冷冰冰；说明比较依据、岗位要求和能力匹配差距，会改变候选人对公平和责任的感受。</p></article>
+        <article class="scene-card"><div class="scene-icon">荐</div><h3>推荐系统</h3><p>只推内容像黑箱；解释“为什么推荐给你”，会让用户觉得系统在理解偏好和做判断。</p></article>
+        <article class="scene-card"><div class="scene-icon">助</div><h3>智能助手 / 客服</h3><p>只给答案可能像模板回复；说明建议依据和备选方案，会让用户更愿意依赖它。</p></article>
+        <article class="scene-card"><div class="scene-icon">游</div><h3>游戏智能体</h3><p>只执行动作像脚本；展示战术判断、风险权衡和临场修正，会让角色更像有主见。</p></article>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">概念说明</p>
+        <h2>核心概念</h2>
+      </div>
+      <div class="grid-4">
+        <article class="plain-card">
+          <h3>行动者感</h3>
+          <p>指观察者是否觉得某个系统像一个能够判断、选择、行动并回应理由的主体。这里并不意味着 AI 真的有意识，而是指用户如何感知它。</p>
+        </article>
+        <article class="plain-card">
+          <h3>自由意志归因</h3>
+          <p>指观察者是否倾向于把某个行为理解为“像是在自己做选择”。这里研究的是人的归因判断，不是证明 AI 真的拥有自由意志。</p>
+        </article>
+        <article class="plain-card">
+          <h3>感知智能</h3>
+          <p>指观察者觉得系统是否聪明、是否理解任务、是否具有推理能力。它在本项目中是竞争解释：如果效果只是因为 AI 显得更聪明，那就不一定是决策结构本身的作用。</p>
+        </article>
+        <article class="plain-card">
+          <h3>责任归因</h3>
+          <p>指观察者是否认为系统应为结果、判断过程或后果承担一定责任。本项目中责任归因结果不稳定，因此只作为探索性结果处理。</p>
+        </article>
+      </div>
+      <div class="case-note">本项目研究的是“观察者如何理解 AI 的决策过程”，不是回答 AI 是否拥有意识、灵魂或真正自由意志。</div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">研究聚焦</p>
+        <h2>研究聚焦</h2>
+      </div>
+      <div class="grid-3">
+        <article class="panel"><span class="question-num">01</span><h3>决策过程会不会改变行动者感？</h3><p>当 AI 展示候选、理由、反思和修正时，观察者是否更容易把它看成能行动、能控制、能回应理由的主体？</p></article>
+        <article class="panel"><span class="question-num">02</span><h3>自由意志归因是不是先经过行动者感？</h3><p>人们是否先觉得系统有行动者感，再进一步产生类似自由选择的归因？</p></article>
+        <article class="panel"><span class="question-num">03</span><h3>这是不是只是因为它说得更多或者看起来更聪明？</h3><p>如果效果只是来自文本更长或更聪明的印象，就不能说明决策结构本身起作用。</p></article>
+      </div>
+    </section>
+
+    <section id="design" class="shell section">
+      <div class="section-head">
+        <p class="kicker">实验结构</p>
+        <h2>研究设计</h2>
+        <p>6 种决策过程 × 2 种身份标签。六种决策过程条件被组织成结构阶梯，并加入两个诊断条件，用于区分文本长度和决策结构。</p>
+      </div>
+      <div class="design-layout">
+        <div class="ladder">
+          <div class="ladder-row head"><div></div><div>决策过程条件</div><div>候选比较</div><div>理由权衡</div><div>反思修正</div><div>诊断条件</div></div>
+          <div class="ladder-row"><div class="step-num">1</div><div class="condition-name">直接给出选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark">否</div></div>
+          <div class="ladder-row"><div class="step-num">2</div><div class="condition-name">长文本直接选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark diag">是</div></div>
+          <div class="ladder-row"><div class="step-num">3</div><div class="condition-name">列出可选方案</div><div class="mark yes">有</div><div class="mark">弱</div><div class="mark">无</div><div class="mark">否</div></div>
+          <div class="ladder-row"><div class="step-num">4</div><div class="condition-name">简洁理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark diag">是</div></div>
+          <div class="ladder-row"><div class="step-num">5</div><div class="condition-name">完整理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark">否</div></div>
+          <div class="ladder-row"><div class="step-num">6</div><div class="condition-name">反思与反馈修正</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">否</div></div>
+        </div>
+        <aside class="model summary-list">
+          <div><span>决策过程</span><strong>6 种</strong></div>
+          <div><span>身份标签</span><strong>2 种</strong></div>
+          <div><span>条件格</span><strong>12 个</strong></div>
+          <div><span>每格响应</span><strong>30 条</strong></div>
+          <div><span>总响应</span><strong>360 条</strong></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">材料示例</p>
+        <h2>实验材料与代表性示例</h2>
+        <p>同一个情境，通过不同的决策过程写法形成不同实验条件。这里展示代表性材料，帮助理解本项目究竟在比较什么。</p>
+      </div>
+      <div class="material-scene"><b>情境一：员工违规上报。</b>系统发现某位员工可能存在违规操作，需要决定是否上报。</div>
+      <div class="tabs" role="tablist" aria-label="材料操纵示例">
+        <button class="tab-btn is-active" type="button" data-tab="direct">直接给出选择</button>
+        <button class="tab-btn" type="button" data-tab="long">长文本直接选择</button>
+        <button class="tab-btn" type="button" data-tab="alt">列出可选方案</button>
+        <button class="tab-btn" type="button" data-tab="reason">简洁理由权衡</button>
+        <button class="tab-btn" type="button" data-tab="reflect">反思与反馈修正</button>
+      </div>
+      <div class="tab-panel is-active" data-panel="direct"><h3>直接给出选择</h3><p>系统最终决定上报该问题。</p></div>
+      <div class="tab-panel" data-panel="long"><h3>长文本直接选择</h3><p>系统综合考虑了当前信息、既有背景、整体情况和相关流程安排，最终决定上报该问题。该情况可能影响后续处理，因此系统将其提交至下一步流程。</p></div>
+      <div class="tab-panel" data-panel="alt"><h3>列出可选方案</h3><p>系统考虑了两个方案：一是暂不上报，继续观察；二是立即上报，进入处理流程。最终系统选择立即上报。</p></div>
+      <div class="tab-panel" data-panel="reason"><h3>简洁理由权衡</h3><p>系统比较后认为：暂不上报可以减少短期干扰，但可能留下后续风险；立即上报虽然会增加处理成本，但更符合流程要求与长期责任。因此系统选择立即上报。</p></div>
+      <div class="tab-panel" data-panel="reflect"><h3>反思与反馈修正</h3><p>系统先比较不同方案，再考虑可能后果：如果暂不上报，短期影响较小，但后续风险可能扩大；如果立即上报，会增加处理成本，但更符合流程要求。综合权衡后，系统选择立即上报。若后续发现影响范围扩大，系统将补充说明并调整处理方式。</p></div>
+      <div class="case-note">这组材料的核心差异不在于结果是否相同，而在于是否出现了“候选方案—理由权衡—反思修正”这些决策过程线索。</div>
+      <div class="grid-2" style="margin-top:24px">
+        <article class="panel">
+          <h3>情境二：推荐系统</h3>
+          <p><b>直接给出选择：</b>系统决定推荐内容 A。</p>
+          <p><b>列出可选方案：</b>系统在内容 A 和内容 B 之间进行了选择，最终推荐内容 A。</p>
+          <p><b>理由权衡：</b>系统比较后认为，内容 A 与用户近期浏览记录更一致，虽然内容 B 更新更快，但匹配度较低。因此系统推荐内容 A。</p>
+          <p><b>反思与反馈修正：</b>系统比较了内容 A 与内容 B。内容 A 与用户近期偏好更匹配，内容 B 虽然更新更快，但相关性较低。因此系统先推荐内容 A；如果用户后续跳过该内容，系统将下调此类推荐权重，并重新评估内容 B。</p>
+          <p class="boundary">这一类材料贴近日常平台推荐场景，可以帮助读者直观看到：当系统呈现理由和修正机制时，它更像是在“做判断”。</p>
+        </article>
+        <article class="panel">
+          <h3>情境三：智能助手建议</h3>
+          <p><b>直接给出选择：</b>系统建议采用方案 A。</p>
+          <p><b>理由权衡：</b>系统比较后认为，方案 A 时间成本较低、失败风险较小，虽然收益略低于方案 B，但更适合当前资源条件，因此建议采用方案 A。</p>
+          <p><b>反思与反馈修正：</b>系统比较了方案 A 与方案 B。方案 A 时间成本较低、执行更稳妥；方案 B 收益更高，但失败风险较大。基于当前资源条件，系统建议先采用方案 A。若后续资源增加，可重新评估是否转向方案 B。</p>
+          <p class="boundary">这组材料更适合说明：系统不是单纯给出答案，而是在展示比较、取舍和条件变化下的修正逻辑。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">模拟响应示例</p>
+        <h2>模拟被试的代表性反应</h2>
+        <p>以下内容为结构化模拟响应示例，用于展示不同材料如何引发不同的感知判断。页面仅展示代表性摘要，不公开完整原始响应数据。</p>
+      </div>
+      <div class="grid-4">
+        <article class="plain-card">
+          <h3>示例 1｜直接给出选择</h3>
+          <p><b>行动者感：</b>较低</p>
+          <p><b>自由意志归因：</b>较低</p>
+          <p>系统给出了结果，但缺少比较过程，因此更像执行输出，而不像在做判断。</p>
+        </article>
+        <article class="plain-card">
+          <h3>示例 2｜列出可选方案</h3>
+          <p><b>行动者感：</b>中等</p>
+          <p><b>自由意志归因：</b>小幅上升</p>
+          <p>系统看起来不是完全机械输出，因为它至少体现了“存在其他可能”。但如果没有理由比较，主体性感仍然有限。</p>
+        </article>
+        <article class="plain-card">
+          <h3>示例 3｜简洁理由权衡</h3>
+          <p><b>行动者感：</b>明显上升</p>
+          <p><b>自由意志归因：</b>上升</p>
+          <p>一旦系统展示了不同方案之间的利弊比较，观察者更容易把它理解为一个会权衡、会判断的系统。</p>
+        </article>
+        <article class="plain-card">
+          <h3>示例 4｜反思与反馈修正</h3>
+          <p><b>行动者感：</b>最高或接近最高</p>
+          <p><b>自由意志归因：</b>最高或接近最高</p>
+          <p>当系统不仅做出比较，还会根据后果进行修正时，它最容易被看作一个具有行动过程和持续判断能力的主体。</p>
+        </article>
+      </div>
+      <div class="case-note">这些示例并不等同于真实人类被试访谈结果，而是用于帮助理解模拟实验中不同材料条件所激发的典型判断方向。</div>
+    </section>
+
+    <section id="flow" class="shell section">
+      <div class="section-head">
+        <p class="kicker">流程</p>
+        <h2>模拟实验流程</h2>
+        <p>流程不是手动提问后凭印象总结，而是通过脚本统一完成材料生成、条件分配、模拟响应、数据保存、统计分析和报告输出。</p>
+      </div>
+      <div class="flow">
+        <div class="flow-track">
+          <div class="flow-step">现实问题</div><span class="flow-arrow">→</span>
+          <div class="flow-step">变量拆解</div><span class="flow-arrow">→</span>
+          <div class="flow-step">6 × 2 材料设计</div><span class="flow-arrow">→</span>
+          <div class="flow-step">DeepSeek 模拟被试</div><span class="flow-arrow">→</span>
+          <div class="flow-step">结构化数据保存</div><span class="flow-arrow">→</span>
+          <div class="flow-step">构念得分计算</div><span class="flow-arrow">→</span>
+          <div class="flow-step">事实操纵检验</div><span class="flow-arrow">→</span>
+          <div class="flow-step">控制回归</div><span class="flow-arrow">→</span>
+          <div class="flow-step">并行中介分析</div><span class="flow-arrow">→</span>
+          <div class="flow-step">自动生成报告</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="data" class="shell section">
+      <div class="section-head">
+        <p class="kicker">样本与数据质量</p>
+        <h2>样本与数据质量</h2>
+      </div>
+      <div class="grid-4">
+        <div class="stat"><strong>360</strong><span>模拟响应总数</span></div>
+        <div class="stat"><strong>12</strong><span>条件格数量</span></div>
+        <div class="stat"><strong>30</strong><span>每格样本量</span></div>
+        <div class="stat"><strong>0</strong><span>JSON / API 失败数</span></div>
+      </div>
+      <div class="quality-row">
+        <span class="chip">缺失值 0</span>
+        <span class="chip">题项取值范围：全部有效</span>
+        <span class="chip">事实操纵检验：梯度稳定</span>
+      </div>
+    </section>
+
+    <section id="charts" class="shell section">
+      <div class="section-head">
+        <p class="kicker">关键结果</p>
+        <h2>关键结果</h2>
+        <p>最稳定的发现是：决策过程越完整，观察者越容易形成行动者感。自由意志归因也呈上升趋势，但其直接效应并不稳定，更主要通过行动者感间接发生。</p>
+      </div>
+      <figure class="chart" data-tip="事实操纵检验用于确认材料是否真的呈现了不同层次的决策过程。">
+        <h3>图 1｜六类决策过程的事实操纵检验均值</h3>
+        <p class="boundary">检验材料是否真的呈现了不同层次的“候选—理由—反思”结构。</p>
+        <div class="figure-layout">
+          <div class="figure-graphic"><img src="/img/projects/llm-free-will/chart_manipulation_check.svg" alt="六类决策过程的事实操纵检验均值图"></div>
+          <aside class="figure-note">
+            <b>读图要点</b>
+            <ol>
+              <li>“直接给出选择”和“长文本直接选择”接近 0，说明它们几乎没有呈现明确的决策过程结构。</li>
+              <li>“列出可选方案”开始上升，说明材料中已经出现可替代选项。</li>
+              <li>“理由权衡”和“反思与反馈修正”继续升高，说明材料逐步加入理由比较和后果修正。</li>
+              <li>这说明材料操纵是有效的：模型能够区分不同层次的决策过程。</li>
+            </ol>
+          </aside>
+        </div>
+        <figcaption>事实操纵检验采用 0–2 编码，数值越高表示材料中越明确呈现候选方案、理由权衡或反思修正。</figcaption>
+      </figure>
+      <figure class="chart" data-tip="行动者感上升更明显；自由意志归因的直接效应在控制分析中不稳定。">
+        <h3>图 2｜行动者感与自由意志归因的均值趋势</h3>
+        <p class="boundary">比较不同决策过程条件下，观察者对“行动者感”和“自由意志归因”的评分变化。</p>
+        <div class="figure-layout">
+          <div class="figure-graphic"><img src="/img/projects/llm-free-will/chart_construct_means.svg" alt="行动者感与自由意志归因的均值趋势图"></div>
+          <aside class="figure-note">
+            <b>读图要点</b>
+            <ol>
+              <li>行动者感在“反思与反馈修正”条件下提升最明显。</li>
+              <li>“长文本直接选择”并没有带来更高评分，说明单纯增加文字长度并不足以增强行动者感。</li>
+              <li>自由意志归因也呈上升趋势，但控制分析显示其直接效应并不稳定。</li>
+              <li>更稳妥的解释是：决策过程首先影响行动者感，再通过行动者感影响自由意志归因。</li>
+            </ol>
+          </aside>
+        </div>
+        <figcaption>行动者感和自由意志归因均为模拟被试评分均值。该趋势用于展示模拟预实验结果，不等同于真实人类被试结论。</figcaption>
+      </figure>
+      <figure class="chart" data-tip="并行中介分析用于比较行动者感路径和感知智能路径。">
+        <h3>图 3｜行动者感与感知智能的并行中介模型</h3>
+        <p class="boundary">检验“决策过程影响自由意志归因”主要通过哪条路径发生。</p>
+        <div class="figure-layout">
+          <div class="figure-graphic"><img src="/img/projects/llm-free-will/chart_mediation_model.svg" alt="行动者感与感知智能的并行中介模型图"></div>
+          <aside class="figure-note">
+            <b>读图要点</b>
+            <ol>
+              <li>行动者感的间接效应为 0.2699，95% 置信区间为 [0.1985, 0.3507]，说明该路径较稳定。</li>
+              <li>感知智能的间接效应为 0.0184，95% 置信区间为 [-0.0068, 0.0442]，区间跨 0，说明这一路径不稳定。</li>
+              <li>这意味着结果并不是主要因为 AI “看起来更聪明”，而是因为更完整的决策过程让它更像一个能判断、能行动的主体。</li>
+              <li>文本长度已作为控制因素处理，降低了“只是写得更长”的解释可能。</li>
+            </ol>
+          </aside>
+        </div>
+        <figcaption>并行中介模型用于比较行动者感与感知智能两条解释路径。结果仅用于模拟预实验中的理论路径诊断。</figcaption>
+      </figure>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">统计摘要</p>
+        <h2>核心检验结果</h2>
+      </div>
+      <div class="result-grid">
+        <article class="table-panel panel">
+          <h3>数据质量</h3>
+          <ul class="result-list">
+            <li><b>总记录数</b><strong>360</strong></li>
+            <li><b>条件格数量</b><strong>12</strong></li>
+            <li><b>每格样本量</b><strong>30</strong></li>
+            <li><b>JSON/API 失败</b><strong>0</strong></li>
+            <li><b>缺失值</b><strong>0</strong></li>
+          </ul>
+        </article>
+        <article class="table-panel panel">
+          <h3>关键检验</h3>
+          <ul class="result-list">
+            <li class="hot"><b>决策过程 → 行动者感 <span class="status">稳定</span></b><strong>p &lt; .001</strong></li>
+            <li><b>决策过程 → 自由意志归因 <span class="status weak">不稳定</span></b><strong>p = .6157</strong></li>
+            <li><b>决策过程 → 总责任归因 <span class="status explore">探索性</span></b><strong>p = .0063</strong></li>
+            <li><b>决策过程 → 过程责任 <span class="status no">未支持</span></b><strong>p = .7772</strong></li>
+            <li class="hot"><b>行动者感间接效应 <span class="status">稳定</span></b><strong>0.2699，[0.1985, 0.3507]</strong></li>
+            <li><b>感知智能间接效应 <span class="status no">未支持</span></b><strong>0.0184，[-0.0068, 0.0442]</strong></li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="model" class="shell section">
+      <div class="section-head">
+        <p class="kicker">解释</p>
+        <h2>结果解读：解释过程改变的不是答案，而是用户对系统的理解方式</h2>
+      </div>
+      <div class="prose">
+        <p>本研究最稳定的发现是：当决策过程更完整时，观察者更容易把系统看成一个能够判断、选择和行动的主体，即更容易形成行动者感。</p>
+        <p>单纯给出结果，并不足以让 AI 显得像在做决定；即使把文字写得更长，如果没有真正呈现候选方案、理由比较和后果修正，也不会显著增强这种感受。</p>
+        <p>相较之下，当系统开始展示“比较了哪些方案”“为什么舍弃某个方案”“如果条件变化会怎样修正”时，观察者更容易觉得：这不只是一个输出工具，而是一个会做判断的系统。</p>
+        <p>自由意志归因的直接效应并不稳定，但它更可能通过行动者感间接发生。也就是说，人们不是先直接觉得“AI 有自由意志”，而更可能先觉得“它像一个行动者”，再进一步把它理解为“像是在自主做选择”。</p>
+        <p>并行中介结果还表明，这种作用并不是主要因为系统看起来更聪明。感知智能并没有解释大部分效应，更关键的是决策过程本身是否呈现出了判断、权衡与修正的结构。</p>
+      </div>
+      <div class="grid-3" style="margin-top:26px">
+        <article class="panel"><h3>只给答案</h3><p>不足以形成强行动者感。观察者看到的是结论，而不是判断过程。</p></article>
+        <article class="panel"><h3>只列出选项</h3><p>也不足以明显提升自由意志归因。候选方案本身还不是理由响应。</p></article>
+        <article class="panel"><h3>理由与反思</h3><p>理由权衡与反思修正，是更关键的过程线索。</p></article>
+      </div>
+    </section>
+
+    <section id="application" class="shell section">
+      <div class="section-head">
+        <p class="kicker">应用启发</p>
+        <h2>实际应用与实践价值</h2>
+        <p>解释过程不只是界面文案问题，它可能影响用户如何理解 AI 的判断、公平性、责任边界和主体性。</p>
+      </div>
+      <div class="application-grid">
+        <article class="application-card">
+          <span class="scene-label">招聘筛选</span>
+          <h3>解释方式会影响公平感与责任判断</h3>
+          <div class="example-box">
+            <div><b>系统 A：</b>未通过筛选。</div>
+            <div><b>系统 B：</b>系统比较了岗位要求、项目经历和能力匹配度后，认为当前经历与岗位需求匹配不足，因此未推荐进入下一轮。</div>
+          </div>
+          <p class="application-read">两个系统给出的结论相同，但系统 B 更容易被理解为“进行了判断”。这可能提升应聘者对流程的理解，也会让用户更自然地追问：如果判断有误，责任应由谁承担？</p>
+          <p class="application-read"><b>设计启发：</b>招聘类 AI 产品需要展示足够的判断依据，但不能把解释包装得像系统拥有完整自主判断能力。更合适的方式是：展示比较依据，同时明确人工复核、申诉机制和责任边界。</p>
+        </article>
+        <article class="application-card">
+          <span class="scene-label">推荐系统</span>
+          <h3>带理由的推荐会更像判断，而不是黑箱输出</h3>
+          <div class="example-box">
+            <div><b>系统 A：</b>为你推荐这条内容。</div>
+            <div><b>系统 B：</b>因为你最近持续浏览策略类、剧情向和长线养成内容，所以推荐这条内容。</div>
+          </div>
+          <p class="application-read">系统 B 更容易被用户看成“有理由地做出判断”，而不是简单调用一个结果。这会提升推荐的可理解性，但也可能增强用户对系统解释的依赖。</p>
+          <p class="application-read"><b>设计启发：</b>推荐解释应该帮助用户理解推荐逻辑，而不是制造“系统完全理解我”的错觉。更好的解释设计应同时提供调整入口，例如“不感兴趣”“减少类似推荐”“为什么看到这个”。</p>
+        </article>
+        <article class="application-card">
+          <span class="scene-label">智能助手 / 办公助理</span>
+          <h3>会比较、会修正的系统，更容易建立可信判断印象</h3>
+          <div class="example-box">
+            <div><b>系统 A：</b>建议选择方案 A。</div>
+            <div><b>系统 B：</b>我比较了时间成本、失败风险和执行难度，方案 A 虽然收益略低，但更稳妥；如果后续资源增加，可以重新评估方案 B。</div>
+          </div>
+          <p class="application-read">第二种表达不只是更长，而是展示了取舍逻辑和条件变化下的修正可能。这种结构更容易让用户把系统理解为“在判断”，而不是仅仅在生成答案。</p>
+          <p class="application-read"><b>设计启发：</b>AI 助手的解释设计可以分层呈现：先给建议，再给理由，再给风险和可调整条件。这样既提高可理解性，也避免把用户淹没在过长解释里。</p>
+        </article>
+        <article class="application-card">
+          <span class="scene-label">游戏智能体 / NPC</span>
+          <h3>理由和反思结构会增强角色的主体感</h3>
+          <div class="example-box">
+            <div><b>NPC A：</b>撤退。</div>
+            <div><b>NPC B：</b>敌人数量超过预期，正面推进风险过高。我先撤退补给，再从侧面寻找突破口。</div>
+          </div>
+          <p class="application-read">NPC B 更容易被玩家理解为“有战术判断”“有行动意图”的角色，而不只是脚本触发的动作容器。</p>
+          <p class="application-read"><b>设计启发：</b>在游戏设计中，AI 角色不一定需要暴露复杂算法，但可以通过行为理由、战术判断和后续修正增强角色主体感。这对队友 AI、敌方 AI、伴随型角色和叙事 NPC 都有价值。</p>
+        </article>
+      </div>
+      <div class="callout" style="margin-top:22px">
+        <h3>应用含义</h3>
+        <p>这些场景共同指向一个问题：AI 的解释方式不仅影响用户是否理解结果，也会影响用户如何判断系统能力、责任边界和主体性。因此，解释设计不是简单地“多写几句话”，而是在设计用户如何理解 AI 的判断过程。</p>
+      </div>
+    </section>
+
+    <section id="limits" class="shell section">
+      <div class="limits">
+        <h2>研究边界与适用范围</h2>
+        <div class="grid-2">
+          <article class="limit-col">
+            <h3>当前结果适用于</h3>
+            <ul>
+              <li>材料预演</li>
+              <li>模拟流程验证</li>
+              <li>理论路径诊断</li>
+              <li>真实被试研究前的设计依据</li>
+              <li>AI 解释设计的早期探索</li>
+            </ul>
+          </article>
+          <article class="limit-col">
+            <h3>当前结果不适用于</h3>
+            <ul>
+              <li>证明 AI 具有自由意志</li>
+              <li>替代真实人类被试</li>
+              <li>证明正式心理测量信效度</li>
+              <li>直接推广为人类心理机制结论</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">产出</p>
+        <h2>方法实现与研究产出</h2>
+      </div>
+      <div class="grid-5">
+        <article class="panel"><h3>材料与条件构建</h3><p>构建六类决策过程和两类身份标签。</p></article>
+        <article class="panel"><h3>模拟被试流程</h3><p>调用 DeepSeek，生成结构化模拟响应。</p></article>
+        <article class="panel"><h3>数据整理</h3><p>保存原始响应，并转换为分析宽表。</p></article>
+        <article class="panel"><h3>统计分析</h3><p>完成构念得分、事实操纵检验、控制回归和计划对比。</p></article>
+        <article class="panel"><h3>模型诊断</h3><p>进行并行中介分析，并自动生成研究报告。</p></article>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">延展</p>
+        <h2>后续研究方向</h2>
+      </div>
+      <div class="flow">
+        <div class="flow-track">
+          <div class="flow-step">专家内容效度评估</div><span class="flow-arrow">→</span>
+          <div class="flow-step">真实被试预测试</div><span class="flow-arrow">→</span>
+          <div class="flow-step">探索性 / 验证性因素分析</div><span class="flow-arrow">→</span>
+          <div class="flow-step">正式 6 × 2 人类被试实验</div><span class="flow-arrow">→</span>
+          <div class="flow-step">扩展到 AI 解释设计与责任界面</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="appendix" class="shell section">
+      <div class="section-head">
+        <p class="kicker">补充信息</p>
+        <h2>折叠附录</h2>
+      </div>
+      <details class="appendix">
+        <summary>查看变量说明、代码名对照、输出文件与测量边界</summary>
+        <table class="appendix-table">
+          <thead><tr><th>中文页面术语</th><th>数据字段 / 代码名</th></tr></thead>
+          <tbody>
+            <tr><td>行动者感</td><td>agency</td></tr>
+            <tr><td>感知智能</td><td>perceived_intelligence</td></tr>
+            <tr><td>感受能力归因</td><td>experience</td></tr>
+            <tr><td>决策过程条件</td><td>process_condition</td></tr>
+            <tr><td>事实操纵检验</td><td>factual_manipulation_check</td></tr>
+            <tr><td>文本长度</td><td>char_len</td></tr>
+            <tr><td>并行中介分析</td><td>parallel mediation</td></tr>
+          </tbody>
+        </table>
+        <table class="appendix-table">
+          <thead><tr><th>输出类型</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td>量表得分表</td><td>用于计算各决策过程条件下的构念均值。</td></tr>
+            <tr><td>控制回归摘要</td><td>用于检查文本长度和感知智能控制后的结果。</td></tr>
+            <tr><td>并行中介摘要</td><td>用于比较行动者感路径与感知智能路径。</td></tr>
+            <tr><td>研究报告</td><td>用于记录模拟预实验趋势和方法边界。</td></tr>
+          </tbody>
+        </table>
+        <p style="color: var(--muted); line-height: 1.7; margin: 16px 0 0;">题项来源边界：当前题项是基于既有理论和量表构念改写的情境化归因题项池，不是完整成熟量表；正式研究仍需真实被试中的信效度检验。</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    <p>项目定位：作品集展示 / 研究想法证明 / 大语言模型模拟预实验。</p>
+  </footer>
+
+  <div class="tooltip" id="tooltip" aria-hidden="true"></div>
+  <script>
+    (function () {
+      var progress = document.getElementById('progress');
+      function updateProgress() {
+        var doc = document.documentElement;
+        var max = doc.scrollHeight - doc.clientHeight;
+        var pct = max > 0 ? (doc.scrollTop / max) * 100 : 0;
+        progress.style.width = pct + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+
+      var buttons = document.querySelectorAll('.tab-btn');
+      var panels = document.querySelectorAll('.tab-panel');
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var tab = btn.getAttribute('data-tab');
+          buttons.forEach(function (b) { b.classList.remove('is-active'); });
+          panels.forEach(function (p) { p.classList.toggle('is-active', p.getAttribute('data-panel') === tab); });
+          btn.classList.add('is-active');
+        });
+      });
+
+      var tooltip = document.getElementById('tooltip');
+      document.querySelectorAll('[data-tip]').forEach(function (item) {
+        item.addEventListener('mouseenter', function () {
+          tooltip.textContent = item.getAttribute('data-tip');
+          tooltip.classList.add('is-visible');
+          tooltip.setAttribute('aria-hidden', 'false');
+        });
+        item.addEventListener('mousemove', function (event) {
+          tooltip.style.left = Math.min(event.clientX + 16, window.innerWidth - 300) + 'px';
+          tooltip.style.top = (event.clientY + 16) + 'px';
+        });
+        item.addEventListener('mouseleave', function () {
+          tooltip.classList.remove('is-visible');
+          tooltip.setAttribute('aria-hidden', 'true');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
