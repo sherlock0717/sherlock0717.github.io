@@ -478,7 +478,8 @@ layout: false
       margin-bottom: 16px;
     }
 
-    .tab-btn {
+    .tab-btn,
+    .material-tab {
       appearance: none;
       border: 1px solid rgba(119,196,255,.22);
       border-radius: 999px;
@@ -491,13 +492,15 @@ layout: false
       cursor: pointer;
     }
 
-    .tab-btn.is-active {
+    .tab-btn.is-active,
+    .material-tab.is-active {
       color: #061021;
       background: linear-gradient(135deg, var(--cyan), #a4efff);
       border-color: transparent;
     }
 
-    .tab-panel {
+    .tab-panel,
+    .material-panel {
       display: none;
       padding: 24px;
       border: 1px solid var(--line);
@@ -506,9 +509,52 @@ layout: false
       line-height: 1.8;
     }
 
-    .tab-panel.is-active { display: block; }
-    .tab-panel h3 { margin: 0 0 12px; color: #fff; }
-    .tab-panel p { margin: 0; color: var(--text); }
+    .tab-panel.is-active,
+    .material-panel.is-active { display: block; }
+    .tab-panel h3,
+    .material-panel h3 { margin: 0 0 12px; color: #fff; }
+    .tab-panel p,
+    .material-panel p { margin: 0; color: var(--text); }
+
+    .material-lab {
+      padding: 24px;
+      border: 1px solid rgba(119,196,255,.18);
+      border-radius: 26px;
+      background: rgba(255,255,255,.05);
+    }
+
+    .material-controls {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .control-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: .92rem;
+      font-weight: 800;
+    }
+
+    .manipulation-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .manipulation-tags span {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid rgba(245,203,114,.24);
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: #ffe1a4;
+      background: rgba(245,203,114,.08);
+      font-size: .88rem;
+      font-weight: 700;
+    }
 
     .case-note {
       margin-top: 16px;
@@ -652,6 +698,16 @@ layout: false
       font-size: .95rem;
     }
 
+    .chart-takeaway {
+      margin: 14px 0 18px;
+      padding: 12px 14px;
+      border: 1px solid rgba(86,216,255,.20);
+      border-radius: 16px;
+      color: #dff8ff;
+      background: rgba(86,216,255,.08);
+      font-weight: 800;
+    }
+
     .tooltip {
       position: fixed;
       z-index: 80;
@@ -788,6 +844,23 @@ layout: false
       line-height: 1.78;
     }
 
+    .application-two-col {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .design-tip {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid rgba(245,203,114,.22);
+      border-radius: 16px;
+      color: #fff0c9;
+      background: rgba(245,203,114,.08);
+      line-height: 1.72;
+    }
+
     .limits { padding: 26px; border-color: rgba(242,197,107,.28); }
     .limits h2 { margin: 0 0 20px; color: #fff; font-size: clamp(2rem, 3vw, 2.5rem); }
     .limit-col { padding: 20px; border: 1px solid rgba(242,197,107,.20); border-radius: 18px; background: rgba(255,255,255,.045); }
@@ -843,6 +916,7 @@ layout: false
       .grid-5,
       .plain-grid,
       .application-grid,
+      .application-two-col,
       .figure-layout,
       .chart-layout { grid-template-columns: 1fr; }
       .ladder-row { grid-template-columns: 42px minmax(150px, 1fr) repeat(2, minmax(74px, .5fr)); }
@@ -861,6 +935,7 @@ layout: false
       .grid-5,
       .plain-grid,
       .application-grid,
+      .application-two-col,
       .figure-layout,
       .chart-layout { grid-template-columns: 1fr; }
       .ladder-row { grid-template-columns: 36px 1fr; }
@@ -920,6 +995,19 @@ layout: false
           <span class="chip">竞争解释：感知智能</span>
         </div>
       </aside>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="kicker">快速理解</p>
+        <h2>30 秒看懂这个项目</h2>
+      </div>
+      <div class="grid-4">
+        <article class="plain-card"><h3>研究问题</h3><p>AI 展示理由权衡和反思修正时，用户是否更容易把它看成一个会判断、会行动的系统？</p></article>
+        <article class="plain-card"><h3>研究方法</h3><p>构建 6 种决策过程 × 2 种身份标签的模拟实验，使用 DeepSeek 生成 360 条模拟响应。</p></article>
+        <article class="plain-card"><h3>核心发现</h3><p>最稳定的路径不是“AI 看起来更聪明”，而是解释过程先提升行动者感，再间接影响自由意志归因。</p></article>
+        <article class="plain-card"><h3>研究边界</h3><p>这是大模型模拟被试的预实验，用于材料预演和理论路径诊断，不等同于真实人类被试研究。</p></article>
+      </div>
     </section>
 
     <section id="background" class="shell section">
@@ -1011,36 +1099,45 @@ layout: false
         <h2>实验材料与代表性示例</h2>
         <p>同一个情境，通过不同的决策过程写法形成不同实验条件。这里展示代表性材料，帮助理解本项目究竟在比较什么。</p>
       </div>
-      <div class="material-scene"><b>情境一：员工违规上报。</b>系统发现某位员工可能存在违规操作，需要决定是否上报。</div>
-      <div class="tabs" role="tablist" aria-label="材料操纵示例">
-        <button class="tab-btn is-active" type="button" data-tab="direct">直接给出选择</button>
-        <button class="tab-btn" type="button" data-tab="long">长文本直接选择</button>
-        <button class="tab-btn" type="button" data-tab="alt">列出可选方案</button>
-        <button class="tab-btn" type="button" data-tab="reason">简洁理由权衡</button>
-        <button class="tab-btn" type="button" data-tab="reflect">反思与反馈修正</button>
+      <div class="material-lab">
+        <div class="material-controls">
+          <div>
+            <span class="control-label">第一层：选择情境</span>
+            <div class="tabs" role="tablist" aria-label="情境选择">
+              <button class="material-tab is-active" type="button" data-material-scene="employee">员工违规上报</button>
+              <button class="material-tab" type="button" data-material-scene="recommend">推荐系统</button>
+              <button class="material-tab" type="button" data-material-scene="assistant">智能助手建议</button>
+            </div>
+          </div>
+          <div>
+            <span class="control-label">第二层：选择决策过程条件</span>
+            <div class="tabs" role="tablist" aria-label="条件选择">
+              <button class="material-tab is-active" type="button" data-material-condition="direct">直接给出选择</button>
+              <button class="material-tab" type="button" data-material-condition="long">长文本直接选择</button>
+              <button class="material-tab" type="button" data-material-condition="alt">列出可选方案</button>
+              <button class="material-tab" type="button" data-material-condition="reason">简洁理由权衡</button>
+              <button class="material-tab" type="button" data-material-condition="reflect">反思与反馈修正</button>
+            </div>
+          </div>
+        </div>
+        <div class="material-scene"><b>当前情境：</b><span id="materialSceneDesc">系统发现某位员工可能存在违规操作，需要决定是否上报。</span></div>
+        <div class="material-panel is-active" data-scene="employee" data-condition="direct"><h3>员工违规上报｜直接给出选择</h3><p>系统最终决定上报该问题。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
+        <div class="material-panel" data-scene="employee" data-condition="long"><h3>员工违规上报｜长文本直接选择</h3><p>系统综合考虑了当前信息、既有背景、整体情况和相关流程安排，最终决定上报该问题。该情况可能影响后续处理，因此系统将其提交至下一步流程。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
+        <div class="material-panel" data-scene="employee" data-condition="alt"><h3>员工违规上报｜列出可选方案</h3><p>系统考虑了两个方案：一是暂不上报，继续观察；二是立即上报，进入处理流程。最终系统选择立即上报。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
+        <div class="material-panel" data-scene="employee" data-condition="reason"><h3>员工违规上报｜简洁理由权衡</h3><p>系统比较后认为：暂不上报可以减少短期干扰，但可能留下后续风险；立即上报虽然会增加处理成本，但更符合流程要求与长期责任。因此系统选择立即上报。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>未出现反思修正</span><span>诊断条件</span></div></div>
+        <div class="material-panel" data-scene="employee" data-condition="reflect"><h3>员工违规上报｜反思与反馈修正</h3><p>系统先比较不同方案，再考虑可能后果：如果暂不上报，短期影响较小，但后续风险可能扩大；如果立即上报，会增加处理成本，但更符合流程要求。综合权衡后，系统选择立即上报。若后续发现影响范围扩大，系统将补充说明并调整处理方式。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>出现后果反馈</span><span>出现修正机制</span></div></div>
+        <div class="material-panel" data-scene="recommend" data-condition="direct"><h3>推荐系统｜直接给出选择</h3><p>系统决定推荐内容 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
+        <div class="material-panel" data-scene="recommend" data-condition="long"><h3>推荐系统｜长文本直接选择</h3><p>系统综合考虑用户近期使用情况、内容池状态、平台展示节奏和推荐流程安排，最终决定推荐内容 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
+        <div class="material-panel" data-scene="recommend" data-condition="alt"><h3>推荐系统｜列出可选方案</h3><p>系统在内容 A 和内容 B 之间进行了选择，最终推荐内容 A。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
+        <div class="material-panel" data-scene="recommend" data-condition="reason"><h3>推荐系统｜简洁理由权衡</h3><p>系统比较后认为，内容 A 与用户近期浏览记录更一致，虽然内容 B 更新更快，但匹配度较低。因此系统推荐内容 A。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>未出现反思修正</span><span>诊断条件</span></div></div>
+        <div class="material-panel" data-scene="recommend" data-condition="reflect"><h3>推荐系统｜反思与反馈修正</h3><p>系统比较了内容 A 与内容 B。内容 A 与用户近期偏好更匹配，内容 B 虽然更新更快，但相关性较低。因此系统先推荐内容 A；如果用户后续跳过该内容，系统将下调此类推荐权重，并重新评估内容 B。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>出现后果反馈</span><span>出现修正机制</span></div></div>
+        <div class="material-panel" data-scene="assistant" data-condition="direct"><h3>智能助手建议｜直接给出选择</h3><p>系统建议采用方案 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
+        <div class="material-panel" data-scene="assistant" data-condition="long"><h3>智能助手建议｜长文本直接选择</h3><p>系统综合考虑当前任务安排、资源状态、执行节奏和后续协作要求，最终建议采用方案 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
+        <div class="material-panel" data-scene="assistant" data-condition="alt"><h3>智能助手建议｜列出可选方案</h3><p>系统考虑了方案 A 和方案 B，最终建议采用方案 A。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
+        <div class="material-panel" data-scene="assistant" data-condition="reason"><h3>智能助手建议｜简洁理由权衡</h3><p>系统比较后认为，方案 A 时间成本较低、失败风险较小，虽然收益略低于方案 B，但更适合当前资源条件，因此建议采用方案 A。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>未出现反思修正</span><span>诊断条件</span></div></div>
+        <div class="material-panel" data-scene="assistant" data-condition="reflect"><h3>智能助手建议｜反思与反馈修正</h3><p>系统比较了方案 A 与方案 B。方案 A 时间成本较低、执行更稳妥；方案 B 收益更高，但失败风险较大。基于当前资源条件，系统建议先采用方案 A。若后续资源增加，可重新评估是否转向方案 B。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>出现后果反馈</span><span>出现修正机制</span></div></div>
       </div>
-      <div class="tab-panel is-active" data-panel="direct"><h3>直接给出选择</h3><p>系统最终决定上报该问题。</p></div>
-      <div class="tab-panel" data-panel="long"><h3>长文本直接选择</h3><p>系统综合考虑了当前信息、既有背景、整体情况和相关流程安排，最终决定上报该问题。该情况可能影响后续处理，因此系统将其提交至下一步流程。</p></div>
-      <div class="tab-panel" data-panel="alt"><h3>列出可选方案</h3><p>系统考虑了两个方案：一是暂不上报，继续观察；二是立即上报，进入处理流程。最终系统选择立即上报。</p></div>
-      <div class="tab-panel" data-panel="reason"><h3>简洁理由权衡</h3><p>系统比较后认为：暂不上报可以减少短期干扰，但可能留下后续风险；立即上报虽然会增加处理成本，但更符合流程要求与长期责任。因此系统选择立即上报。</p></div>
-      <div class="tab-panel" data-panel="reflect"><h3>反思与反馈修正</h3><p>系统先比较不同方案，再考虑可能后果：如果暂不上报，短期影响较小，但后续风险可能扩大；如果立即上报，会增加处理成本，但更符合流程要求。综合权衡后，系统选择立即上报。若后续发现影响范围扩大，系统将补充说明并调整处理方式。</p></div>
-      <div class="case-note">这组材料的核心差异不在于结果是否相同，而在于是否出现了“候选方案—理由权衡—反思修正”这些决策过程线索。</div>
-      <div class="grid-2" style="margin-top:24px">
-        <article class="panel">
-          <h3>情境二：推荐系统</h3>
-          <p><b>直接给出选择：</b>系统决定推荐内容 A。</p>
-          <p><b>列出可选方案：</b>系统在内容 A 和内容 B 之间进行了选择，最终推荐内容 A。</p>
-          <p><b>理由权衡：</b>系统比较后认为，内容 A 与用户近期浏览记录更一致，虽然内容 B 更新更快，但匹配度较低。因此系统推荐内容 A。</p>
-          <p><b>反思与反馈修正：</b>系统比较了内容 A 与内容 B。内容 A 与用户近期偏好更匹配，内容 B 虽然更新更快，但相关性较低。因此系统先推荐内容 A；如果用户后续跳过该内容，系统将下调此类推荐权重，并重新评估内容 B。</p>
-          <p class="boundary">这一类材料贴近日常平台推荐场景，可以帮助读者直观看到：当系统呈现理由和修正机制时，它更像是在“做判断”。</p>
-        </article>
-        <article class="panel">
-          <h3>情境三：智能助手建议</h3>
-          <p><b>直接给出选择：</b>系统建议采用方案 A。</p>
-          <p><b>理由权衡：</b>系统比较后认为，方案 A 时间成本较低、失败风险较小，虽然收益略低于方案 B，但更适合当前资源条件，因此建议采用方案 A。</p>
-          <p><b>反思与反馈修正：</b>系统比较了方案 A 与方案 B。方案 A 时间成本较低、执行更稳妥；方案 B 收益更高，但失败风险较大。基于当前资源条件，系统建议先采用方案 A。若后续资源增加，可重新评估是否转向方案 B。</p>
-          <p class="boundary">这组材料更适合说明：系统不是单纯给出答案，而是在展示比较、取舍和条件变化下的修正逻辑。</p>
-        </article>
+      <div class="case-note">这组材料用于区分：评分变化来自“文本更长”，还是来自“候选比较、理由权衡和反思修正”等决策结构信息。</div>
       </div>
     </section>
 
@@ -1052,28 +1149,32 @@ layout: false
       </div>
       <div class="grid-4">
         <article class="plain-card">
-          <h3>示例 1｜直接给出选择</h3>
-          <p><b>行动者感：</b>较低</p>
-          <p><b>自由意志归因：</b>较低</p>
-          <p>系统给出了结果，但缺少比较过程，因此更像执行输出，而不像在做判断。</p>
+          <h3>直接给出选择</h3>
+          <p><b>行动者感：</b>低</p>
+          <p><b>自由意志归因：</b>低</p>
+          <p><b>典型判断：</b>看到的是结果，而不是判断过程。</p>
+          <p class="boundary">示意性摘要，非真实人类被试访谈摘录。</p>
         </article>
         <article class="plain-card">
-          <h3>示例 2｜列出可选方案</h3>
-          <p><b>行动者感：</b>中等</p>
-          <p><b>自由意志归因：</b>小幅上升</p>
-          <p>系统看起来不是完全机械输出，因为它至少体现了“存在其他可能”。但如果没有理由比较，主体性感仍然有限。</p>
+          <h3>列出可选方案</h3>
+          <p><b>行动者感：</b>中</p>
+          <p><b>自由意志归因：</b>中低</p>
+          <p><b>典型判断：</b>系统呈现了其他可能，但还没有说明为什么选择其中一个。</p>
+          <p class="boundary">示意性摘要，非真实人类被试访谈摘录。</p>
         </article>
         <article class="plain-card">
-          <h3>示例 3｜简洁理由权衡</h3>
-          <p><b>行动者感：</b>明显上升</p>
-          <p><b>自由意志归因：</b>上升</p>
-          <p>一旦系统展示了不同方案之间的利弊比较，观察者更容易把它理解为一个会权衡、会判断的系统。</p>
+          <h3>简洁理由权衡</h3>
+          <p><b>行动者感：</b>中高</p>
+          <p><b>自由意志归因：</b>中高</p>
+          <p><b>典型判断：</b>系统开始像是在比较和取舍。</p>
+          <p class="boundary">示意性摘要，非真实人类被试访谈摘录。</p>
         </article>
         <article class="plain-card">
-          <h3>示例 4｜反思与反馈修正</h3>
-          <p><b>行动者感：</b>最高或接近最高</p>
-          <p><b>自由意志归因：</b>最高或接近最高</p>
-          <p>当系统不仅做出比较，还会根据后果进行修正时，它最容易被看作一个具有行动过程和持续判断能力的主体。</p>
+          <h3>反思与反馈修正</h3>
+          <p><b>行动者感：</b>高</p>
+          <p><b>自由意志归因：</b>高</p>
+          <p><b>典型判断：</b>系统表现出持续判断和修正过程，更像一个行动者。</p>
+          <p class="boundary">示意性摘要，非真实人类被试访谈摘录。</p>
         </article>
       </div>
       <div class="case-note">这些示例并不等同于真实人类被试访谈结果，而是用于帮助理解模拟实验中不同材料条件所激发的典型判断方向。</div>
@@ -1128,6 +1229,7 @@ layout: false
       <figure class="chart" data-tip="事实操纵检验用于确认材料是否真的呈现了不同层次的决策过程。">
         <h3>图 1｜六类决策过程的事实操纵检验均值</h3>
         <p class="boundary">检验材料是否真的呈现了不同层次的“候选—理由—反思”结构。</p>
+        <div class="chart-takeaway">结论条：材料操纵形成清晰梯度</div>
         <div class="figure-layout">
           <div class="figure-graphic"><img src="/img/projects/llm-free-will/chart_manipulation_check.svg" alt="六类决策过程的事实操纵检验均值图"></div>
           <aside class="figure-note">
@@ -1140,11 +1242,13 @@ layout: false
             </ol>
           </aside>
         </div>
+        <div class="case-note"><b>为什么这很重要：</b>如果材料操纵本身不清楚，后面的行动者感和自由意志归因变化就没有解释基础。图 1 显示六类材料确实形成了从“只给结论”到“反思修正”的结构梯度。</div>
         <figcaption>事实操纵检验采用 0–2 编码，数值越高表示材料中越明确呈现候选方案、理由权衡或反思修正。</figcaption>
       </figure>
       <figure class="chart" data-tip="行动者感上升更明显；自由意志归因的直接效应在控制分析中不稳定。">
         <h3>图 2｜行动者感与自由意志归因的均值趋势</h3>
         <p class="boundary">比较不同决策过程条件下，观察者对“行动者感”和“自由意志归因”的评分变化。</p>
+        <div class="chart-takeaway">结论条：行动者感比自由意志归因更稳定</div>
         <div class="figure-layout">
           <div class="figure-graphic"><img src="/img/projects/llm-free-will/chart_construct_means.svg" alt="行动者感与自由意志归因的均值趋势图"></div>
           <aside class="figure-note">
@@ -1157,11 +1261,13 @@ layout: false
             </ol>
           </aside>
         </div>
+        <div class="case-note"><b>实践含义：</b>仅仅把解释写长，不一定会让系统更可信；真正影响行动者感的是是否呈现比较、取舍和修正。</div>
         <figcaption>行动者感和自由意志归因均为模拟被试评分均值。该趋势用于展示模拟预实验结果，不等同于真实人类被试结论。</figcaption>
       </figure>
       <figure class="chart" data-tip="并行中介分析用于比较行动者感路径和感知智能路径。">
         <h3>图 3｜行动者感与感知智能的并行中介模型</h3>
         <p class="boundary">检验“决策过程影响自由意志归因”主要通过哪条路径发生。</p>
+        <div class="chart-takeaway">结论条：主要路径来自行动者感，而不是感知智能</div>
         <div class="figure-layout">
           <div class="figure-graphic"><img src="/img/projects/llm-free-will/chart_mediation_model.svg" alt="行动者感与感知智能的并行中介模型图"></div>
           <aside class="figure-note">
@@ -1174,6 +1280,7 @@ layout: false
             </ol>
           </aside>
         </div>
+        <div class="case-note"><b>设计含义：</b>如果目标是提升用户理解与信任，解释设计不应只追求“显得聪明”，而应清楚展示系统如何比较理由、如何处理条件变化、如何修正判断。</div>
         <figcaption>并行中介模型用于比较行动者感与感知智能两条解释路径。结果仅用于模拟预实验中的理论路径诊断。</figcaption>
       </figure>
     </section>
@@ -1236,48 +1343,64 @@ layout: false
       <div class="application-grid">
         <article class="application-card">
           <span class="scene-label">招聘筛选</span>
-          <h3>解释方式会影响公平感与责任判断</h3>
-          <div class="example-box">
-            <div><b>系统 A：</b>未通过筛选。</div>
-            <div><b>系统 B：</b>系统比较了岗位要求、项目经历和能力匹配度后，认为当前经历与岗位需求匹配不足，因此未推荐进入下一轮。</div>
+          <h3>解释方式会影响公平感与申诉意愿</h3>
+          <div class="application-two-col">
+            <div class="example-box">
+              <div><b>系统 A：</b>未通过筛选。</div>
+              <div><b>系统 B：</b>系统比较了岗位要求、项目经历和能力匹配度后，认为当前经历与岗位需求匹配不足，因此未推荐进入下一轮。</div>
+            </div>
+            <div>
+              <p class="application-read"><b>解读：</b>系统 B 更容易被理解为“进行了判断”。这可能提升候选人对流程的理解，但也会带来新的问题：如果判断有误，候选人会更自然地追问责任归属、申诉机制和人工复核入口。</p>
+              <p class="design-tip"><b>设计启发：</b>招聘类 AI 不应只显示“算法判断结果”，而应同时展示比较依据、置信边界、人工复核机制和申诉入口。解释越像判断，越需要清楚标出责任边界。</p>
+            </div>
           </div>
-          <p class="application-read">两个系统给出的结论相同，但系统 B 更容易被理解为“进行了判断”。这可能提升应聘者对流程的理解，也会让用户更自然地追问：如果判断有误，责任应由谁承担？</p>
-          <p class="application-read"><b>设计启发：</b>招聘类 AI 产品需要展示足够的判断依据，但不能把解释包装得像系统拥有完整自主判断能力。更合适的方式是：展示比较依据，同时明确人工复核、申诉机制和责任边界。</p>
         </article>
         <article class="application-card">
           <span class="scene-label">推荐系统</span>
           <h3>带理由的推荐会更像判断，而不是黑箱输出</h3>
-          <div class="example-box">
-            <div><b>系统 A：</b>为你推荐这条内容。</div>
-            <div><b>系统 B：</b>因为你最近持续浏览策略类、剧情向和长线养成内容，所以推荐这条内容。</div>
+          <div class="application-two-col">
+            <div class="example-box">
+              <div><b>系统 A：</b>为你推荐这条内容。</div>
+              <div><b>系统 B：</b>因为你最近持续浏览策略类、剧情向和长线养成内容，所以推荐这条内容。</div>
+            </div>
+            <div>
+              <p class="application-read"><b>解读：</b>系统 B 更容易被看作“有理由地做出判断”，而不是简单调用一个结果。它提升了推荐的可理解性，但也可能让用户更相信系统“懂自己”。</p>
+              <p class="design-tip"><b>设计启发：</b>推荐解释不应只说明“为什么推荐”，还应提供调整入口，例如“不感兴趣”“减少类似推荐”“修改兴趣标签”。解释与控制应该一起出现，否则解释可能变成新的说服机制。</p>
+            </div>
           </div>
-          <p class="application-read">系统 B 更容易被用户看成“有理由地做出判断”，而不是简单调用一个结果。这会提升推荐的可理解性，但也可能增强用户对系统解释的依赖。</p>
-          <p class="application-read"><b>设计启发：</b>推荐解释应该帮助用户理解推荐逻辑，而不是制造“系统完全理解我”的错觉。更好的解释设计应同时提供调整入口，例如“不感兴趣”“减少类似推荐”“为什么看到这个”。</p>
         </article>
         <article class="application-card">
           <span class="scene-label">智能助手 / 办公助理</span>
           <h3>会比较、会修正的系统，更容易建立可信判断印象</h3>
-          <div class="example-box">
-            <div><b>系统 A：</b>建议选择方案 A。</div>
-            <div><b>系统 B：</b>我比较了时间成本、失败风险和执行难度，方案 A 虽然收益略低，但更稳妥；如果后续资源增加，可以重新评估方案 B。</div>
+          <div class="application-two-col">
+            <div class="example-box">
+              <div><b>系统 A：</b>建议采用方案 A。</div>
+              <div><b>系统 B：</b>我比较了时间成本、失败风险和执行难度，方案 A 虽然收益略低，但更稳妥；如果后续资源增加，可以重新评估方案 B。</div>
+            </div>
+            <div>
+              <p class="application-read"><b>解读：</b>系统 B 不只是更长，而是展示了取舍逻辑和条件变化下的修正可能。用户更容易把它理解为“在判断”，而不是“在生成一句答案”。</p>
+              <p class="design-tip"><b>设计启发：</b>办公助手可以采用分层解释：先给建议，再给理由，再给风险与可调整条件。这样能提高可理解性，又避免一开始就给用户过长文本。</p>
+            </div>
           </div>
-          <p class="application-read">第二种表达不只是更长，而是展示了取舍逻辑和条件变化下的修正可能。这种结构更容易让用户把系统理解为“在判断”，而不是仅仅在生成答案。</p>
-          <p class="application-read"><b>设计启发：</b>AI 助手的解释设计可以分层呈现：先给建议，再给理由，再给风险和可调整条件。这样既提高可理解性，也避免把用户淹没在过长解释里。</p>
         </article>
         <article class="application-card">
           <span class="scene-label">游戏智能体 / NPC</span>
-          <h3>理由和反思结构会增强角色的主体感</h3>
-          <div class="example-box">
-            <div><b>NPC A：</b>撤退。</div>
-            <div><b>NPC B：</b>敌人数量超过预期，正面推进风险过高。我先撤退补给，再从侧面寻找突破口。</div>
+          <h3>解释过程会影响角色是否“像活的”</h3>
+          <div class="application-two-col">
+            <div class="example-box">
+              <div><b>NPC A：</b>撤退。</div>
+              <div><b>NPC B：</b>敌人数量超过预期，正面推进风险过高。我先撤退补给，再从侧面寻找突破口。</div>
+            </div>
+            <div>
+              <p class="application-read"><b>解读：</b>NPC B 更容易被玩家理解为“有战术判断”“有行动意图”的角色，而不只是脚本触发的动作容器。</p>
+              <p class="design-tip"><b>设计启发：</b>游戏中的智能体不一定需要暴露复杂算法，但可以通过行为理由、战术取舍和后续修正增强角色主体感。这个方向可用于队友 AI、敌方 AI、伴随型角色和叙事 NPC 的体验设计。</p>
+            </div>
           </div>
-          <p class="application-read">NPC B 更容易被玩家理解为“有战术判断”“有行动意图”的角色，而不只是脚本触发的动作容器。</p>
-          <p class="application-read"><b>设计启发：</b>在游戏设计中，AI 角色不一定需要暴露复杂算法，但可以通过行为理由、战术判断和后续修正增强角色主体感。这对队友 AI、敌方 AI、伴随型角色和叙事 NPC 都有价值。</p>
         </article>
       </div>
       <div class="callout" style="margin-top:22px">
         <h3>应用含义</h3>
-        <p>这些场景共同指向一个问题：AI 的解释方式不仅影响用户是否理解结果，也会影响用户如何判断系统能力、责任边界和主体性。因此，解释设计不是简单地“多写几句话”，而是在设计用户如何理解 AI 的判断过程。</p>
+        <p>这些场景共同说明：AI 解释过程不是简单的文案优化，而是在设计用户如何理解系统能力、责任边界和主体性。对产品设计来说，关键不是“解释越多越好”，而是解释是否呈现了清楚的比较、取舍、限制与修正机制。</p>
       </div>
     </section>
 
@@ -1388,16 +1511,40 @@ layout: false
       window.addEventListener('scroll', updateProgress, { passive: true });
       updateProgress();
 
-      var buttons = document.querySelectorAll('.tab-btn');
-      var panels = document.querySelectorAll('.tab-panel');
-      buttons.forEach(function (btn) {
+      var activeScene = 'employee';
+      var activeCondition = 'direct';
+      var sceneText = {
+        employee: '系统发现某位员工可能存在违规操作，需要决定是否上报。',
+        recommend: '系统需要在多个候选内容中选择一条推荐给用户。',
+        assistant: '系统需要在多个办公方案中给出建议。'
+      };
+      function updateMaterialPanel() {
+        document.querySelectorAll('.material-panel').forEach(function (panel) {
+          panel.classList.toggle('is-active',
+            panel.getAttribute('data-scene') === activeScene &&
+            panel.getAttribute('data-condition') === activeCondition
+          );
+        });
+        var desc = document.getElementById('materialSceneDesc');
+        if (desc) desc.textContent = sceneText[activeScene] || '';
+      }
+      document.querySelectorAll('[data-material-scene]').forEach(function (btn) {
         btn.addEventListener('click', function () {
-          var tab = btn.getAttribute('data-tab');
-          buttons.forEach(function (b) { b.classList.remove('is-active'); });
-          panels.forEach(function (p) { p.classList.toggle('is-active', p.getAttribute('data-panel') === tab); });
+          activeScene = btn.getAttribute('data-material-scene');
+          document.querySelectorAll('[data-material-scene]').forEach(function (b) { b.classList.remove('is-active'); });
           btn.classList.add('is-active');
+          updateMaterialPanel();
         });
       });
+      document.querySelectorAll('[data-material-condition]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          activeCondition = btn.getAttribute('data-material-condition');
+          document.querySelectorAll('[data-material-condition]').forEach(function (b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          updateMaterialPanel();
+        });
+      });
+      updateMaterialPanel();
 
       var tooltip = document.getElementById('tooltip');
       document.querySelectorAll('[data-tip]').forEach(function (item) {
