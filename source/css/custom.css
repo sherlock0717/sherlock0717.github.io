@@ -531,6 +531,11 @@ img { display: block; width: 100%; }
   object-position: center 45%;
 }
 
+.cover-fit--llm-freewill {
+  object-position: center 50%;
+  filter: saturate(1.02) brightness(.98) contrast(1.03);
+}
+
 .card-grid--projects-main {
   grid-template-columns: 1fr;
   gap: 28px;
@@ -1946,7 +1951,6 @@ body.portfolio-home::before {
 .hero-actions .pill-button {
   min-width: 148px;
 }
-
 
 
 

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" role="img" aria-labelledby="title desc">
+  <title id="title">AI 决策过程归因研究封面</title>
+  <desc id="desc">深蓝背景上的决策过程结构、行动者感和自由意志归因机制图。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16395f"/>
+      <stop offset="0.55" stop-color="#0f2948"/>
+      <stop offset="1" stop-color="#071626"/>
+    </linearGradient>
+    <linearGradient id="node" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#274f86"/>
+      <stop offset="1" stop-color="#16345d"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#6fa8ff"/>
+      <stop offset="1" stop-color="#56d8ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020914" flood-opacity=".32"/>
+    </filter>
+  </defs>
+  <rect width="1280" height="800" fill="url(#bg)"/>
+  <g opacity=".26">
+    <circle cx="178" cy="92" r="190" fill="#56d8ff"/>
+    <circle cx="1080" cy="150" r="210" fill="#6fa8ff"/>
+    <circle cx="880" cy="710" r="260" fill="#f5cb72"/>
+  </g>
+  <g opacity=".16" stroke="#d8ecff" stroke-width="1">
+    <path d="M0 110h1280M0 220h1280M0 330h1280M0 440h1280M0 550h1280M0 660h1280"/>
+    <path d="M120 0v800M260 0v800M400 0v800M540 0v800M680 0v800M820 0v800M960 0v800M1100 0v800"/>
+  </g>
+  <text x="92" y="92" fill="#9edfff" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="30" font-weight="700">AI Agent · 模拟预实验</text>
+  <text x="92" y="150" fill="#f4f8ff" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="54" font-weight="800">AI 决策过程归因研究</text>
+  <text x="92" y="205" fill="#c8d8ee" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="28" font-weight="500">解释过程如何影响行动者感与自由意志归因</text>
+  <g filter="url(#shadow)">
+    <rect x="92" y="318" width="300" height="140" rx="28" fill="url(#node)" stroke="#74caff" stroke-opacity=".42"/>
+    <rect x="490" y="318" width="300" height="140" rx="28" fill="url(#node)" stroke="#74caff" stroke-opacity=".42"/>
+    <rect x="888" y="318" width="300" height="140" rx="28" fill="url(#node)" stroke="#74caff" stroke-opacity=".42"/>
+  </g>
+  <text x="242" y="378" text-anchor="middle" fill="#f4f8ff" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="30" font-weight="800">决策过程结构</text>
+  <text x="242" y="420" text-anchor="middle" fill="#bad2ed" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="22">候选 · 理由 · 反思</text>
+  <text x="640" y="378" text-anchor="middle" fill="#f4f8ff" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="30" font-weight="800">行动者感</text>
+  <text x="640" y="420" text-anchor="middle" fill="#bad2ed" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="22">判断 · 行动 · 回应理由</text>
+  <text x="1038" y="378" text-anchor="middle" fill="#f4f8ff" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="30" font-weight="800">自由意志归因</text>
+  <text x="1038" y="420" text-anchor="middle" fill="#bad2ed" font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="22">像是在自主选择</text>
+  <path d="M414 388h54" stroke="url(#accent)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M468 388l-18-14v28z" fill="#56d8ff"/>
+  <path d="M812 388h54" stroke="url(#accent)" stroke-width="8" stroke-linecap="round"/>
+  <path d="M866 388l-18-14v28z" fill="#56d8ff"/>
+  <g font-family="Microsoft YaHei, PingFang SC, Segoe UI, sans-serif" font-size="22" font-weight="700">
+    <rect x="92" y="590" width="112" height="46" rx="23" fill="#f5cb72"/>
+    <text x="148" y="621" text-anchor="middle" fill="#081626">6 × 2</text>
+    <rect x="224" y="590" width="150" height="46" rx="23" fill="#203f6b" stroke="#6fa8ff" stroke-opacity=".45"/>
+    <text x="299" y="621" text-anchor="middle" fill="#e9f5ff">AI Agent</text>
+    <rect x="394" y="590" width="170" height="46" rx="23" fill="#203f6b" stroke="#56d8ff" stroke-opacity=".45"/>
+    <text x="479" y="621" text-anchor="middle" fill="#e9f5ff">研究原型</text>
+  </g>
+</svg>
