@@ -407,7 +407,7 @@ layout: false
 
     .ladder-row {
       display: grid;
-      grid-template-columns: 42px minmax(150px, 1fr) repeat(4, minmax(74px, .45fr));
+      grid-template-columns: 42px minmax(150px, 1fr) repeat(4, minmax(72px, .42fr)) minmax(150px, .82fr);
       gap: 10px;
       align-items: center;
       padding: 14px;
@@ -1083,7 +1083,7 @@ layout: false
     }
 
     .ladder-row {
-      grid-template-columns: 42px minmax(180px, 1fr) repeat(3, minmax(72px, .42fr)) minmax(180px, .92fr);
+      grid-template-columns: 42px minmax(170px, 1fr) repeat(4, minmax(72px, .42fr)) minmax(160px, .82fr);
     }
 
     .design-role {
@@ -1283,8 +1283,7 @@ layout: false
       .grid-4,
       .application-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       #data .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .ladder-row { grid-template-columns: 42px minmax(150px, 1fr) repeat(2, minmax(74px, .5fr)); }
-      .design-role { grid-column: 2 / -1; }
+      .ladder-row { grid-template-columns: 42px minmax(150px, 1fr) repeat(4, minmax(64px, .4fr)) minmax(140px, .76fr); }
       .hero { gap: 28px; padding-top: 64px; }
       .flow-track { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
@@ -1316,6 +1315,13 @@ layout: false
       .ladder-row.head { display: none; }
       .design-role { grid-column: 2; }
       .mark { justify-content: flex-start; padding: 7px 10px; }
+      .ladder-row:not(.head) .mark:nth-child(3)::before { content: "候选比较："; color: var(--muted); margin-right: 4px; }
+      .ladder-row:not(.head) .mark:nth-child(4)::before { content: "理由权衡："; color: var(--muted); margin-right: 4px; }
+      .ladder-row:not(.head) .mark:nth-child(5)::before { content: "反思修正："; color: var(--muted); margin-right: 4px; }
+      .ladder-row:not(.head) .mark:nth-child(6)::before { content: "诊断条件："; color: var(--muted); margin-right: 4px; }
+      .ladder-row:not(.head) .design-role::before { content: "设计作用："; color: var(--muted); margin-right: 4px; }
+      .ladder-row:not(.head) .mark.yes::before,
+      .ladder-row:not(.head) .mark.diag::before { color: rgba(6, 16, 33, .72); }
       .flow-track { display: grid; grid-template-columns: 1fr; }
       .flow-arrow { text-align: center; transform: rotate(90deg); }
       .result-list li { grid-template-columns: 1fr; }
@@ -1467,13 +1473,13 @@ layout: false
       </div>
       <div class="design-layout">
         <div class="ladder">
-          <div class="ladder-row head"><div></div><div>条件</div><div>候选比较</div><div>理由权衡</div><div>反思修正</div><div>设计作用</div></div>
-          <div class="ladder-row"><div class="step-num">1</div><div class="condition-name">直接给出选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark design-role">基线条件，只呈现结论。</div></div>
-          <div class="ladder-row"><div class="step-num">2</div><div class="condition-name">长文本直接选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark diag design-role">诊断条件：排除“只是文本更长”。</div></div>
-          <div class="ladder-row"><div class="step-num">3</div><div class="condition-name">列出可选方案</div><div class="mark yes">有</div><div class="mark">弱</div><div class="mark">无</div><div class="mark design-role">检查候选方案是否足够。</div></div>
-          <div class="ladder-row"><div class="step-num">4</div><div class="condition-name">简洁理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark diag design-role">诊断条件：检验短文本中的理由结构。</div></div>
-          <div class="ladder-row"><div class="step-num">5</div><div class="condition-name">完整理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark design-role">呈现更完整的利弊比较。</div></div>
-          <div class="ladder-row"><div class="step-num">6</div><div class="condition-name">反思与反馈修正</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark design-role">加入反馈、反思与后续修正。</div></div>
+          <div class="ladder-row head"><div></div><div>条件</div><div>候选比较</div><div>理由权衡</div><div>反思修正</div><div>诊断条件</div><div>设计作用</div></div>
+          <div class="ladder-row"><div class="step-num">1</div><div class="condition-name">直接给出选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark">否</div><div class="mark design-role">基线条件</div></div>
+          <div class="ladder-row"><div class="step-num">2</div><div class="condition-name">长文本直接选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark diag">是</div><div class="mark design-role">控制文本长度</div></div>
+          <div class="ladder-row"><div class="step-num">3</div><div class="condition-name">列出可选方案</div><div class="mark yes">有</div><div class="mark">弱</div><div class="mark">无</div><div class="mark">否</div><div class="mark design-role">检查候选本身</div></div>
+          <div class="ladder-row"><div class="step-num">4</div><div class="condition-name">简洁理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark diag">是</div><div class="mark design-role">检查理由结构</div></div>
+          <div class="ladder-row"><div class="step-num">5</div><div class="condition-name">完整理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark">否</div><div class="mark design-role">强化理由比较</div></div>
+          <div class="ladder-row"><div class="step-num">6</div><div class="condition-name">反思与反馈修正</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">否</div><div class="mark design-role">最高结构条件</div></div>
         </div>
         <aside class="model summary-list">
           <div><span>决策过程</span><strong>6 种</strong></div>
@@ -1516,18 +1522,18 @@ layout: false
         <div class="material-panel is-active" data-scene="employee" data-condition="direct"><h3>员工违规上报｜直接给出选择</h3><p>系统最终决定上报该问题。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
         <div class="material-panel" data-scene="employee" data-condition="long"><h3>员工违规上报｜长文本直接选择</h3><p>系统综合考虑了当前信息、既有背景、整体情况和相关流程安排，最终决定上报该问题。该情况可能影响后续处理，因此系统将其提交至下一步流程。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
         <div class="material-panel" data-scene="employee" data-condition="alt"><h3>员工违规上报｜列出可选方案</h3><p>系统考虑了两个方案：一是暂不上报，继续观察；二是立即上报，进入处理流程。最终系统选择立即上报。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
-        <div class="material-panel" data-scene="employee" data-condition="reason"><h3>员工违规上报｜简洁理由权衡</h3><p>系统比较后认为：暂不上报可以减少短期干扰，但可能留下后续风险；立即上报虽然会增加处理成本，但更符合流程要求与长期责任。因此系统选择立即上报。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>未出现反思修正</span><span>诊断条件</span></div></div>
-        <div class="material-panel" data-scene="employee" data-condition="reflect"><h3>员工违规上报｜反思与反馈修正</h3><p>系统先比较不同方案，再考虑可能后果：如果暂不上报，短期影响较小，但后续风险可能扩大；如果立即上报，会增加处理成本，但更符合流程要求。综合权衡后，系统选择立即上报。若后续发现影响范围扩大，系统将补充说明并调整处理方式。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>出现后果反馈</span><span>出现修正机制</span></div></div>
+        <div class="material-panel" data-scene="employee" data-condition="reason"><h3>员工违规上报｜简洁理由权衡</h3><p>系统比较后认为：暂不上报可以减少短期干扰，但可能留下后续风险；立即上报虽然会增加处理成本，但更符合流程要求与长期责任。因此系统选择立即上报。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：有</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
+        <div class="material-panel" data-scene="employee" data-condition="reflect"><h3>员工违规上报｜反思与反馈修正</h3><p>系统先比较不同方案，再考虑可能后果：如果暂不上报，短期影响较小，但后续风险可能扩大；如果立即上报，会增加处理成本，但更符合流程要求。综合权衡后，系统选择立即上报。若后续发现影响范围扩大，系统将补充说明并调整处理方式。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：有</span><span>反思修正：有</span><span>诊断条件：否</span></div></div>
         <div class="material-panel" data-scene="recommend" data-condition="direct"><h3>推荐系统｜直接给出选择</h3><p>系统决定推荐内容 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
         <div class="material-panel" data-scene="recommend" data-condition="long"><h3>推荐系统｜长文本直接选择</h3><p>系统综合考虑用户近期使用情况、内容池状态、平台展示节奏和推荐流程安排，最终决定推荐内容 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
         <div class="material-panel" data-scene="recommend" data-condition="alt"><h3>推荐系统｜列出可选方案</h3><p>系统在内容 A 和内容 B 之间进行了选择，最终推荐内容 A。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
-        <div class="material-panel" data-scene="recommend" data-condition="reason"><h3>推荐系统｜简洁理由权衡</h3><p>系统比较后认为，内容 A 与用户近期浏览记录更一致，虽然内容 B 更新更快，但匹配度较低。因此系统推荐内容 A。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>未出现反思修正</span><span>诊断条件</span></div></div>
-        <div class="material-panel" data-scene="recommend" data-condition="reflect"><h3>推荐系统｜反思与反馈修正</h3><p>系统比较了内容 A 与内容 B。内容 A 与用户近期偏好更匹配，内容 B 虽然更新更快，但相关性较低。因此系统先推荐内容 A；如果用户后续跳过该内容，系统将下调此类推荐权重，并重新评估内容 B。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>出现后果反馈</span><span>出现修正机制</span></div></div>
+        <div class="material-panel" data-scene="recommend" data-condition="reason"><h3>推荐系统｜简洁理由权衡</h3><p>系统比较后认为，内容 A 与用户近期浏览记录更一致，虽然内容 B 更新更快，但匹配度较低。因此系统推荐内容 A。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：有</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
+        <div class="material-panel" data-scene="recommend" data-condition="reflect"><h3>推荐系统｜反思与反馈修正</h3><p>系统比较了内容 A 与内容 B。内容 A 与用户近期偏好更匹配，内容 B 虽然更新更快，但相关性较低。因此系统先推荐内容 A；如果用户后续跳过该内容，系统将下调此类推荐权重，并重新评估内容 B。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：有</span><span>反思修正：有</span><span>诊断条件：否</span></div></div>
         <div class="material-panel" data-scene="assistant" data-condition="direct"><h3>智能助手建议｜直接给出选择</h3><p>系统建议采用方案 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
         <div class="material-panel" data-scene="assistant" data-condition="long"><h3>智能助手建议｜长文本直接选择</h3><p>系统综合考虑当前任务安排、资源状态、执行节奏和后续协作要求，最终建议采用方案 A。</p><div class="manipulation-tags"><span>候选比较：无</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
         <div class="material-panel" data-scene="assistant" data-condition="alt"><h3>智能助手建议｜列出可选方案</h3><p>系统考虑了方案 A 和方案 B，最终建议采用方案 A。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：无</span><span>反思修正：无</span><span>诊断条件：否</span></div></div>
-        <div class="material-panel" data-scene="assistant" data-condition="reason"><h3>智能助手建议｜简洁理由权衡</h3><p>系统比较后认为，方案 A 时间成本较低、失败风险较小，虽然收益略低于方案 B，但更适合当前资源条件，因此建议采用方案 A。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>未出现反思修正</span><span>诊断条件</span></div></div>
-        <div class="material-panel" data-scene="assistant" data-condition="reflect"><h3>智能助手建议｜反思与反馈修正</h3><p>系统比较了方案 A 与方案 B。方案 A 时间成本较低、执行更稳妥；方案 B 收益更高，但失败风险较大。基于当前资源条件，系统建议先采用方案 A。若后续资源增加，可重新评估是否转向方案 B。</p><div class="manipulation-tags"><span>出现候选比较</span><span>出现理由权衡</span><span>出现后果反馈</span><span>出现修正机制</span></div></div>
+        <div class="material-panel" data-scene="assistant" data-condition="reason"><h3>智能助手建议｜简洁理由权衡</h3><p>系统比较后认为，方案 A 时间成本较低、失败风险较小，虽然收益略低于方案 B，但更适合当前资源条件，因此建议采用方案 A。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：有</span><span>反思修正：无</span><span>诊断条件：是</span></div></div>
+        <div class="material-panel" data-scene="assistant" data-condition="reflect"><h3>智能助手建议｜反思与反馈修正</h3><p>系统比较了方案 A 与方案 B。方案 A 时间成本较低、执行更稳妥；方案 B 收益更高，但失败风险较大。基于当前资源条件，系统建议先采用方案 A。若后续资源增加，可重新评估是否转向方案 B。</p><div class="manipulation-tags"><span>候选比较：有</span><span>理由权衡：有</span><span>反思修正：有</span><span>诊断条件：否</span></div></div>
       </div>
       <div class="case-note">这组材料用于区分：评分变化来自“文本更长”，还是来自“候选比较、理由权衡和反思修正”等决策结构信息。</div>
     </section>
@@ -1581,14 +1587,14 @@ layout: false
         <div class="flow-track">
           <div class="flow-step">现实问题</div><span class="flow-arrow">→</span>
           <div class="flow-step">变量拆解</div><span class="flow-arrow">→</span>
-          <div class="flow-step">6 × 2 材料设计</div><span class="flow-arrow">→</span>
-          <div class="flow-step">DeepSeek 模拟被试</div><span class="flow-arrow">→</span>
-          <div class="flow-step">结构化数据保存</div><span class="flow-arrow">→</span>
-          <div class="flow-step">构念得分计算</div><span class="flow-arrow">→</span>
-          <div class="flow-step">事实操纵检验</div><span class="flow-arrow">→</span>
+          <div class="flow-step">材料设计</div><span class="flow-arrow">→</span>
+          <div class="flow-step">模拟被试</div><span class="flow-arrow">→</span>
+          <div class="flow-step">数据保存</div><span class="flow-arrow">→</span>
+          <div class="flow-step">得分计算</div><span class="flow-arrow">→</span>
+          <div class="flow-step">操纵检验</div><span class="flow-arrow">→</span>
           <div class="flow-step">控制回归</div><span class="flow-arrow">→</span>
-          <div class="flow-step">并行中介分析</div><span class="flow-arrow">→</span>
-          <div class="flow-step">自动生成报告</div>
+          <div class="flow-step">中介分析</div><span class="flow-arrow">→</span>
+          <div class="flow-step">报告生成</div>
         </div>
       </div>
     </section>
