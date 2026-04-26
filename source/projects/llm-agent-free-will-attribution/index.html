@@ -37,6 +37,7 @@ layout: false
     }
 
     * { box-sizing: border-box; }
+    [hidden] { display: none !important; }
     html {
       scroll-behavior: smooth;
       scroll-padding-top: 88px;
@@ -398,6 +399,108 @@ layout: false
       grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
       gap: 22px;
       align-items: stretch;
+    }
+
+    .design-table-card {
+      overflow: hidden;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 20px;
+      background: rgba(255,255,255,.045);
+      box-shadow: 0 18px 54px rgba(0,0,0,.16);
+    }
+
+    .design-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .design-matrix th,
+    .design-matrix td {
+      padding: 16px 14px;
+      border-bottom: 1px solid rgba(119,196,255,.12);
+      color: var(--text-secondary);
+      text-align: center;
+      vertical-align: middle;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .design-matrix th {
+      color: #fff;
+      background: rgba(255,255,255,.07);
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .design-matrix td:first-child,
+    .design-matrix th:first-child {
+      width: 24%;
+      text-align: left;
+    }
+
+    .design-matrix td:last-child,
+    .design-matrix th:last-child {
+      width: 18%;
+      text-align: left;
+    }
+
+    .design-matrix tr:last-child td { border-bottom: 0; }
+
+    .table-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 38px;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      color: #cfe0f7;
+      background: rgba(255,255,255,.07);
+      font-weight: 800;
+      line-height: 1.3;
+      white-space: nowrap;
+    }
+
+    .table-chip.yes { color: #07101f; background: var(--cyan); }
+    .table-chip.diag { color: #07101f; background: var(--amber); }
+
+    .design-mobile-cards {
+      display: none;
+      gap: 14px;
+    }
+
+    .design-condition-card {
+      padding: 18px;
+      border: 1px solid rgba(119,196,255,.16);
+      border-radius: 18px;
+      background: rgba(255,255,255,.052);
+    }
+
+    .design-condition-card h3 {
+      margin: 0 0 12px;
+      color: #fff;
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    .design-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .design-card-grid span {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,.06);
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
     .ladder {
@@ -805,6 +908,21 @@ layout: false
       letter-spacing: 0;
     }
 
+    .title-tag {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 10px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      color: #07101f;
+      background: var(--accent-gold);
+      font-size: 13.5px;
+      line-height: 1.55;
+      font-weight: 800;
+      white-space: nowrap;
+      vertical-align: 2px;
+    }
+
     .example-box {
       display: grid;
       gap: 10px;
@@ -1138,13 +1256,30 @@ layout: false
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 12px;
       align-items: stretch;
+      counter-reset: flow;
     }
 
     .flow-step {
+      counter-increment: flow;
+      position: relative;
       min-height: 64px;
-      padding: 14px;
+      padding: 14px 12px 14px 38px;
       font-size: 15px;
       line-height: 1.45;
+      justify-items: start;
+      text-align: left;
+    }
+
+    .flow-step::before {
+      content: counter(flow, decimal-leading-zero);
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--accent-cyan);
+      font-size: 12px;
+      font-weight: 900;
+      opacity: .9;
     }
 
     .flow-arrow {
@@ -1311,6 +1446,9 @@ layout: false
       .figure-layout,
       .chart-layout { grid-template-columns: 1fr; }
       #data .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .design-table-card { display: none; }
+      .design-mobile-cards { display: grid; }
+      .design-card-grid { grid-template-columns: 1fr; }
       .ladder-row { grid-template-columns: 36px 1fr; }
       .ladder-row.head { display: none; }
       .design-role { grid-column: 2; }
@@ -1323,7 +1461,8 @@ layout: false
       .ladder-row:not(.head) .mark.yes::before,
       .ladder-row:not(.head) .mark.diag::before { color: rgba(6, 16, 33, .72); }
       .flow-track { display: grid; grid-template-columns: 1fr; }
-      .flow-arrow { text-align: center; transform: rotate(90deg); }
+      .flow-step { min-height: 56px; padding-left: 42px; }
+      .flow-arrow { display: none; }
       .result-list li { grid-template-columns: 1fr; }
       .result-list strong { text-align: left; }
       .scene-card { grid-template-columns: 1fr; }
@@ -1472,14 +1611,30 @@ layout: false
         <p>6 种决策过程 × 2 种身份标签。六种决策过程条件被组织成结构阶梯，并加入两个诊断条件，用于区分文本长度和决策结构。</p>
       </div>
       <div class="design-layout">
-        <div class="ladder">
-          <div class="ladder-row head"><div></div><div>条件</div><div>候选比较</div><div>理由权衡</div><div>反思修正</div><div>诊断条件</div><div>设计作用</div></div>
-          <div class="ladder-row"><div class="step-num">1</div><div class="condition-name">直接给出选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark">否</div><div class="mark design-role">基线条件</div></div>
-          <div class="ladder-row"><div class="step-num">2</div><div class="condition-name">长文本直接选择</div><div class="mark">无</div><div class="mark">无</div><div class="mark">无</div><div class="mark diag">是</div><div class="mark design-role">控制文本长度</div></div>
-          <div class="ladder-row"><div class="step-num">3</div><div class="condition-name">列出可选方案</div><div class="mark yes">有</div><div class="mark">弱</div><div class="mark">无</div><div class="mark">否</div><div class="mark design-role">检查候选本身</div></div>
-          <div class="ladder-row"><div class="step-num">4</div><div class="condition-name">简洁理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark diag">是</div><div class="mark design-role">检查理由结构</div></div>
-          <div class="ladder-row"><div class="step-num">5</div><div class="condition-name">完整理由权衡</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">无</div><div class="mark">否</div><div class="mark design-role">强化理由比较</div></div>
-          <div class="ladder-row"><div class="step-num">6</div><div class="condition-name">反思与反馈修正</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark yes">有</div><div class="mark">否</div><div class="mark design-role">最高结构条件</div></div>
+        <div>
+          <div class="design-table-card">
+            <table class="design-matrix" aria-label="六种决策过程条件矩阵">
+              <thead>
+                <tr><th>条件</th><th>候选比较</th><th>理由权衡</th><th>反思修正</th><th>诊断条件</th><th>设计作用</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><b>直接给出选择</b></td><td><span class="table-chip">无</span></td><td><span class="table-chip">无</span></td><td><span class="table-chip">无</span></td><td><span class="table-chip">否</span></td><td>基线条件</td></tr>
+                <tr><td><b>长文本直接选择</b></td><td><span class="table-chip">无</span></td><td><span class="table-chip">无</span></td><td><span class="table-chip">无</span></td><td><span class="table-chip diag">是</span></td><td>控制文本长度</td></tr>
+                <tr><td><b>列出可选方案</b></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip">弱</span></td><td><span class="table-chip">无</span></td><td><span class="table-chip">否</span></td><td>检查候选本身</td></tr>
+                <tr><td><b>简洁理由权衡</b></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip">无</span></td><td><span class="table-chip diag">是</span></td><td>检查理由结构</td></tr>
+                <tr><td><b>完整理由权衡</b></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip">无</span></td><td><span class="table-chip">否</span></td><td>强化理由比较</td></tr>
+                <tr><td><b>反思与反馈修正</b></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip yes">有</span></td><td><span class="table-chip">否</span></td><td>最高结构条件</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="design-mobile-cards" aria-label="六种决策过程条件卡片">
+            <article class="design-condition-card"><h3>直接给出选择</h3><div class="design-card-grid"><span><b>候选比较</b>无</span><span><b>理由权衡</b>无</span><span><b>反思修正</b>无</span><span><b>诊断条件</b>否</span><span><b>设计作用</b>基线条件</span></div></article>
+            <article class="design-condition-card"><h3>长文本直接选择</h3><div class="design-card-grid"><span><b>候选比较</b>无</span><span><b>理由权衡</b>无</span><span><b>反思修正</b>无</span><span><b>诊断条件</b>是</span><span><b>设计作用</b>控制文本长度</span></div></article>
+            <article class="design-condition-card"><h3>列出可选方案</h3><div class="design-card-grid"><span><b>候选比较</b>有</span><span><b>理由权衡</b>弱</span><span><b>反思修正</b>无</span><span><b>诊断条件</b>否</span><span><b>设计作用</b>检查候选本身</span></div></article>
+            <article class="design-condition-card"><h3>简洁理由权衡</h3><div class="design-card-grid"><span><b>候选比较</b>有</span><span><b>理由权衡</b>有</span><span><b>反思修正</b>无</span><span><b>诊断条件</b>是</span><span><b>设计作用</b>检查理由结构</span></div></article>
+            <article class="design-condition-card"><h3>完整理由权衡</h3><div class="design-card-grid"><span><b>候选比较</b>有</span><span><b>理由权衡</b>有</span><span><b>反思修正</b>无</span><span><b>诊断条件</b>否</span><span><b>设计作用</b>强化理由比较</span></div></article>
+            <article class="design-condition-card"><h3>反思与反馈修正</h3><div class="design-card-grid"><span><b>候选比较</b>有</span><span><b>理由权衡</b>有</span><span><b>反思修正</b>有</span><span><b>诊断条件</b>否</span><span><b>设计作用</b>最高结构条件</span></div></article>
+          </div>
         </div>
         <aside class="model summary-list">
           <div><span>决策过程</span><strong>6 种</strong></div>
@@ -1585,15 +1740,15 @@ layout: false
       </div>
       <div class="flow">
         <div class="flow-track">
-          <div class="flow-step">现实问题</div><span class="flow-arrow">→</span>
-          <div class="flow-step">变量拆解</div><span class="flow-arrow">→</span>
-          <div class="flow-step">材料设计</div><span class="flow-arrow">→</span>
-          <div class="flow-step">模拟被试</div><span class="flow-arrow">→</span>
-          <div class="flow-step">数据保存</div><span class="flow-arrow">→</span>
-          <div class="flow-step">得分计算</div><span class="flow-arrow">→</span>
-          <div class="flow-step">操纵检验</div><span class="flow-arrow">→</span>
-          <div class="flow-step">控制回归</div><span class="flow-arrow">→</span>
-          <div class="flow-step">中介分析</div><span class="flow-arrow">→</span>
+          <div class="flow-step">现实问题</div>
+          <div class="flow-step">变量拆解</div>
+          <div class="flow-step">材料设计</div>
+          <div class="flow-step">模拟被试</div>
+          <div class="flow-step">数据保存</div>
+          <div class="flow-step">得分计算</div>
+          <div class="flow-step">操纵检验</div>
+          <div class="flow-step">控制回归</div>
+          <div class="flow-step">中介分析</div>
           <div class="flow-step">报告生成</div>
         </div>
       </div>
@@ -1736,8 +1891,7 @@ layout: false
       </div>
       <div class="application-grid">
         <article class="application-card">
-          <span class="scene-label">招聘筛选</span>
-          <h3>解释方式会影响公平感与申诉意愿</h3>
+          <h3><span class="title-tag">招聘筛选</span>解释方式会影响公平感与申诉意愿</h3>
           <div class="application-two-col">
             <div class="example-box">
               <div><b>系统 A：</b>未通过筛选。</div>
@@ -1750,8 +1904,7 @@ layout: false
           </div>
         </article>
         <article class="application-card">
-          <span class="scene-label">推荐系统</span>
-          <h3>带理由的推荐会更像判断，而不是黑箱输出</h3>
+          <h3><span class="title-tag">推荐系统</span>解释理由会影响用户对平台偏好的理解</h3>
           <div class="application-two-col">
             <div class="example-box">
               <div><b>系统 A：</b>为你推荐这条内容。</div>
@@ -1764,8 +1917,7 @@ layout: false
           </div>
         </article>
         <article class="application-card">
-          <span class="scene-label">智能助手 / 办公助理</span>
-          <h3>会比较、会修正的系统，更容易建立可信判断印象</h3>
+          <h3><span class="title-tag">智能助手</span>可信感来自可追踪的判断过程</h3>
           <div class="application-two-col">
             <div class="example-box">
               <div><b>系统 A：</b>建议采用方案 A。</div>
@@ -1778,8 +1930,7 @@ layout: false
           </div>
         </article>
         <article class="application-card">
-          <span class="scene-label">游戏智能体 / NPC</span>
-          <h3>解释过程会影响角色是否“像活的”</h3>
+          <h3><span class="title-tag">游戏智能体</span>解释过程会影响角色是否“像活的”</h3>
           <div class="application-two-col">
             <div class="example-box">
               <div><b>NPC A：</b>撤退。</div>
@@ -1846,10 +1997,10 @@ layout: false
       </div>
       <div class="flow">
         <div class="flow-track">
-          <div class="flow-step">专家内容效度评估</div><span class="flow-arrow">→</span>
-          <div class="flow-step">真实被试预测试</div><span class="flow-arrow">→</span>
-          <div class="flow-step">探索性 / 验证性因素分析</div><span class="flow-arrow">→</span>
-          <div class="flow-step">正式 6 × 2 人类被试实验</div><span class="flow-arrow">→</span>
+          <div class="flow-step">专家内容效度评估</div>
+          <div class="flow-step">真实被试预测试</div>
+          <div class="flow-step">探索性 / 验证性因素分析</div>
+          <div class="flow-step">正式 6 × 2 人类被试实验</div>
           <div class="flow-step">扩展到 AI 解释设计与责任界面</div>
         </div>
       </div>
@@ -1914,10 +2065,20 @@ layout: false
       };
       function updateMaterialPanel() {
         document.querySelectorAll('.material-panel').forEach(function (panel) {
-          panel.classList.toggle('is-active',
-            panel.getAttribute('data-scene') === activeScene &&
-            panel.getAttribute('data-condition') === activeCondition
-          );
+          var isActive = panel.getAttribute('data-scene') === activeScene &&
+            panel.getAttribute('data-condition') === activeCondition;
+          panel.classList.toggle('is-active', isActive);
+          panel.hidden = !isActive;
+        });
+        document.querySelectorAll('[data-material-scene]').forEach(function (btn) {
+          var isSelected = btn.getAttribute('data-material-scene') === activeScene;
+          btn.classList.toggle('is-active', isSelected);
+          btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        });
+        document.querySelectorAll('[data-material-condition]').forEach(function (btn) {
+          var isSelected = btn.getAttribute('data-material-condition') === activeCondition;
+          btn.classList.toggle('is-active', isSelected);
+          btn.setAttribute('aria-selected', isSelected ? 'true' : 'false');
         });
         var desc = document.getElementById('materialSceneDesc');
         if (desc) desc.textContent = sceneText[activeScene] || '';
@@ -1925,16 +2086,12 @@ layout: false
       document.querySelectorAll('[data-material-scene]').forEach(function (btn) {
         btn.addEventListener('click', function () {
           activeScene = btn.getAttribute('data-material-scene');
-          document.querySelectorAll('[data-material-scene]').forEach(function (b) { b.classList.remove('is-active'); });
-          btn.classList.add('is-active');
           updateMaterialPanel();
         });
       });
       document.querySelectorAll('[data-material-condition]').forEach(function (btn) {
         btn.addEventListener('click', function () {
           activeCondition = btn.getAttribute('data-material-condition');
-          document.querySelectorAll('[data-material-condition]').forEach(function (b) { b.classList.remove('is-active'); });
-          btn.classList.add('is-active');
           updateMaterialPanel();
         });
       });
